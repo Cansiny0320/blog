@@ -1,0 +1,337 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #006dfe;
+  --ifm-color-primary-dark: #119cc5;
+  --ifm-color-primary-darker: #05879d;
+  --ifm-color-primary-darkest: #007a87;
+  --ifm-color-primary-light: #6dc8f2;
+  --ifm-color-primary-lighter: #c6ebfc;
+  --ifm-color-primary-lightest: #f2fbff;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Raleway', 'Yuanti SC', 'Yuanti SC Regular', 'Youyuan',
+    'You Yuan', '幼圆', 'PingFang SC', 'Microsoft Yahei', sans-serif;
+
+  --ifm-navbar-shadow: 0px 4px 28px rgba(0, 0, 0, 0.1);
+  --ifm-toc-border-color: #f7f7f7;
+  --text-color: #57616f;
+  --ifm-heading-color: hsl(200deg, 20%, 20%);
+}
+
+html {
+  --post-title-color: #2f5c85;
+  --post-pub-date-color: #8c8c8c;
+  --divider-color: #ebebeb;
+}
+
+html[data-theme='dark'] {
+  --post-title-color: white;
+  --post-pub-date-color: var(--ifm-color-gray-100);
+  --divider-color: #353535;
+  --ifm-toc-border-color: #313131;
+  --ifm-heading-color: #ffffff;
+}
+
+article > * {
+  line-height: 1.8em;
+  /* letter-spacing: 0.04em; */
+  /* text-align: justify; */
+}
+
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--ifm-font-weight-semibold);
+} */
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+/* navbar */
+.navbar {
+  box-shadow: none;
+}
+
+.navbar__title {
+  margin-left: 20px;
+  color: var(--ifm-color-primary);
+}
+
+/* hero */
+.hero {
+  height: calc(100vh - 60px);
+  width: 100vw;
+  max-width: 100%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 7fr 10fr;
+  position: relative;
+  background: url('/img/hero_main.svg') no-repeat right;
+  background-size: 60vw;
+  letter-spacing: 0.04em;
+}
+
+html[data-theme='dark'] .hero {
+  background-image: url('/img/hero_main_dark.svg');
+}
+
+html[data-theme='dark'] .bloghome__intro > p {
+  color: #dfdfdf;
+}
+
+/* 
+.bloghome__image {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+}
+
+.bloghome__image img {
+  width: 100%;
+} */
+
+.intro__name {
+  color: var(--ifm-color-primary);
+}
+
+.bloghome__intro {
+  padding: 4em;
+  position: relative;
+  z-index: 1;
+}
+
+.bloghome__intro h1 {
+  font-size: calc(1.8em + 1.2vw);
+}
+
+.bloghome__intro > p {
+  margin: 26px 0px 24px 0;
+  color: #8c99ab;
+  /* text-shadow: 0 0 #8c99ab; */
+  font-size: 1.125rem;
+  text-align: justify;
+  letter-spacing: -0.04em;
+  line-height: 32px;
+}
+
+.bloghome__intro > p:nth-child(3) {
+  align-self: start;
+  margin-top: 0;
+}
+
+.bloghome__follow {
+  display: inline-block;
+  color: white;
+  padding: 0.75em 20px;
+  margin-left: -2px;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    var(--ifm-color-primary) 11.3%,
+    #20b7d9 161.54%
+  );
+  box-shadow: 0px 0px 32px rgba(0, 105, 165, 0.35);
+  border-radius: 7px;
+  font-family: 'Yuanti SC', 'Youyuan', 'You Yuan', '幼圆', 'PingFang SC',
+    'Microsoft Yahei', Helvetica, sans-serif;
+}
+
+.bloghome__follow:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.content__divider {
+  border-bottom: 1px solid var(--divider-color);
+  margin-top: 84px;
+  margin-bottom: 60px;
+}
+
+.blog__section_title {
+  margin: 1em 0 2.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(1.375rem + 1.5vw);
+}
+
+.bloghome__scroll-down {
+  justify-self: center;
+  align-self: end;
+  grid-column: span 2;
+  position: absolute;
+  bottom: 8em;
+  background: linear-gradient(25deg, #1081ff, #72e1f6, #b185ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.bloghome__scroll-down button {
+  border: none;
+  width: 150px;
+  height: 48px;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bloghome__scroll-down button svg {
+  stroke: #7f7f7f;
+}
+
+/* 博客列表 */
+.bloghome__posts {
+  /* display: grid;
+  grid-template-columns: 1fr; */
+}
+
+/* 发布日期 */
+.post__date {
+  background: url('/icons/circle.svg') no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  width: 9.75em;
+  height: 9.75em;
+  margin-top: 1.6em;
+  font-family: 'Raleway';
+}
+
+.post__day {
+  font-size: 4.75em;
+  line-height: 1em;
+  font-weight: 900;
+}
+
+.post__year_month {
+  align-self: start;
+  color: var(--post-pub-date-color);
+}
+
+.post__tags {
+  background: #3d94fa;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+.post__tags:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .post__tags {
+  color: #d4e8fa;
+  background: #0179fa77;
+}
+
+/* 底部 */
+.footer {
+  margin-top: 4em;
+}
+
+.social__links {
+  width: 100%;
+  display: flex;
+  max-width: 105px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 0 2.5em 0;
+  z-index: 100;
+  position: relative;
+}
+
+.social__links > * {
+  width: 24px;
+  height: 24px;
+  color: #4093f6;
+}
+
+.social__links .dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.social__links .dropdown span {
+  margin-left: 6px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.social__links .dropdown__menu {
+  max-width: initial;
+  right: 0;
+  top: 120%;
+}
+
+.article__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__read_count {
+  opacity: 0.8;
+  color: #006dfe;
+  font-size: 1.8em;
+}
+
+html[data-theme='dark'] .footer__read_count {
+  color: #76baff;
+}
+
+.pagination-nav__link {
+  border: none;
+}
+
+@media (max-width: 1105px) {
+  .hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+    height: 95vh;
+    min-height: 900px;
+    background-position: center bottom;
+    background-size: 70vh;
+  }
+  .bloghome__intro {
+    padding: 0em var(--ifm-spacing-horizontal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bloghome__image {
+    width: 90%;
+  }
+
+  .blog__section_title {
+    padding-top: 3em;
+  }
+}
+
+@media (max-width: 570px) {
+  .hero {
+    height: 90vh;
+    background-size: 55vh;
+  }
+}
