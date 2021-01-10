@@ -154,7 +154,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/Cansiny0320/Cansiny0320.github.io/tree/main/docs',
+            'https://github.com/Cansiny0320/blog/tree/main',
         },
         blog: {
           path: './blog',
