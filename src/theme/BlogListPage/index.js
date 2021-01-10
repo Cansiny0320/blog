@@ -17,6 +17,8 @@ import {
   faGithub,
   faQq,
   faWeixin,
+  faGoogle,
+  faZhihu
 } from '@fortawesome/free-brands-svg-icons'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 // import bilibiliIcon from "@site/static/icons/bilibili.svg";
@@ -168,9 +170,12 @@ function SocialLinks({ animatedProps, ...props }) {
       <a href="https://github.com/Cansiny0320">
         <FontAwesomeIcon icon={faGithub} size="lg" />
       </a>
-      {/* <a href="https://www.linkedin.com/in/zxuqian/">
-        <FontAwesomeIcon icon={faLinkedin} size="lg" />
-      </a> */}
+      <a href="mailto:cansiny1220@gmail.com">
+        <FontAwesomeIcon icon={faGoogle} size="lg" />
+      </a>
+      <a href="https://www.zhihu.com/people/wang-jia-xin-bu-hui-nbcs">
+        <FontAwesomeIcon icon={faZhihu} size="lg" />
+      </a>
       {/* <div className="dropdown dropdown--hoverable">
         <FontAwesomeIcon icon={faWeixin} size="lg" />
         <img

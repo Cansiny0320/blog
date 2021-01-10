@@ -253,7 +253,7 @@ html[data-theme='dark'] .post__tags {
 .social__links {
   width: 100%;
   display: flex;
-  max-width: 105px;
+  max-width: 210px;
   align-items: center;
   justify-content: space-between;
   padding: 1em 0 2.5em 0;
