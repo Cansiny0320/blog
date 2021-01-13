@@ -42,6 +42,10 @@ module.exports = {
               label: 'JS',
               to: 'docs/notes/js/01-prototype/prototype',
             },
+            {
+              label: '每日一题',
+              to: 'docs/notes/everyday-one-question/01-JavaScript/everyday-one-question-js',
+            },
           ],
         },
         {
@@ -153,8 +157,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/Cansiny0320/blog/tree/main',
+          editUrl: 'https://github.com/Cansiny0320/blog/tree/main',
         },
         blog: {
           path: './blog',

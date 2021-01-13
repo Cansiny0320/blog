@@ -44,10 +44,8 @@ module.exports = {
   //   TypeScript: ['videos/ts/01-intro/ts-intro'],
   // },
   notes: {
-    JavaScript: [
-      'notes/js/01-prototype/prototype',
-      'notes/js/02-eventloop/eventloop',
-    ],
+    JavaScript: ['notes/js/01-prototype/prototype', 'notes/js/02-eventloop/eventloop'],
+    每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
   },
   // projects: {
   //   简介: ['projects/projects-intro'],
