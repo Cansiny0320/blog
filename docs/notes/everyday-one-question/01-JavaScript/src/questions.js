@@ -8,3 +8,9 @@ const timer = a => {
 }
 
 const all = Promise.all([timer('first'), timer('second')]).then(data => console.log(data))
+
+// 2021-01-14 120
+
+const arr = [x => x * 1, x => x * 2, x => x * 3, x => x * 4]
+
+console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
