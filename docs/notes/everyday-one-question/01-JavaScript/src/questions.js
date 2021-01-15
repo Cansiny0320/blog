@@ -14,3 +14,19 @@ const all = Promise.all([timer('first'), timer('second')]).then(data => console.
 const arr = [x => x * 1, x => x * 2, x => x * 3, x => x * 4]
 
 console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
+
+//2021-01-15 woof
+function Dog(name) {
+  this.name = name
+  this.speak = function () {
+    return 'woof'
+  }
+}
+
+const dog = new Dog('Pogo')
+
+Dog.prototype.speak = function () {
+  return 'arf'
+}
+
+console.log(dog.speak())

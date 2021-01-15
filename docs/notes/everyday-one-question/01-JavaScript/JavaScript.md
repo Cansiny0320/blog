@@ -58,3 +58,24 @@ console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
 6 + 6 \* 3 = 24
 
 24 + 24 \* 4 = 120
+
+## 2021-01-15
+
+```js
+function Dog(name) {
+  this.name = name
+  this.speak = function () {
+    return 'woof'
+  }
+}
+
+const dog = new Dog('Pogo')
+
+Dog.prototype.speak = function () {
+  return 'arf'
+}
+
+console.log(dog.speak())
+```
+
+答案是 woof，实例中有 speak 方法就使用实例中的，没有的话再沿原型链向上找
