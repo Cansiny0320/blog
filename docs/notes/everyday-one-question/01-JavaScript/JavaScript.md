@@ -79,3 +79,24 @@ console.log(dog.speak())
 ```
 
 答案是 woof，实例中有 speak 方法就使用实例中的，没有的话再沿原型链向上找
+
+## 2021-01-16
+
+```js
+const user = {
+  name: 'Joe',
+  age: 25,
+  pet: {
+    type: 'dog',
+    name: 'Buttercup',
+  },
+}
+
+Object.freeze(user)
+
+user.pet.name = 'Daffodil'
+
+console.log(user.pet.name)
+```
+
+答案是 Daffodil，对象在使用 freeze() 冻结之后便不能添加新属性和修改现有属性了，但是 freeze() 不会冻结嵌套的子对象，它所执行的是浅冻结。

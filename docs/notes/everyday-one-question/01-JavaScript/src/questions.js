@@ -15,7 +15,7 @@ const arr = [x => x * 1, x => x * 2, x => x * 3, x => x * 4]
 
 console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
 
-//2021-01-15 woof
+// 2021-01-15 woof
 function Dog(name) {
   this.name = name
   this.speak = function () {
@@ -30,3 +30,19 @@ Dog.prototype.speak = function () {
 }
 
 console.log(dog.speak())
+
+// 2021-01-16 Daffodil
+const user = {
+  name: 'Joe',
+  age: 25,
+  pet: {
+    type: 'dog',
+    name: 'Buttercup',
+  },
+}
+
+Object.freeze(user)
+
+user.pet.name = 'Daffodil'
+
+console.log(user.pet.name)
