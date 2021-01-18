@@ -100,3 +100,31 @@ console.log(user.pet.name)
 ```
 
 答案是 Daffodil，对象在使用 freeze() 冻结之后便不能添加新属性和修改现有属性了，但是 freeze() 不会冻结嵌套的子对象，它所执行的是浅冻结。
+
+## 2021-01-18
+
+```js
+const arr1 = [{ firstName: 'James' }]
+const arr2 = [...arr1]
+arr2[0].firstName = 'Jonah'
+console.log(arr1)
+```
+
+答案是 Jonah，扩展操作符只能深拷贝一层的对象，如果对象是两层的结构，那么使用扩展操作符拷贝会是浅拷贝 `[{}]`嵌套了两层
+
+例如
+
+```js
+let arr = [1, 3, 5, 7]
+let arr2 = [...arr]
+arr[0] = 2
+console.log(arr2) // [1, 3, 5, 7]
+
+let person = { name: '布兰', age: 12 }
+let p2 = { ...person }
+person.age = 20
+console.log(person) // { name: '布兰', age: 20 }
+console.log(p2) // { name: '布兰', age: 12 }
+```
+
+以上只有一层嵌套的情况就是浅拷贝

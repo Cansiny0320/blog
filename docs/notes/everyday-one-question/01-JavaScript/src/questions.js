@@ -46,3 +46,10 @@ Object.freeze(user)
 user.pet.name = 'Daffodil'
 
 console.log(user.pet.name)
+
+// 2021-01-18
+// const arr1 = [{ firstName: 'James' }]
+const arr1 = ['James']
+const arr2 = [...arr1]
+arr2[0] = 'Jonah'
+console.log(arr1)
