@@ -128,3 +128,12 @@ console.log(p2) // { name: '布兰', age: 12 }
 ```
 
 以上只有一层嵌套的情况就是浅拷贝
+
+## 2020-01-19
+
+```js
+const map = ['a', 'b', 'c'].map.bind([1, 2, 3])
+map(el => console.log(el))
+```
+
+答案是 1 2 3，`['a', 'b', 'c'].map.bind([1, 2, 3])`相当与`[].map.bind([1, 2, 3])`即`[1,2,3].map(el => console.log(el))`

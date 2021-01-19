@@ -48,8 +48,11 @@ user.pet.name = 'Daffodil'
 console.log(user.pet.name)
 
 // 2021-01-18
-// const arr1 = [{ firstName: 'James' }]
-const arr1 = ['James']
+const arr1 = [{ firstName: 'James' }]
 const arr2 = [...arr1]
-arr2[0] = 'Jonah'
+arr2[0].firstName = 'Jonah'
 console.log(arr1)
+
+// 2021-01-19 1 2 3
+const map = ['a', 'b', 'c'].map.bind([1, 2, 3])
+map(el => console.log(el))
