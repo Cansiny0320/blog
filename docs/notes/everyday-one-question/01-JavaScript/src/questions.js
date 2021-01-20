@@ -56,3 +56,7 @@ console.log(arr1)
 // 2021-01-19 1 2 3
 const map = ['a', 'b', 'c'].map.bind([1, 2, 3])
 map(el => console.log(el))
+
+//2021-01-20 4 2
+const arr = [...new Set([3, 1, 2, 3, 4])]
+console.log(arr.length, arr[2])

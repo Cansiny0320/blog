@@ -137,3 +137,12 @@ map(el => console.log(el))
 ```
 
 答案是 1 2 3，`['a', 'b', 'c'].map.bind([1, 2, 3])`相当与`[].map.bind([1, 2, 3])`即`[1,2,3].map(el => console.log(el))`
+
+## 2021-01-20
+
+```js
+const arr = [...new Set([3, 1, 2, 3, 4])]
+console.log(arr.length, arr[2])
+```
+
+答案是 4 2，new Set()数组去重，arr 为[3,1,2,4]
