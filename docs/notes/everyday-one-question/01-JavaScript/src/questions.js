@@ -57,6 +57,9 @@ console.log(arr1)
 const map = ['a', 'b', 'c'].map.bind([1, 2, 3])
 map(el => console.log(el))
 
-//2021-01-20 4 2
+// 2021-01-20 4 2
 const arr = [...new Set([3, 1, 2, 3, 4])]
 console.log(arr.length, arr[2])
+
+// 2021-01-21 [1, NaN, NaN]
+console.log(['1', '2', '3'].map(parseInt))

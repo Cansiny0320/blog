@@ -146,3 +146,11 @@ console.log(arr.length, arr[2])
 ```
 
 答案是 4 2，new Set()数组去重，arr 为[3,1,2,4]
+
+## 2021-01-21
+
+```js
+console.log(['1', '2', '3'].map(parseInt))
+```
+
+答案是[1, NaN, NaN]
