@@ -46,6 +46,10 @@ module.exports = {
               label: '每日一题',
               to: 'docs/notes/everyday-one-question/01-JavaScript/everyday-one-question-js',
             },
+            {
+              label: 'leetcode',
+              to: 'docs/notes/leetcode/01-hot100/hot100',
+            },
           ],
         },
         {

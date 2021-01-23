@@ -46,6 +46,7 @@ module.exports = {
   notes: {
     JavaScript: ['notes/js/01-prototype/prototype', 'notes/js/02-eventloop/eventloop'],
     每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
+    leetcode: ['notes/leetcode/01-hot100/hot100'],
   },
   // projects: {
   //   简介: ['projects/projects-intro'],
