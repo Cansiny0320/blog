@@ -6,11 +6,11 @@ module.exports = {
   title: 'Cansiny的博客',
   tagline: '记录生活',
   titleDelimiter: '-',
-  url: 'https://Cansiny0320.github.io/',
+  url: 'https://cansiny0320.now.sh/',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
   organizationName: 'Cansiny0320', // Usually your GitHub org/user name.
-  projectName: 'Cansiny0320.github.io', // Usually your repo name.
+  projectName: 'blog', // Usually your repo name.
   stylesheets: [
     'https://fonts.font.im/css?family=Raleway:500,700',
     {
@@ -72,6 +72,11 @@ module.exports = {
           label: 'GitHub',
           position: 'right',
         },
+        {
+          href: 'https://cansiny0320.now.sh/rss.xml',
+          label: 'RSS',
+          position: 'right',
+        },
       ],
     },
     footer: {
@@ -102,15 +107,6 @@ module.exports = {
             //   href: 'https://ke.qq.com/course/2839093?tuin=3850fdc6',
             // },
           ],
-        },
-        {
-          // title: '友情链接',
-          // items: [
-          //   // {
-          //   //   label: 'yuqing521のblog',
-          //   //   to: 'https://yuqing521.github.io/',
-          //   // },
-          // ],
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} cansiny0320 (王嘉欣) Built with Docusaurus.`,
