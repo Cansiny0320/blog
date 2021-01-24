@@ -97,15 +97,6 @@ module.exports = {
               label: 'Bilibili 哔哩哔哩',
               href: 'https://space.bilibili.com/4377132',
             },
-            // {
-            //   label: '网易云课堂',
-            //   href:
-            //     'https://study.163.com/course/courseMain.htm?courseId=1210022809&share=2&shareId=480000002172128',
-            // },
-            // {
-            //   label: '腾讯课堂',
-            //   href: 'https://ke.qq.com/course/2839093?tuin=3850fdc6',
-            // },
           ],
         },
       ],
@@ -115,15 +106,6 @@ module.exports = {
       darkTheme: require('prism-react-renderer/themes/vsDark'),
       defaultLanguage: 'javascript',
     },
-    // googleAnalytics: {
-    //   trackingID: 'UA-118572241-1',
-    //   anonymizeIP: true, // Should IPs be anonymized?
-    // },
-    // gtag: {
-    //   trackingID: 'G-6PSESJX0BM',
-    //   // Optional fields.
-    //   anonymizeIP: true, // Should IPs be anonymized?
-    // },
   },
   presets: [
     [
@@ -157,9 +139,4 @@ module.exports = {
     ],
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
-  // plugins: [
-  //   path.resolve(__dirname, './src/plugin/plugin-baidu-analytics'),
-  //   path.resolve(__dirname, './src/plugin/plugin-baidu-push'),
-  //   // path.resolve(__dirname, "./src/plugin/plugin-google-adsense"),
-  // ],
 }
