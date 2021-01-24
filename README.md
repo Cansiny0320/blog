@@ -22,6 +22,4 @@ $ yarn build
 
 ### 部署
 
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
+[https://vercel.com/](https://vercel.com/dashboard)
