@@ -1,4 +1,6 @@
 const path = require('path')
+const math = require('remark-math')
+const katex = require('rehype-katex')
 
 module.exports = {
   title: 'Cansiny的博客',
@@ -9,7 +11,15 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'Cansiny0320', // Usually your GitHub org/user name.
   projectName: 'Cansiny0320.github.io', // Usually your repo name.
-  stylesheets: ['https://fonts.font.im/css?family=Raleway:500,700'],
+  stylesheets: [
+    'https://fonts.font.im/css?family=Raleway:500,700',
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css',
+      type: 'text/css',
+      integrity: 'sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X',
+      crossorigin: 'anonymous',
+    },
+  ],
   themeConfig: {
     navbar: {
       title: 'CANSINY',
@@ -57,52 +67,16 @@ module.exports = {
           position: 'right',
           to: 'docs/projects/projects-intro',
         },
-        // {
-        //   href: 'https://www.itnanls.cn',
-        //   label: '后端学习',
-        //   position: 'right',
-        // },
         {
           href: 'https://github.com/Cansiny0320',
           label: 'GitHub',
           position: 'right',
         },
-        // {
-        //   href: "https://github.com/zxuqian/frontend-questions/issues",
-        //   label: "提问",
-        //   position: "right",
-        // },
       ],
     },
     footer: {
       style: 'dark',
       links: [
-        // {
-        //   title: "Docs",
-        //   items: [
-        //     {
-        //       label: "Style Guide",
-        //       to: "docs/doc1"
-        //     },
-        //     {
-        //       label: "Second Doc",
-        //       to: "docs/doc2"
-        //     }
-        //   ]
-        // },
-        // {
-        //   title: "Community",
-        //   items: [
-        //     {
-        //       label: "Stack Overflow",
-        //       href: "https://stackoverflow.com/questions/tagged/docusaurus"
-        //     },
-        //     {
-        //       label: "Discord",
-        //       href: "https://discordapp.com/invite/docusaurus"
-        //     }
-        //   ]
-        // },
         {
           title: 'Social',
           items: [
@@ -162,6 +136,8 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/Cansiny0320/blog/tree/main',
+          remarkPlugins: [math],
+          rehypePlugins: [katex],
         },
         blog: {
           path: './blog',
