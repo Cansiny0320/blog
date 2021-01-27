@@ -169,3 +169,31 @@ console.log(myFunc("Hello World"));
 ```
 
 答案是 d，递归调用
+
+## 2021-01-27
+
+```js
+var a = 10;
+(function () {
+  console.log(a);
+  a = 5;
+  console.log(window.a);
+  var a = 20;
+  console.log(a);
+})();
+```
+
+答案是 undefined 10 20，上面代码解析如下
+
+```js
+var a;
+a = 10;
+function () {
+  var a;
+  console.log(a) // undefined
+  a = 5;
+  console.log(window.a); // 10
+  a = 20
+  console.log(a); // 20
+}
+```
