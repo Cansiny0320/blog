@@ -77,7 +77,7 @@ function BlogPostItem(props) {
           className={clsx(
             isBlogPostPage ? "margin-bottom--md" : "margin-vert--md",
             styles.blogPostTitle,
-            isBlogPostPage ? "text--center" : ""
+            isBlogPostPage ? "text--center" : "",
           )}
         >
           {isBlogPostPage ? title : <Link to={permalink}>{title}</Link>}
@@ -127,7 +127,8 @@ function BlogPostItem(props) {
   return (
     <StyledBlogItem
       isDark={isDarkTheme}
-      className={isBlogPostPage ? "margin-top--xl" : ""}
+      isBlogPostPage={isBlogPostPage}
+      // className={isBlogPostPage ? "margin-top--xl" : ""}
     >
       <Head>
         {image && <meta property="og:image" content={imageUrl} />}
@@ -140,10 +141,14 @@ function BlogPostItem(props) {
       {/* 统计 */}
       {isBlogPostPage && <Count postId={postId} />}
 
-      <div className="row">
+      <div
+        className={`row 
+         ${!isBlogPostPage ? "blog-list--item" : ""}`}
+        style={{ margin: 0 }}
+      >
         {/* 列表页日期 */}
         {!isBlogPostPage && (
-          <div className="col col--2 padding-right--lg margin-bottom--lg">
+          <div className="col col--3 padding-right--lg margin-bottom--lg">
             <div className="post__date">
               <div className="post__day">{day}</div>
               <div className="post__year_month">
@@ -152,7 +157,7 @@ function BlogPostItem(props) {
             </div>
           </div>
         )}
-        <div className={`col ${isBlogPostPage ? `col--12` : `col--10`}`}>
+        <div className={`col ${isBlogPostPage ? `col--12` : `col--9`}`}>
           {/* 博文部分 */}
           <article
             className={!isBlogPostPage ? "margin-bottom--md" : undefined}
@@ -181,11 +186,6 @@ function BlogPostItem(props) {
             </MarkdownSection>
           </article>
           <footer className="article__footer padding-top--md margin-top--lg margin-bottom--lg">
-            {truncated && (
-              <Link to={metadata.permalink} aria-label={`阅读 ${title} 的全文`}>
-                <strong className={styles.readMore}>阅读原文</strong>
-              </Link>
-            )}
             {!isBlogPostPage && (
               <span className="footer__read_count">
                 <Eye
@@ -194,6 +194,11 @@ function BlogPostItem(props) {
                 />{" "}
                 {views}
               </span>
+            )}
+            {truncated && (
+              <Link to={metadata.permalink} aria-label={`阅读 ${title} 的全文`}>
+                <strong className={styles.readMore}>阅读原文</strong>
+              </Link>
             )}
           </footer>
         </div>
