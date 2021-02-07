@@ -11,8 +11,12 @@ module.exports = {
   //   "React 基础示例": [],
   // },
   notes: {
-    JavaScript: ['notes/js/01-prototype/prototype', 'notes/js/02-eventloop/eventloop'],
-    每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
-    leetcode: ['notes/leetcode/01-hot100/hot100'],
+    JavaScript: [
+      "notes/js/01-prototype/prototype",
+      "notes/js/02-eventloop/eventloop",
+      "notes/js/03-es6/es6",
+    ],
+    每日一题: ["notes/everyday-one-question/01-JavaScript/everyday-one-question-js"],
+    leetcode: ["notes/leetcode/01-hot100/hot100"],
   },
-}
+};
