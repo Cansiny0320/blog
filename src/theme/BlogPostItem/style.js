@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
 const light = css`
   h2 {
@@ -32,21 +32,23 @@ const light = css`
   li {
     /* color: var(--text-color); */
   }
-`;
+`
 
 export const MarkdownSection = styled.section`
   ${({ isDark }) => (isDark ? `` : light)}
-`;
+`
 
 export const StyledBlogItem = styled.div`
-  /* ${({ isBlogPostPage }) =>
-    !isBlogPostPage &&
-    css`
-      box-shadow: var(--post-shadow);
-      padding: 3em 2em;
-    `} */
   margin-top: 4.25em;
   margin-bottom: 4.25em;
+
+  ${({ isBlogPostPage }) =>
+    isBlogPostPage &&
+    css`
+      /* box-shadow: var(--post-shadow);
+      padding: 3em 2em; */
+      margin-top: 0;
+    `}
 
   article {
     .single-post--date {
@@ -99,4 +101,4 @@ export const StyledBlogItem = styled.div`
     box-shadow: none;
     padding: 0;
   } */
-`;
+`
