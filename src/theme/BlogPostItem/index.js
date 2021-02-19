@@ -5,41 +5,41 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useContext, useEffect, useState } from "react";
-import clsx from "clsx";
-import { MDXProvider } from "@mdx-js/react";
+import React, { useContext, useEffect, useState } from 'react'
+import clsx from 'clsx'
+import { MDXProvider } from '@mdx-js/react'
 
-import Head from "@docusaurus/Head";
-import Link from "@docusaurus/Link";
-import MDXComponents from "@theme/MDXComponents";
-import useBaseUrl from "@docusaurus/useBaseUrl";
+import Head from '@docusaurus/Head'
+import Link from '@docusaurus/Link'
+import MDXComponents from '@theme/MDXComponents'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
-import ThemeContext from "@theme/ThemeContext";
+import ThemeContext from '@theme/ThemeContext'
 
-import styles from "./styles.module.css";
-import { MarkdownSection, StyledBlogItem } from "./style";
-import { withTheme } from "styled-components";
+import styles from './styles.module.css'
+import { MarkdownSection, StyledBlogItem } from './style'
+import { withTheme } from 'styled-components'
 
-import Eye from "@site/static/icons/eye.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags } from "@fortawesome/free-solid-svg-icons";
+import Eye from '@site/static/icons/eye.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTags } from '@fortawesome/free-solid-svg-icons'
 
-import BrowserOnly from "@docusaurus/BrowserOnly";
+import BrowserOnly from '@docusaurus/BrowserOnly'
 
 const MONTHS = [
-  "",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+  '',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
 function BlogPostItem(props) {
   const {
@@ -49,35 +49,35 @@ function BlogPostItem(props) {
     truncated,
     isBlogPostPage = false,
     views,
-  } = props;
-  const { date, permalink, tags, readingTime } = metadata;
-  const { slug: postId, author, title, image } = frontMatter;
+  } = props
+  const { date, permalink, tags, readingTime } = metadata
+  const { slug: postId, author, title, image } = frontMatter
 
-  const authorURL = frontMatter.author_url || frontMatter.authorURL;
-  const authorTitle = frontMatter.author_title || frontMatter.authorTitle;
+  const authorURL = frontMatter.author_url || frontMatter.authorURL
+  const authorTitle = frontMatter.author_title || frontMatter.authorTitle
   const authorImageURL =
-    frontMatter.author_image_url || frontMatter.authorImageURL;
-  const imageUrl = useBaseUrl(image, { absolute: true });
+    frontMatter.author_image_url || frontMatter.authorImageURL
+  const imageUrl = useBaseUrl(image, { absolute: true })
 
   // 是否为黑暗主题：
-  const theme = useContext(ThemeContext);
-  const { isDarkTheme } = theme;
+  const theme = useContext(ThemeContext)
+  const { isDarkTheme } = theme
 
-  const match = date.substring(0, 10).split("-");
-  const year = match[0];
-  const month = parseInt(match[1], 10);
-  const day = parseInt(match[2], 10);
+  const match = date.substring(0, 10).split('-')
+  const year = match[0]
+  const month = parseInt(match[1], 10)
+  const day = parseInt(match[2], 10)
 
   const renderPostHeader = () => {
-    const TitleHeading = isBlogPostPage ? "h1" : "h2";
+    const TitleHeading = isBlogPostPage ? 'h1' : 'h2'
 
     return (
       <header>
         <TitleHeading
           className={clsx(
-            isBlogPostPage ? "margin-bottom--md" : "margin-vert--md",
+            isBlogPostPage ? 'margin-bottom--md' : 'margin-vert--md',
             styles.blogPostTitle,
-            isBlogPostPage ? "text--center" : "",
+            isBlogPostPage ? 'text--center' : '',
           )}
         >
           {isBlogPostPage ? title : <Link to={permalink}>{title}</Link>}
@@ -89,19 +89,19 @@ function BlogPostItem(props) {
           </time>
         </div> */}
       </header>
-    );
-  };
+    )
+  }
 
   const renderTags = () => {
     return (
       (tags.length > 0 || truncated) && (
-        <div className="row margin-top--none margin-bottom--lg">
+        <div className='row margin-top--none margin-bottom--lg'>
           {tags.length > 0 && (
-            <div className="col">
+            <div className='col'>
               <FontAwesomeIcon
                 icon={faTags}
-                color="#c4d3e0"
-                className="margin-right--md"
+                color='#c4d3e0'
+                className='margin-right--md'
               />
               {tags
                 .slice(0, 4)
@@ -109,10 +109,10 @@ function BlogPostItem(props) {
                   <Link
                     key={tagPermalink}
                     className={`post__tags ${
-                      index > 0 ? "margin-horiz--sm" : "margin-right--sm"
+                      index > 0 ? 'margin-horiz--sm' : 'margin-right--sm'
                     }`}
                     to={tagPermalink}
-                    style={{ fontSize: "0.75em", fontWeight: 500 }}
+                    style={{ fontSize: '0.75em', fontWeight: 500 }}
                   >
                     {label}
                   </Link>
@@ -121,8 +121,8 @@ function BlogPostItem(props) {
           )}
         </div>
       )
-    );
-  };
+    )
+  }
 
   return (
     <StyledBlogItem
@@ -131,10 +131,10 @@ function BlogPostItem(props) {
       // className={isBlogPostPage ? "margin-top--xl" : ""}
     >
       <Head>
-        {image && <meta property="og:image" content={imageUrl} />}
-        {image && <meta property="twitter:image" content={imageUrl} />}
+        {image && <meta property='og:image' content={imageUrl} />}
+        {image && <meta property='twitter:image' content={imageUrl} />}
         {image && (
-          <meta name="twitter:image:alt" content={`Image for ${title}`} />
+          <meta name='twitter:image:alt' content={`Image for ${title}`} />
         )}
       </Head>
 
@@ -143,15 +143,15 @@ function BlogPostItem(props) {
 
       <div
         className={`row 
-         ${!isBlogPostPage ? "blog-list--item" : ""}`}
+         ${!isBlogPostPage ? 'blog-list--item' : ''}`}
         style={{ margin: 0 }}
       >
         {/* 列表页日期 */}
         {!isBlogPostPage && (
-          <div className="col col--3 padding-right--lg margin-bottom--lg">
-            <div className="post__date">
-              <div className="post__day">{day}</div>
-              <div className="post__year_month">
+          <div className='col col--3 padding-right--lg margin-bottom--lg'>
+            <div className='post__date'>
+              <div className='post__day'>{day}</div>
+              <div className='post__year_month'>
                 {year}年{month}月
               </div>
             </div>
@@ -160,7 +160,7 @@ function BlogPostItem(props) {
         <div className={`col ${isBlogPostPage ? `col--12` : `col--9`}`}>
           {/* 博文部分 */}
           <article
-            className={!isBlogPostPage ? "margin-bottom--md" : undefined}
+            className={!isBlogPostPage ? 'margin-bottom--md' : undefined}
           >
             {/* 标题 */}
             {renderPostHeader()}
@@ -175,23 +175,27 @@ function BlogPostItem(props) {
             )}
             {/* 标签 */}
             {isBlogPostPage && (
-              <div className="text--center margin-bottom--lg padding-bottom--xs">
+              <div className='text--center margin-bottom--lg padding-bottom--xs'>
                 {renderTags()}
               </div>
             )}
 
             {/* 正文 */}
-            <MarkdownSection isDark={isDarkTheme} className="markdown">
+            <MarkdownSection
+              isBlogPostPage={isBlogPostPage}
+              isDark={isDarkTheme}
+              className='markdown'
+            >
               <MDXProvider components={MDXComponents}>{children}</MDXProvider>
             </MarkdownSection>
           </article>
-          <footer className="article__footer padding-top--md margin-top--lg margin-bottom--lg">
+          <footer className='article__footer padding-top--md margin-top--lg margin-bottom--lg'>
             {!isBlogPostPage && (
-              <span className="footer__read_count">
+              <span className='footer__read_count'>
                 <Eye
-                  color={isDarkTheme ? "#76baff" : "#006dfe"}
-                  style={{ verticalAlign: "middle" }}
-                />{" "}
+                  color={isDarkTheme ? '#76baff' : '#006dfe'}
+                  style={{ verticalAlign: 'middle' }}
+                />{' '}
                 {views}
               </span>
             )}
@@ -204,33 +208,33 @@ function BlogPostItem(props) {
         </div>
       </div>
     </StyledBlogItem>
-  );
+  )
 }
 
 function Count({ postId, ...post }) {
   return (
     <BrowserOnly fallback={<div></div>}>
       {() => {
-        if (localStorage.getItem(postId)) return null;
+        if (localStorage.getItem(postId)) return null
 
         const addViewCount = async () => {
-          await fetch("https://api.zxuqian.cn/post/increase_view", {
-            method: "PUT",
+          await fetch('https://api.zxuqian.cn/post/increase_view', {
+            method: 'PUT',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ postId }),
-          });
-          localStorage.setItem(postId, true);
-        };
+          })
+          localStorage.setItem(postId, true)
+        }
 
         useEffect(() => {
-          addViewCount();
-        }, []);
-        return null;
+          addViewCount()
+        }, [])
+        return null
       }}
     </BrowserOnly>
-  );
+  )
 }
 
-export default BlogPostItem;
+export default BlogPostItem
