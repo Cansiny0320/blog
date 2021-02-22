@@ -1,8 +1,7 @@
 ---
 id: eventloop
 title: 事件循环
-
-# hide_title: false
+hide_title: true
 
 # hide_table_of_contents: false
 
