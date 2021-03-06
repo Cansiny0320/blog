@@ -12,7 +12,7 @@ module.exports = {
   organizationName: 'Cansiny0320', // Usually your GitHub org/user name.
   projectName: 'blog', // Usually your repo name.
   stylesheets: [
-    'https://fonts.font.im/css?family=Raleway:500,700',
+    'https://fonts.font.im/css?family=Raleway:500,700&display=swap',
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css',
       type: 'text/css',
@@ -142,6 +142,6 @@ module.exports = {
       },
     ],
   ],
-  themes: ['@docusaurus/theme-live-codeblock'],
+  // themes: ['@docusaurus/theme-live-codeblock'],
   plugins: [path.resolve(__dirname, './src/plugin/plugin-baidu-analytics')],
 }
