@@ -360,13 +360,13 @@ pagination-nav__item:hover .pagination-nav__link {
   width: 100vw;
 }
 
-.blog-wrapper > .container > .row {
+/* .blog-wrapper > .container > .row {
   display: grid;
   grid-template-areas:
     'detail recent'
     'detail outline';
   grid-template-rows: max-content min-content;
-}
+} */
 
 .blog-wrapper > .container > .row .col[class*='col--'] {
   max-width: unset;
