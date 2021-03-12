@@ -54,7 +54,7 @@ console.log(person2.name) // Kevin
 
 让我们用一张图表示构造函数和实例原型之间的关系：
 
-![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype1.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615529783212.png)
 
 在这张图中我们用 Object.prototype 表示实例原型。
 
@@ -74,7 +74,7 @@ console.log(person.__proto__ === Person.prototype; // true
 
 于是我们更新下关系图：
 
-![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype2.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615529822442.png)
 
 既然实例对象和构造函数都可以指向原型，那么原型是否有属性指向构造函数或者实例呢？
 
@@ -91,7 +91,7 @@ console.log(Person === Person.prototype.constructor) // true
 
 所以再更新下关系图：
 
-![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype3.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615529832622.png)
 
 综上我们已经得出：
 
@@ -144,9 +144,9 @@ obj.name = 'Kevin'
 console.log(obj.name) // Kevin
 ```
 
-其实原型对象就是通过 Object 构造函数生成的，结合之前所讲，实例的 **proto** 指向构造函数的 prototype ，所以我们再更新下关系图：
+其实原型对象就是通过 Object 构造函数生成的，结合之前所讲，实例的 \_\_proto\_\_ 指向构造函数的 prototype ，所以我们再更新下关系图：
 
-![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype4.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615529857514.png)
 
 ## 原型链
 
@@ -170,7 +170,7 @@ console.log(Object.prototype.__proto__ === null) // true
 
 最后一张关系图也可以更新为：
 
-![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype5.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615529873512.png)
 
 顺便还要说一下，图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。
 
