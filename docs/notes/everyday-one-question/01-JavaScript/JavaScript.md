@@ -39,7 +39,7 @@ const arr = [x => x * 1, x => x * 2, x => x * 3, x => x * 4]
 console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
 ```
 
-答案是 120，reduce 方法有两个参数，第一个参数是回调函数，回调函数有四个参数，分别是
+答案是 120，reduce 方法有两个参数，第一个参数是回调函数，回调函数有三个参数，分别是
 
 - acc(累计值)，即回调函数 return 的值
 
@@ -47,7 +47,7 @@ console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
 
 - index(索引)，数组的下标
 
-- initValue(初始值)，累计值的初始值
+第二个参数为 initValue(初始值)，累计值的初始值
 
 注意**当有 initValue 参数时，index 才从 0 开始，否则从 1 开始**
 
