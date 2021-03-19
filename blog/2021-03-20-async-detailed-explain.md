@@ -199,7 +199,7 @@ Promise 有三种状态`pending`、`resolved`、`rejected`，在一个 Promise �
 
 首先我们的 Promise 需要传入一个`executor`函数，它的两个参数可以让我们 resolve 一个 value 或者 reject 一个 reason
 
-```JS
+```js
 const PENDING = 'pending'
 const RESOLVED = 'resolved'
 const REJECTED = 'rejected'
