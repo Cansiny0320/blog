@@ -24,9 +24,7 @@ const timer = a => {
   )
 }
 
-const all = Promise.all([timer('first'), timer('second')]).then(data =>
-  console.log(data),
-)
+const all = Promise.all([timer('first'), timer('second')]).then(data => console.log(data))
 ```
 
 答案是["first", "second"]，Promise.all 方法获得的成功结果的数组里面的数据顺序和 Promise.all 接收到的数组顺序是一致的
@@ -39,13 +37,12 @@ const arr = [x => x * 1, x => x * 2, x => x * 3, x => x * 4]
 console.log(arr.reduce((acc, cur) => acc + cur(acc), 1))
 ```
 
-答案是 120，reduce 方法有两个参数，第一个参数是回调函数，回调函数有三个参数，分别是
+答案是 120，reduce 方法有两个参数，第一个参数是回调函数，回调函数有四个参数，分别是
 
 - acc(累计值)，即回调函数 return 的值
-
 - cur(当前值)，数组中的当前元素的值
-
 - index(索引)，数组的下标
+- src(原数组)
 
 第二个参数为 initValue(初始值)，累计值的初始值
 
