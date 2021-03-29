@@ -23,7 +23,7 @@ import Eye from '@site/static/icons/eye.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags } from '@fortawesome/free-solid-svg-icons'
 
-import BrowserOnly from '@docusaurus/BrowserOnly'
+// import BrowserOnly from '@docusaurus/BrowserOnly'
 
 const MONTHS = [
   '',
@@ -41,21 +41,13 @@ const MONTHS = [
 ]
 
 function BlogPostItem(props) {
-  const {
-    children,
-    frontMatter,
-    metadata,
-    truncated,
-    isBlogPostPage = false,
-    views,
-  } = props
+  const { children, frontMatter, metadata, truncated, isBlogPostPage = false, views } = props
   const { date, permalink, tags, readingTime } = metadata
   const { slug: postId, author, title, image } = frontMatter
 
   const authorURL = frontMatter.author_url || frontMatter.authorURL
   const authorTitle = frontMatter.author_title || frontMatter.authorTitle
-  const authorImageURL =
-    frontMatter.author_image_url || frontMatter.authorImageURL
+  const authorImageURL = frontMatter.author_image_url || frontMatter.authorImageURL
   const imageUrl = useBaseUrl(image, { absolute: true })
 
   // 是否为黑暗主题：
@@ -97,25 +89,17 @@ function BlogPostItem(props) {
         <div className='post__tags-container margin-top--none margin-bottom--lg'>
           {tags.length > 0 && (
             <>
-              <FontAwesomeIcon
-                icon={faTags}
-                color='#c4d3e0'
-                className='margin-right--md'
-              />
-              {tags
-                .slice(0, 4)
-                .map(({ label, permalink: tagPermalink }, index) => (
-                  <Link
-                    key={tagPermalink}
-                    className={`post__tags ${
-                      index > 0 ? 'margin-horiz--sm' : 'margin-right--sm'
-                    }`}
-                    to={tagPermalink}
-                    style={{ fontSize: '0.75em', fontWeight: 500 }}
-                  >
-                    {label}
-                  </Link>
-                ))}
+              <FontAwesomeIcon icon={faTags} color='#c4d3e0' className='margin-right--md' />
+              {tags.slice(0, 4).map(({ label, permalink: tagPermalink }, index) => (
+                <Link
+                  key={tagPermalink}
+                  className={`post__tags ${index > 0 ? 'margin-horiz--sm' : 'margin-right--sm'}`}
+                  to={tagPermalink}
+                  style={{ fontSize: '0.75em', fontWeight: 500 }}
+                >
+                  {label}
+                </Link>
+              ))}
             </>
           )}
         </div>
@@ -132,13 +116,11 @@ function BlogPostItem(props) {
       <Head>
         {image && <meta property='og:image' content={imageUrl} />}
         {image && <meta property='twitter:image' content={imageUrl} />}
-        {image && (
-          <meta name='twitter:image:alt' content={`Image for ${title}`} />
-        )}
+        {image && <meta name='twitter:image:alt' content={`Image for ${title}`} />}
       </Head>
 
       {/* 统计 */}
-      {isBlogPostPage && <Count postId={postId} />}
+      {/* {isBlogPostPage && <Count postId={postId} />} */}
 
       <div
         className={`row 
@@ -158,9 +140,7 @@ function BlogPostItem(props) {
         )}
         <div className={`col ${isBlogPostPage ? `col--12` : `col--9`}`}>
           {/* 博文部分 */}
-          <article
-            className={!isBlogPostPage ? 'margin-bottom--md' : undefined}
-          >
+          <article className={!isBlogPostPage ? 'margin-bottom--md' : undefined}>
             {/* 标题 */}
             {renderPostHeader()}
             {/* 列表页标签 */}
@@ -173,29 +153,17 @@ function BlogPostItem(props) {
               </p>
             )}
             {/* 标签 */}
-            {isBlogPostPage && (
-              <div className='text--center margin-bottom--lg padding-bottom--xs'>
-                {renderTags()}
-              </div>
-            )}
+            {isBlogPostPage && <div className='text--center margin-bottom--lg padding-bottom--xs'>{renderTags()}</div>}
 
             {/* 正文 */}
-            <MarkdownSection
-              isBlogPostPage={isBlogPostPage}
-              isDark={isDarkTheme}
-              className='markdown'
-            >
+            <MarkdownSection isBlogPostPage={isBlogPostPage} isDark={isDarkTheme} className='markdown'>
               <MDXProvider components={MDXComponents}>{children}</MDXProvider>
             </MarkdownSection>
           </article>
           <footer className='article__footer padding-top--md margin-top--lg margin-bottom--lg'>
             {!isBlogPostPage && (
               <span className='footer__read_count'>
-                <Eye
-                  color={isDarkTheme ? '#76baff' : '#006dfe'}
-                  style={{ verticalAlign: 'middle' }}
-                />{' '}
-                {views}
+                <Eye color={isDarkTheme ? '#76baff' : '#006dfe'} style={{ verticalAlign: 'middle' }} /> {views}
               </span>
             )}
             {truncated && (
@@ -210,30 +178,30 @@ function BlogPostItem(props) {
   )
 }
 
-function Count({ postId, ...post }) {
-  return (
-    <BrowserOnly fallback={<div></div>}>
-      {() => {
-        if (localStorage.getItem(postId)) return null
+// function Count({ postId, ...post }) {
+//   return (
+//     <BrowserOnly fallback={<div></div>}>
+//       {() => {
+//         if (localStorage.getItem(postId)) return null
 
-        const addViewCount = async () => {
-          await fetch('https://api.zxuqian.cn/post/increase_view', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ postId }),
-          })
-          localStorage.setItem(postId, true)
-        }
+//         const addViewCount = async () => {
+//           await fetch('https://api.zxuqian.cn/post/increase_view', {
+//             method: 'PUT',
+//             headers: {
+//               'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ postId }),
+//           })
+//           localStorage.setItem(postId, true)
+//         }
 
-        useEffect(() => {
-          addViewCount()
-        }, [])
-        return null
-      }}
-    </BrowserOnly>
-  )
-}
+//         useEffect(() => {
+//           addViewCount()
+//         }, [])
+//         return null
+//       }}
+//     </BrowserOnly>
+//   )
+// }
 
 export default BlogPostItem

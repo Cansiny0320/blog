@@ -12,24 +12,14 @@ import Layout from '@theme/Layout'
 import BlogPostItem from '@theme/BlogPostItem'
 import BlogListPaginator from '@theme/BlogListPaginator'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faLinkedin,
-  faGithub,
-  faQq,
-  faWeixin,
-  faGoogle,
-  faZhihu,
-} from '@fortawesome/free-brands-svg-icons'
+import { faLinkedin, faGithub, faQq, faWeixin, faGoogle, faZhihu } from '@fortawesome/free-brands-svg-icons'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 // import bilibiliIcon from "@site/static/icons/bilibili.svg";
 
-// import useFollowers from './useFollowers'
-// import useViews from "./useViews";
 import { useTrail, animated, useSpring } from 'react-spring'
 import Fade from 'react-reveal/Fade'
 
 import BilibiliIcon from '@site/static/icons/bilibili.svg'
-// import CSDNIcon from '@site/static/icons/csdn.svg'
 
 function BlogListPage(props) {
   const { metadata, items } = props
@@ -42,10 +32,6 @@ function BlogListPage(props) {
   const title = isBlogOnlyMode ? siteTitle : 'Blog'
   const description = `记录一下学习和日常生活`
 
-  // Get all post views
-  // const views = useViews(items);
-  // Get followers
-  // const followers = useFollowers()
   // animation
   const animatedTexts = useTrail(5, {
     from: { opacity: 0, transform: 'translateY(3em)' },
@@ -81,9 +67,7 @@ function BlogListPage(props) {
             <animated.div style={animatedTexts[0]} className='hero_text'>
               Hello! 我是<span className='intro__name'>嘉欣</span>
             </animated.div>
-            <animated.p style={animatedTexts[1]}>
-              记录一下学习和日常生活
-            </animated.p>
+            <animated.p style={animatedTexts[1]}>记录一下学习和日常生活</animated.p>
             {/* <animated.p style={animatedTexts[3]}>
               QQ 1 群：644722908，2 群：1004912565
             </animated.p> */}
@@ -119,13 +103,7 @@ function BlogListPage(props) {
               {!isPaginated && (
                 <h1 className='blog__section_title'>
                   最新博客&nbsp;
-                  <svg
-                    width='31'
-                    height='31'
-                    viewBox='0 0 31 31'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
+                  <svg width='31' height='31' viewBox='0 0 31 31' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
                       d='M25.8333 5.16666H5.16668C3.73293 5.16666 2.59626 6.31624 2.59626 7.74999L2.58334 23.25C2.58334 24.6837 3.73293 25.8333 5.16668 25.8333H25.8333C27.2671 25.8333 28.4167 24.6837 28.4167 23.25V7.74999C28.4167 6.31624 27.2671 5.16666 25.8333 5.16666ZM10.9792 19.375H9.42918L6.13543 14.8542V19.375H4.52084V11.625H6.13543L9.36459 16.1458V11.625H10.9792V19.375ZM17.4375 13.2525H14.2083V14.6992H17.4375V16.3267H14.2083V17.7604H17.4375V19.375H12.2708V11.625H17.4375V13.2525ZM26.4792 18.0833C26.4792 18.7937 25.8979 19.375 25.1875 19.375H20.0208C19.3104 19.375 18.7292 18.7937 18.7292 18.0833V11.625H20.3438V17.4504H21.8033V12.9037H23.4179V17.4375H24.8646V11.625H26.4792V18.0833Z'
                       fill='#4490D6'
