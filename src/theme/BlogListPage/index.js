@@ -19,7 +19,6 @@ import { faGithub, faGoogle, faZhihu } from '@fortawesome/free-brands-svg-icons'
 import { useTrail, animated } from 'react-spring'
 // import Fade from 'react-reveal/Fade'
 
-import BilibiliIcon from '@site/static/icons/bilibili.svg'
 // import Button from '../../components/Button'
 import Head from '@docusaurus/Head'
 import HeroMain from './img/hero_main.svg'
@@ -221,9 +220,9 @@ function SocialLinks({ animatedProps, ...props }) {
   // const { isDarkTheme } = useThemeContext();
   return (
     <animated.div className='social__links' style={animatedProps}>
-      <a href='https://space.bilibili.com/4377132'>
+      {/* <a href='https://space.bilibili.com/4377132'>
         <BilibiliIcon />
-      </a>
+      </a> */}
       <a href='https://github.com/Cansiny0320'>
         <FontAwesomeIcon icon={faGithub} size='lg' />
       </a>
