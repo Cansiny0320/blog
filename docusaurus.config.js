@@ -15,14 +15,12 @@ module.exports = {
     {
       href: 'https://fonts.font.im/css?family=Raleway:500,700&display=swap',
       type: 'text/css',
-      rel: 'preload',
-      as: 'style',
+      rel: 'stylesheet',
     },
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css',
       type: 'text/css',
-      integrity:
-        'sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X',
+      integrity: 'sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X',
       crossorigin: 'anonymous',
     },
   ],
@@ -60,8 +58,7 @@ module.exports = {
             },
             {
               label: '每日一题',
-              to:
-                'docs/notes/everyday-one-question/01-JavaScript/everyday-one-question-js',
+              to: 'docs/notes/everyday-one-question/01-JavaScript/everyday-one-question-js',
             },
             {
               label: 'leetcode',
