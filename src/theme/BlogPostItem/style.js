@@ -52,7 +52,7 @@ export const MarkdownSection = styled.section`
 `
 
 export const StyledBlogItem = styled.div`
-  margin-top: 4.25em;
+  margin-top: 0em;
   margin-bottom: 7.25em;
 
   ${({ isBlogPostPage }) =>
@@ -63,14 +63,28 @@ export const StyledBlogItem = styled.div`
       margin-top: 0;
     `}
 
+  @media (max-width: 570px) {
+    .article__details {
+      padding: 0;
+    }
+  }
+
   article {
     .single-post--date {
       color: var(--post-title-color);
+      font-size: 0.9em;
     }
+
     > header {
       > h1 {
         font-size: 2em;
         /* color: #2f5c85; */
+        @media (max-width: 570px) {
+          & {
+            font-size: 1.6em;
+            text-align: center;
+          }
+        }
       }
 
       > h2 {
@@ -83,6 +97,11 @@ export const StyledBlogItem = styled.div`
             text-decoration: none;
           }
         }
+        @media (max-width: 570px) {
+          & {
+            font-size: 1.7em;
+          }
+        }
       }
 
       > div > time {
@@ -90,8 +109,9 @@ export const StyledBlogItem = styled.div`
       }
     }
 
-    .markdown > h1 {
-      font-size: 2em;
+    .markdown p,
+    .markdown ul {
+      font-family: var(--content-font-family);
     }
   }
 
@@ -101,7 +121,14 @@ export const StyledBlogItem = styled.div`
     background: var(--blog-item-background-color);
     box-shadow: var(--blog-item-shadow);
     padding: 2em 1em;
+
     position: relative;
+  }
+
+  @media (max-width: 1000px) {
+    .blog-list--item {
+      padding-right: 1em;
+    }
   }
 
   .testt {

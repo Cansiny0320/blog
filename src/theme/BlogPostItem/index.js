@@ -41,7 +41,7 @@ const MONTHS = [
 ]
 
 function BlogPostItem(props) {
-  const { children, frontMatter, metadata, truncated, isBlogPostPage = false, views } = props
+  const { children, frontMatter, metadata, truncated, isBlogPostPage = false } = props
   const { date, permalink, tags, readingTime } = metadata
   const { slug: postId, author, title, image } = frontMatter
 
@@ -138,7 +138,7 @@ function BlogPostItem(props) {
             </div>
           </div>
         )}
-        <div className={`col ${isBlogPostPage ? `col--12` : `col--9`}`}>
+        <div className={`col ${isBlogPostPage ? `col--12 article__details` : `col--9`}`}>
           {/* 博文部分 */}
           <article className={!isBlogPostPage ? 'margin-bottom--md' : undefined}>
             {/* 标题 */}
@@ -153,17 +153,29 @@ function BlogPostItem(props) {
               </p>
             )}
             {/* 标签 */}
-            {isBlogPostPage && <div className='text--center margin-bottom--lg padding-bottom--xs'>{renderTags()}</div>}
+            {isBlogPostPage && (
+              <div className='text--center margin-bottom--lg padding-bottom--xs'>
+                {renderTags()}
+              </div>
+            )}
 
             {/* 正文 */}
-            <MarkdownSection isBlogPostPage={isBlogPostPage} isDark={isDarkTheme} className='markdown'>
+            <MarkdownSection
+              isBlogPostPage={isBlogPostPage}
+              isDark={isDarkTheme}
+              className='markdown'
+            >
               <MDXProvider components={MDXComponents}>{children}</MDXProvider>
             </MarkdownSection>
           </article>
           <footer className='article__footer padding-top--md margin-top--lg margin-bottom--lg'>
             {!isBlogPostPage && (
               <span className='footer__read_count'>
-                <Eye color={isDarkTheme ? '#76baff' : '#006dfe'} style={{ verticalAlign: 'middle' }} /> {views}
+                <Eye
+                  color={isDarkTheme ? '#76baff' : '#006dfe'}
+                  style={{ verticalAlign: 'middle' }}
+                />{' '}
+                {/* {views} */}
               </span>
             )}
             {truncated && (
