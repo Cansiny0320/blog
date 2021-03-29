@@ -25,6 +25,7 @@ module.exports = {
     },
   ],
   themeConfig: {
+    hideableSidebar: true,
     navbar: {
       title: 'CANSINY',
       logo: {
@@ -86,23 +87,23 @@ module.exports = {
     footer: {
       style: 'dark',
       links: [
-        {
-          title: 'Social',
-          items: [
-            {
-              label: '博客',
-              to: '/',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/Cansiny0320',
-            },
-            {
-              label: 'Bilibili 哔哩哔哩',
-              href: 'https://space.bilibili.com/4377132',
-            },
-          ],
-        },
+        // {
+        //   title: 'Social',
+        //   items: [
+        //     {
+        //       label: '博客',
+        //       to: '/',
+        //     },
+        //     {
+        //       label: 'GitHub',
+        //       href: 'https://github.com/Cansiny0320',
+        //     },
+        //     {
+        //       label: 'Bilibili 哔哩哔哩',
+        //       href: 'https://space.bilibili.com/4377132',
+        //     },
+        //   ],
+        // },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} cansiny0320 (王嘉欣) Built with Docusaurus.`,
     },
