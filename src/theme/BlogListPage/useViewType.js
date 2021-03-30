@@ -1,21 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react'
 
 export function useViewType() {
-  const [viewType, setViewType] = useState("card");
+  const [viewType, setViewType] = useState('card')
 
   useEffect(() => {
-    setViewType(localStorage.getItem("viewType") || "card");
-  }, []);
+    setViewType(localStorage.getItem('viewType') || 'card')
+  }, [])
 
-  const toggleViewType = useCallback((newViewType) => {
-    setViewType(newViewType);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("viewType", newViewType);
-    }
-  }, []);
+  const toggleViewType = useCallback(newViewType => {
+    setViewType(newViewType)
+    localStorage.setItem('viewType', newViewType)
+  }, [])
 
   return {
     viewType,
     toggleViewType,
-  };
+  }
 }
