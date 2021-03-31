@@ -15,6 +15,7 @@ module.exports = {
     {
       rel: 'preconnect',
       href: 'https://hmcdn.baidu.com',
+      type: 'text/css',
     },
     {
       href: 'https://cansiny.oss-cn-shanghai.aliyuncs.com/assets/fonts.css',
