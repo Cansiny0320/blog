@@ -110,7 +110,7 @@ cache-control: public, max-age=31536000
 
 协商缓存可以可以通过设置两种 HTTP Header 实现：`Last-Modified` 和 `ETag`
 
-### Last-Modified 和 If-Modified-Since
+#### Last-Modified 和 If-Modified-Since
 
 浏览器第一次访问资源时，response header 携带 Last-Modified（资源在服务器上的最后修改时间，最小单位 s），浏览器接收后缓存，下一次请求这个资源时 request header 携带 `If-Modified-Since`，如果修改时间没有变化，就使用缓存，返回 304，否则返回新资源和 200
 
@@ -123,7 +123,7 @@ Last-Modified: Tue, 30 Mar 2021 03:30:52 GMT
 - 如果本地打开缓存文件，即使没有对文件进行修改，但还是会造成 Last-Modified 被修改，服务端不能命中缓存导致发送相同的资源
 - 因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改完成文件，那么服务端会认为资源还是命中了，不会返回正确的资源
 
-### ETag 和 If-None-Match
+#### ETag 和 If-None-Match
 
 Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)，只要资源有变化，Etag 就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的 Etag 值放到 request header 里的`If-None-Match`里，服务器只需要比较客户端传来的 If-None-Match 跟自己服务器上该资源的 ETag 是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
 
