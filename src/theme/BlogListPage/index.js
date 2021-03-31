@@ -12,9 +12,9 @@ import Layout from '@theme/Layout'
 import BlogPostItem from '@theme/BlogPostItem'
 import BlogListPaginator from '@theme/BlogListPaginator'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub, faGoogle, faZhihu } from '@fortawesome/free-brands-svg-icons'
-// import useBaseUrl from '@docusaurus/useBaseUrl'
-// import bilibiliIcon from "@site/static/icons/bilibili.svg";
+import { faGithub, faGoogle, faZhihu, faJ } from '@fortawesome/free-brands-svg-icons'
+
+import JuejinIcon from '@site/static/icons/juejin.svg'
 
 import { useTrail, animated } from 'react-spring'
 // import Fade from 'react-reveal/Fade'
@@ -226,12 +226,16 @@ function SocialLinks({ animatedProps, ...props }) {
       <a href='https://github.com/Cansiny0320'>
         <FontAwesomeIcon icon={faGithub} size='lg' />
       </a>
-      <a href='mailto:cansiny1220@gmail.com'>
-        <FontAwesomeIcon icon={faGoogle} size='lg' />
+      <a href='https://juejin.cn/user/4371313964620712'>
+        <JuejinIcon />
       </a>
       <a href='https://www.zhihu.com/people/wang-jia-xin-bu-hui-nbcs'>
         <FontAwesomeIcon icon={faZhihu} size='lg' />
       </a>
+      <a href='mailto:cansiny1220@gmail.com'>
+        <FontAwesomeIcon icon={faGoogle} size='lg' />
+      </a>
+
       {/* <div className="dropdown dropdown--hoverable">
         <FontAwesomeIcon icon={faWeixin} size="lg" />
         <img
