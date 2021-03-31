@@ -13,6 +13,10 @@ module.exports = {
   projectName: 'blog', // Usually your repo name.
   stylesheets: [
     {
+      rel: 'preconnect',
+      href: 'https://hmcdn.baidu.com',
+    },
+    {
       href: 'https://cansiny.oss-cn-shanghai.aliyuncs.com/assets/fonts.css',
       type: 'text/css',
       rel: 'stylesheet',
