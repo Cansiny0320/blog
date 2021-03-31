@@ -41,7 +41,7 @@ module.exports = {
           items: [
             {
               label: 'JavaScript',
-              to: 'tags/JavaScript',
+              to: 'tags/java-script',
             },
             {
               label: '性能优化',
