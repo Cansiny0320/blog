@@ -13,7 +13,7 @@ module.exports = {
   projectName: 'blog', // Usually your repo name.
   stylesheets: [
     {
-      href: 'https://fonts.font.im/css?family=Raleway:500,700&display=swap',
+      href: 'https://cansiny.oss-cn-shanghai.aliyuncs.com/assets/fonts.css',
       type: 'text/css',
       rel: 'stylesheet',
     },
