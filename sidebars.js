@@ -16,9 +16,8 @@ module.exports = {
       'notes/js/02-eventloop/eventloop',
       // "notes/js/03-es6/es6",
     ],
-    每日一题: [
-      'notes/everyday-one-question/01-JavaScript/everyday-one-question-js',
-    ],
+    JavaScript设计模式: ['notes/JavaScript-design-patterns/01-intro/intro'],
+    每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
     leetcode: ['notes/leetcode/01-hot100/hot100'],
   },
 }
