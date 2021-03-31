@@ -5,7 +5,7 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://gitee.com/cansiny0320/file-bed/blob/master/logo.jpgssig=EvXmyu%2FXsX
-tags: [前端]
+tags: [JavaScript]
 ---
 
 ## 💬 前言

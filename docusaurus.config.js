@@ -40,8 +40,16 @@ module.exports = {
           position: 'right',
           items: [
             {
-              label: '前端',
-              to: 'tags/前端',
+              label: 'JavaScript',
+              to: 'tags/JavaScript',
+            },
+            {
+              label: '性能优化',
+              to: 'tags/性能优化',
+            },
+            {
+              label: '浏览器',
+              to: 'tags/浏览器',
             },
             {
               label: '生活',
