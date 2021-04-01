@@ -16,7 +16,10 @@ module.exports = {
       'notes/js/02-eventloop/eventloop',
       // "notes/js/03-es6/es6",
     ],
-    JavaScript设计模式: ['notes/JavaScript-design-patterns/01-intro/intro'],
+    JavaScript设计模式: [
+      'notes/JavaScript-design-patterns/01-intro/intro',
+      'notes/JavaScript-design-patterns/02-factory/factory',
+    ],
     每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
     leetcode: ['notes/leetcode/01-hot100/hot100'],
   },
