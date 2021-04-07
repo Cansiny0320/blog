@@ -20,7 +20,7 @@ module.exports = {
       'notes/JavaScript-design-patterns/01-intro/intro',
       'notes/JavaScript-design-patterns/02-factory/factory',
     ],
-    每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
+    // 每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
     leetcode: ['notes/leetcode/01-hot100/hot100'],
   },
 }
