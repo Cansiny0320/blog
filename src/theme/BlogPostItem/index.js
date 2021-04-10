@@ -5,39 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useContext, useEffect, useState } from 'react'
-import clsx from 'clsx'
-import { MDXProvider } from '@mdx-js/react'
+import React, { useContext, useEffect, useState } from "react"
+import clsx from "clsx"
+import { MDXProvider } from "@mdx-js/react"
 
-import Head from '@docusaurus/Head'
-import Link from '@docusaurus/Link'
-import MDXComponents from '@theme/MDXComponents'
-import useBaseUrl from '@docusaurus/useBaseUrl'
+import Head from "@docusaurus/Head"
+import Link from "@docusaurus/Link"
+import MDXComponents from "@theme/MDXComponents"
+import useBaseUrl from "@docusaurus/useBaseUrl"
 
-import ThemeContext from '@theme/ThemeContext'
+import ThemeContext from "@theme/ThemeContext"
 
-import styles from './styles.module.css'
-import { MarkdownSection, StyledBlogItem } from './style'
+import styles from "./styles.module.css"
+import { MarkdownSection, StyledBlogItem } from "./style"
 
-import Eye from '@site/static/icons/eye.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTags } from '@fortawesome/free-solid-svg-icons'
+import Eye from "@site/static/icons/eye.svg"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTags } from "@fortawesome/free-solid-svg-icons"
 
 // import BrowserOnly from '@docusaurus/BrowserOnly'
 
 const MONTHS = [
-  '',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  "",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ]
 
 function BlogPostItem(props) {
@@ -54,21 +54,21 @@ function BlogPostItem(props) {
   const theme = useContext(ThemeContext)
   const { isDarkTheme } = theme
 
-  const match = date.substring(0, 10).split('-')
+  const match = date.substring(0, 10).split("-")
   const year = match[0]
   const month = parseInt(match[1], 10)
   const day = parseInt(match[2], 10)
 
   const renderPostHeader = () => {
-    const TitleHeading = isBlogPostPage ? 'h1' : 'h2'
+    const TitleHeading = isBlogPostPage ? "h1" : "h2"
 
     return (
       <header>
         <TitleHeading
           className={clsx(
-            isBlogPostPage ? 'margin-bottom--md' : 'margin-vert--md',
+            isBlogPostPage ? "margin-bottom--md" : "margin-vert--md",
             styles.blogPostTitle,
-            isBlogPostPage ? 'text--center' : '',
+            isBlogPostPage ? "text--center" : "",
           )}
         >
           {isBlogPostPage ? title : <Link to={permalink}>{title}</Link>}
@@ -93,9 +93,9 @@ function BlogPostItem(props) {
               {tags.slice(0, 4).map(({ label, permalink: tagPermalink }, index) => (
                 <Link
                   key={tagPermalink}
-                  className={`post__tags ${index > 0 ? 'margin-horiz--sm' : 'margin-right--sm'}`}
+                  className={`post__tags ${index > 0 ? "margin-horiz--sm" : "margin-right--sm"}`}
                   to={tagPermalink}
-                  style={{ fontSize: '0.75em', fontWeight: 500 }}
+                  style={{ fontSize: "0.75em", fontWeight: 500 }}
                 >
                   {label}
                 </Link>
@@ -124,7 +124,7 @@ function BlogPostItem(props) {
 
       <div
         className={`row 
-         ${!isBlogPostPage ? 'blog-list--item' : ''}`}
+         ${!isBlogPostPage ? "blog-list--item" : ""}`}
         style={{ margin: 0 }}
       >
         {/* 列表页日期 */}
@@ -140,7 +140,7 @@ function BlogPostItem(props) {
         )}
         <div className={`col ${isBlogPostPage ? `col--12 article__details` : `col--9`}`}>
           {/* 博文部分 */}
-          <article className={!isBlogPostPage ? 'margin-bottom--md' : undefined}>
+          <article className={!isBlogPostPage ? "margin-bottom--md" : undefined}>
             {/* 标题 */}
             {renderPostHeader()}
             {/* 列表页标签 */}
@@ -171,10 +171,10 @@ function BlogPostItem(props) {
           <footer className='article__footer padding-top--md margin-top--lg margin-bottom--lg'>
             {!isBlogPostPage && (
               <span className='footer__read_count'>
-                <Eye
+                {/* <Eye
                   color={isDarkTheme ? '#76baff' : '#006dfe'}
                   style={{ verticalAlign: 'middle' }}
-                />{' '}
+                />{' '} */}
                 {/* {views} */}
               </span>
             )}
