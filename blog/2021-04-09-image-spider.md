@@ -144,7 +144,7 @@ request
 
 看起来很美好，但我们真正使用的时候，还是会发现有很多问题
 
-首先同步下载大量的图片速度太慢了，网上也提供了一些解决方法，我最终使用`bagpipe`来异步执行下载
+首先同步下载大量的图片速度太慢了，还有可能遇到`too many files`的报错，网上也提供了一些解决方法，我最终使用`bagpipe`来解决问题
 
 ```js
 const Bagpipe = require("bagpipe")
@@ -182,4 +182,4 @@ const illegalCharacterReg = /\/|\\|:|\*|\?|"|<|>|\|/g
 fs.mkdir(`${dest}/${item.title.replace(illegalCharacterReg, "")}`, { recursive: true }, err => {...})
 ```
 
-虽然下载的时候还会遇到一些问题`socket hang up`，`Client network socket disconnected before secure TLS connection was established`，但博主的能力暂时无法解决，网上也没有找到十分有效的方法，就先写道这里吧。
+虽然下载的时候还会遇到一些问题`socket hang up`，`Client network socket disconnected before secure TLS connection was established`，但博主的能力暂时无法解决，网上也没有找到十分有效的方法，就先写到这里吧。
