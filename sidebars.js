@@ -15,6 +15,7 @@ module.exports = {
       "notes/js/01-prototype/prototype",
       "notes/js/02-eventloop/eventloop",
       "notes/js/03-extends/extends",
+      "notes/js/04-scope-chain/scope-chain",
       // "notes/js/03-es6/es6",
     ],
     JavaScript设计模式: [
