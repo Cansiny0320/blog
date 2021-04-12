@@ -8,8 +8,6 @@ hide_title: true
 description: 原型与原型链详解
 keywords:
   - JavaScript
-  - frontend
-  - 前端
 # image: https://i.imgur.com/mErPwqL.png
 ---
 
@@ -23,7 +21,7 @@ keywords:
 ```js
 function Person() {}
 var person = new Person()
-person.name = 'Kevin'
+person.name = "Kevin"
 console.log(person.name) // Kevin
 ```
 
@@ -39,7 +37,7 @@ console.log(person.name) // Kevin
 function Person() {}
 // 虽然写在注释里，但是你要注意：
 // prototype是函数才会有的属性
-Person.prototype.name = 'Kevin'
+Person.prototype.name = "Kevin"
 var person1 = new Person()
 var person2 = new Person()
 console.log(person1.name) // Kevin
@@ -117,11 +115,11 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 ```js
 function Person() {}
 
-Person.prototype.name = 'Kevin'
+Person.prototype.name = "Kevin"
 
 var person = new Person()
 
-person.name = 'Daisy'
+person.name = "Daisy"
 console.log(person.name) // Daisy
 
 delete person.name
@@ -140,7 +138,7 @@ console.log(person.name) // Kevin
 
 ```js
 var obj = new Object()
-obj.name = 'Kevin'
+obj.name = "Kevin"
 console.log(obj.name) // Kevin
 ```
 

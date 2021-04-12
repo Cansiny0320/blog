@@ -12,8 +12,6 @@ hide_title: true
 description: 事件循环
 keywords:
   - JavaScript
-  - frontend
-  - 前端
 # image: https://i.imgur.com/mErPwqL.png
 ---
 
@@ -161,20 +159,20 @@ console.log(c)
 
 ```javascript
 setTimeout(function () {
-  console.log('a')
+  console.log("a")
 })
 
 new Promise(function (resolve) {
-  console.log('b')
+  console.log("b")
 
   for (var i = 0; i < 10000; i++) {
     i == 99 && resolve()
   }
 }).then(function () {
-  console.log('c')
+  console.log("c")
 })
 
-console.log('d')
+console.log("d")
 
 // b
 // d
@@ -199,40 +197,40 @@ console.log('d')
 综上所述，不要说 a 是最持久的，如果你认为你彻底明白了，给你出道题，看看下面的代码中，谁最持久？
 
 ```javascript
-console.log('a')
+console.log("a")
 
 setTimeout(function () {
-  console.log('b')
+  console.log("b")
   process.nextTick(function () {
-    console.log('c')
+    console.log("c")
   })
   new Promise(function (resolve) {
-    console.log('d')
+    console.log("d")
     resolve()
   }).then(function () {
-    console.log('e')
+    console.log("e")
   })
 })
 process.nextTick(function () {
-  console.log('f')
+  console.log("f")
 })
 new Promise(function (resolve) {
-  console.log('g')
+  console.log("g")
   resolve()
 }).then(function () {
-  console.log('h')
+  console.log("h")
 })
 
 setTimeout(function () {
-  console.log('i')
+  console.log("i")
   process.nextTick(function () {
-    console.log('j')
+    console.log("j")
   })
   new Promise(function (resolve) {
-    console.log('k')
+    console.log("k")
     resolve()
   }).then(function () {
-    console.log('l')
+    console.log("l")
   })
 })
 ```
