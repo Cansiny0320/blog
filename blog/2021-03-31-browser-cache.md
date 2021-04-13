@@ -8,13 +8,15 @@ author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366
 tags: [性能优化, 浏览器, 缓存]
 ---
 
+import Zmage from "react-zmage"
+
 缓存可以说是性能优化中简单高效的一种优化方式了。一个优秀的缓存策略可以缩短网页请求资源的距离，减少延迟，并且由于缓存文件可以重复利用，还可以减少带宽，降低网络负荷。
 
 对于一个数据请求来说，可以分为发起网络请求、后端处理、浏览器响应三个步骤。浏览器缓存可以帮助我们在第一和第三步骤中优化性能。比如说直接使用缓存而不发起请求，或者发起了请求但后端存储的数据和前端一致，那么就没有必要再将数据回传回来，这样就减少了响应数据。
 
 <!--truncate-->
 
-![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615703736574.png)
+<Zmage src="https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615703736574.png"/>
 
 ## 缓存位置
 

@@ -13,12 +13,14 @@ hide_title: true
 description: 继承
 keywords:
   - JavaScript
-# image: https://i.imgur.com/mErPwqL.png
+image: https://i.imgur.com/mErPwqL.png
 ---
+
+import Zmage from "react-zmage"
 
 > 原文链接：[JavaScript 深入之继承的多种方式和优缺点 ](https://github.com/mqyqingfeng/Blog/issues/16)
 
-![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618227316193-%E7%BB%A7%E6%89%BF.png)
+<Zmage src="https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618227316193-%E7%BB%A7%E6%89%BF.png" />
 
 ## 原型链继承
 
