@@ -4,7 +4,7 @@ title: 异步精讲
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
-author_image_url: https://gitee.com/cansiny0320/file-bed/blob/master/logo.jpgssig=EvXmyu%2FXsX
+author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 tags: [JavaScript]
 ---
 
@@ -200,9 +200,9 @@ Promise 有三种状态`pending`、`resolved`、`rejected`，在一个 Promise �
 首先我们的 Promise 需要传入一个`executor`函数，它的两个参数可以让我们 resolve 一个 value 或者 reject 一个 reason
 
 ```js
-const PENDING = 'pending'
-const RESOLVED = 'resolved'
-const REJECTED = 'rejected'
+const PENDING = "pending"
+const RESOLVED = "resolved"
+const REJECTED = "rejected"
 
 class Promise {
   constructor(executor) {
@@ -250,9 +250,9 @@ class Promise {
 改造如下
 
 ```js
-const PENDING = 'pending'
-const RESOLVED = 'resolved'
-const REJECTED = 'rejected'
+const PENDING = "pending"
+const RESOLVED = "resolved"
+const REJECTED = "rejected"
 
 class Promise {
   constructor(executor) {
@@ -286,9 +286,9 @@ class Promise {
   }
 
   then(onFulfilled, onRejected) {
-    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
+    onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value
     onRejected =
-      typeof onRejected === 'function'
+      typeof onRejected === "function"
         ? onRejected
         : reason => {
             throw reason
@@ -347,7 +347,7 @@ class Promise {
 function resolvePromise(bridgePromise, result, resolve, reject) {
   if (bridgePromise === result) {
     // 循环
-    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+    return reject(new TypeError("Chaining cycle detected for promise #<Promise>"))
   }
   if (isPromise(result)) {
     if (result.status === PENDING) {
@@ -366,9 +366,9 @@ function resolvePromise(bridgePromise, result, resolve, reject) {
 这样我们的`Promise`实现得就差不多啦
 
 ```js
-const PENDING = 'pending'
-const RESOLVED = 'resolved'
-const REJECTED = 'rejected'
+const PENDING = "pending"
+const RESOLVED = "resolved"
+const REJECTED = "rejected"
 
 class Promise {
   constructor(executor) {
@@ -402,9 +402,9 @@ class Promise {
   }
 
   then(onFulfilled, onRejected) {
-    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
+    onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value
     onRejected =
-      typeof onRejected === 'function'
+      typeof onRejected === "function"
         ? onRejected
         : reason => {
             throw reason
@@ -456,9 +456,9 @@ class Promise {
 然后再补充一些`Promise`的其他方法
 
 ```js
-const PENDING = 'pending'
-const RESOLVED = 'resolved'
-const REJECTED = 'rejected'
+const PENDING = "pending"
+const RESOLVED = "resolved"
+const REJECTED = "rejected"
 
 class Promise {
   constructor(executor) {
@@ -492,9 +492,9 @@ class Promise {
   }
 
   then(onFulfilled, onRejected) {
-    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
+    onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value
     onRejected =
-      typeof onRejected === 'function'
+      typeof onRejected === "function"
         ? onRejected
         : reason => {
             throw reason
@@ -585,8 +585,8 @@ class Promise {
       }
       promises.forEach((p, i) =>
         Promise.resolve(p).then(
-          value => handle({ status: 'resolved', value }, i),
-          reason => handle({ status: 'rejected', reason }, i),
+          value => handle({ status: "resolved", value }, i),
+          reason => handle({ status: "rejected", reason }, i),
         ),
       )
     })
@@ -599,19 +599,19 @@ class Promise {
 `Generator`可以用来处理异步事件，解决回调地狱的问题，比如：
 
 ```js
-const request = require('request')
+const request = require("request")
 
-request('https://www.baidu.com', function (error, response) {
+request("https://www.baidu.com", function (error, response) {
   if (!error && response.statusCode == 200) {
-    console.log('get times 1')
+    console.log("get times 1")
 
-    request('https://www.baidu.com', function (error, response) {
+    request("https://www.baidu.com", function (error, response) {
       if (!error && response.statusCode == 200) {
-        console.log('get times 2')
+        console.log("get times 2")
 
-        request('https://www.baidu.com', function (error, response) {
+        request("https://www.baidu.com", function (error, response) {
           if (!error && response.statusCode == 200) {
-            console.log('get times 3')
+            console.log("get times 3")
           }
         })
       }
@@ -623,7 +623,7 @@ request('https://www.baidu.com', function (error, response) {
 使用`Generator`
 
 ```js
-const request = require('request')
+const request = require("request")
 
 function* requestGen() {
   function sendRequest(url) {
@@ -637,15 +637,15 @@ function* requestGen() {
     })
   }
 
-  const url = 'https://www.baidu.com'
+  const url = "https://www.baidu.com"
 
   // 使用yield发起三个请求，每个请求成功后再继续调next
   const r1 = yield sendRequest(url)
-  console.log('r1', r1)
+  console.log("r1", r1)
   const r2 = yield sendRequest(url)
-  console.log('r2', r2)
+  console.log("r2", r2)
   const r3 = yield sendRequest(url)
-  console.log('r3', r3)
+  console.log("r3", r3)
 }
 
 const itor = requestGen()
@@ -684,11 +684,11 @@ function run(fn) {
 }
 
 // 使用thunk方法
-const request = require('request')
+const request = require("request")
 const requestThunk = Thunk(request)
 
 function* requestGen() {
-  const url = 'https://www.baidu.com'
+  const url = "https://www.baidu.com"
 
   let r1 = yield requestThunk(url)
   console.log(r1.body)
@@ -748,13 +748,13 @@ Thunk 函数就是这样一种可以自动执行 Generator 的函数，因为 Th
 `co`会将以上各种对象转为`promise`，所以直接看对于 `yield `一个 `promise `的 `generator `怎么自动执行
 
 ```js
-const fetch = require('node-fetch')
-const co = require('co')
+const fetch = require("node-fetch")
+const co = require("co")
 co(function* () {
   // 直接用fetch，简单多了，fetch返回的就是Promise
-  const r1 = yield fetch('https://www.baidu.com')
-  const r2 = yield fetch('https://www.baidu.com')
-  const r3 = yield fetch('https://www.baidu.com')
+  const r1 = yield fetch("https://www.baidu.com")
+  const r2 = yield fetch("https://www.baidu.com")
+  const r3 = yield fetch("https://www.baidu.com")
 
   return {
     r1,
@@ -777,8 +777,8 @@ function co(gen) {
   var args = slice.call(arguments, 1)
 
   return new Promise(function (resolve, reject) {
-    if (typeof gen === 'function') gen = gen.apply(ctx, args)
-    if (!gen || typeof gen.next !== 'function') return resolve(gen)
+    if (typeof gen === "function") gen = gen.apply(ctx, args)
+    if (!gen || typeof gen.next !== "function") return resolve(gen)
 
     onFulfilled()
 
@@ -809,7 +809,7 @@ function co(gen) {
       if (value && isPromise(value)) return value.then(onFulfilled, onRejected)
       return onRejected(
         new TypeError(
-          'You may only yield a function, promise, generator, array, or object, ' +
+          "You may only yield a function, promise, generator, array, or object, " +
             'but the following object was passed: "' +
             String(ret.value) +
             '"',

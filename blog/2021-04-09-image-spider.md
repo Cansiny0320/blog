@@ -4,7 +4,7 @@ title: 记一次从网页爬取图片并下载到本地的过程和遇到的问�
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
-author_image_url: https://gitee.com/cansiny0320/file-bed/blob/master/logo.jpgssig=EvXmyu%2FXsX
+author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 tags: [JavaScript]
 ---
 

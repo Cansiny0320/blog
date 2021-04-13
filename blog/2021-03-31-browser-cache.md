@@ -4,7 +4,7 @@ title: 详解浏览器缓存
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
-author_image_url: https://gitee.com/cansiny0320/file-bed/blob/master/logo.jpgssig=EvXmyu%2FXsX
+author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 tags: [性能优化, 浏览器, 缓存]
 ---
 
@@ -171,14 +171,14 @@ main.js?v=2.0
 当然版本号也可以自动添加随机数，不过这样就违背了版本号的初衷了，这样同样浏览器在资源没修改的时候也不能加载缓存，影响体验 随机版本号的添加方法，使用一个随机函数即可，当然，这样就只能通过 js 中写 js 的调用语句，比如
 
 ```js
-document.write(" <script src='test.js?v= " + Math.random() + " '></s " + ' cript> ')
+document.write(" <script src='test.js?v= " + Math.random() + " '></s " + " cript> ")
 ```
 
 或者是
 
 ```js
-var js = document.createElement(' script ')
-js.src = ' test.js' + '?v=' + Math.random()
+var js = document.createElement(" script ")
+js.src = " test.js" + "?v=" + Math.random()
 document.body.appendChild(js)
 ```
 
