@@ -16,7 +16,7 @@ keywords:
 image: https://i.imgur.com/mErPwqL.png
 ---
 
-import Zmage from "react-zmage"
+import Zmage from "react-zmage/ssr"
 
 > 原文链接：[JavaScript 深入之继承的多种方式和优缺点 ](https://github.com/mqyqingfeng/Blog/issues/16)
 

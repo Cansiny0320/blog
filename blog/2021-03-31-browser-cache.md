@@ -8,7 +8,7 @@ author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366
 tags: [性能优化, 浏览器, 缓存]
 ---
 
-import Zmage from "react-zmage"
+import Zmage from "react-zmage/ssr"
 
 缓存可以说是性能优化中简单高效的一种优化方式了。一个优秀的缓存策略可以缩短网页请求资源的距离，减少延迟，并且由于缓存文件可以重复利用，还可以减少带宽，降低网络负荷。
 
