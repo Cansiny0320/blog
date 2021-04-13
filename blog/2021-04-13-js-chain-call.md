@@ -40,6 +40,8 @@ Student("fxy").sleepFirst(5).study("Ajax")
 
 本篇文章不叙述实现过程，主要分析一下执行过程和原理，实现如下：
 
+参考:[关于 js 的 链式调用和流程控制 （sleep）](https://blog.csdn.net/qq_37653449/article/details/83933724)
+
 ```js
 function Student(name) {
   Student.cbs = []
