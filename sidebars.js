@@ -25,4 +25,7 @@ module.exports = {
     // 每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
     leetcode: ["notes/leetcode/01-hot100/hot100"],
   },
+  books: {
+    你不知道的JS: ["books/You-Dont-Know-JS/01-What-is-Scope/what-is-scope"],
+  },
 }

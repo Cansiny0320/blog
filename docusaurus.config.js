@@ -28,6 +28,9 @@ module.exports = {
       integrity: "sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X",
       crossorigin: "anonymous",
     },
+    // {
+    //   href: "react-zmage/ssr/style.css",
+    // },
   ],
   themeConfig: {
     hideableSidebar: true,
@@ -81,9 +84,14 @@ module.exports = {
           ],
         },
         {
-          label: "项目",
+          label: "阅读",
           position: "right",
-          to: "docs/projects/projects-intro",
+          items: [
+            {
+              label: "你不知道的JS",
+              to: "docs/books/You-Dont-Know-JS/01-What-is-Scope/what-is-scope",
+            },
+          ],
         },
         {
           href: "https://github.com/Cansiny0320",
