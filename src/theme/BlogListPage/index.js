@@ -5,47 +5,47 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from "react"
+import React from 'react'
 
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
-import Layout from "@theme/Layout"
-import BlogPostItem from "@theme/BlogPostItem"
-import BlogListPaginator from "@theme/BlogListPaginator"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faGithub, faGoogle, faZhihu, faJ } from "@fortawesome/free-brands-svg-icons"
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import Layout from '@theme/Layout'
+import BlogPostItem from '@theme/BlogPostItem'
+import BlogListPaginator from '@theme/BlogListPaginator'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faGoogle, faZhihu, faJ } from '@fortawesome/free-brands-svg-icons'
 
-import JuejinIcon from "@site/static/icons/juejin.svg"
+import JuejinIcon from '@site/static/icons/juejin.svg'
 
-import { useTrail, animated } from "react-spring"
+import { useTrail, animated } from 'react-spring'
 // import Fade from 'react-reveal/Fade'
 
 // import Button from '../../components/Button'
-import Head from "@docusaurus/Head"
-import HeroMain from "./img/hero_main.svg"
-import ListFilter from "./img/list.svg"
-import CardFilter from "./img/card.svg"
-import Link from "@docusaurus/Link"
-import { useViewType } from "./useViewType"
+import Head from '@docusaurus/Head'
+import HeroMain from './img/hero_main.svg'
+import ListFilter from './img/list.svg'
+import CardFilter from './img/card.svg'
+import Link from '@docusaurus/Link'
+import { useViewType } from './useViewType'
 function BlogListPage(props) {
   const { metadata, items } = props
 
   const {
     siteConfig: { title: siteTitle },
   } = useDocusaurusContext()
-  const isBlogOnlyMode = metadata.permalink === "/"
+  const isBlogOnlyMode = metadata.permalink === '/'
   const isPaginated = metadata.page > 1
-  const title = isBlogOnlyMode ? siteTitle : "Blog"
+  const title = isBlogOnlyMode ? siteTitle : 'Blog'
   const description = `记录一下学习和日常生活`
 
   // list or card view
   const { viewType, toggleViewType } = useViewType()
 
-  const isCardView = viewType === "card"
-  const isListView = viewType === "list"
+  const isCardView = viewType === 'card'
+  const isListView = viewType === 'list'
   // animation
   const animatedTexts = useTrail(5, {
-    from: { opacity: 0, transform: "translateY(3em)" },
-    to: { opacity: 1, transform: "translateY(0)" },
+    from: { opacity: 0, transform: 'translateY(3em)' },
+    to: { opacity: 1, transform: 'translateY(0)' },
     config: {
       mass: 3,
       friction: 45,
@@ -135,12 +135,12 @@ function BlogListPage(props) {
               {/* switch list and card */}
               <div className='bloghome__swith-view'>
                 <CardFilter
-                  onClick={() => toggleViewType("card")}
-                  fill={viewType === "card" ? "#006dfe" : "#CECECE"}
+                  onClick={() => toggleViewType('card')}
+                  fill={viewType === 'card' ? '#006dfe' : '#CECECE'}
                 />
                 <ListFilter
-                  onClick={() => toggleViewType("list")}
-                  fill={viewType === "list" ? "#006dfe" : "#CECECE"}
+                  onClick={() => toggleViewType('list')}
+                  fill={viewType === 'list' ? '#006dfe' : '#CECECE'}
                 />
               </div>
               <div className='bloghome__posts'>
@@ -172,8 +172,8 @@ function BlogListPage(props) {
                       const dateObj = new Date(date)
 
                       const year = dateObj.getFullYear()
-                      let month = (dateObj.getMonth() + 1).padStart(2, "0")
-                      const day = dateObj.getDate().padStart(2, "0")
+                      let month = ('0' + (dateObj.getMonth() + 1)).slice(-2)
+                      const day = ('0' + dateObj.getDate()).slice(-2)
 
                       return (
                         <div className='post__list-item' key={blogMetaData.permalink + index}>
@@ -186,11 +186,11 @@ function BlogListPage(props) {
                                 <Link
                                   key={tagPermalink}
                                   className={`post__tags ${
-                                    index < tags.length ? "margin-right--sm" : ""
+                                    index < tags.length ? 'margin-right--sm' : ''
                                   }`}
                                   to={tagPermalink}
                                   style={{
-                                    fontSize: "0.75em",
+                                    fontSize: '0.75em',
                                     fontWeight: 500,
                                   }}
                                 >
