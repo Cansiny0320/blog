@@ -8,6 +8,8 @@ author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366
 tags: [JavaScript]
 ---
 
+<!--truncate-->
+
 ## reactivity
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg)
