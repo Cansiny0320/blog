@@ -12,7 +12,7 @@ tags: [JavaScript, SourceCode]
 
 ## reactivity
 
-![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg)+。
 
 vue3 中的 reactivity 是一个独立的包，可以完全脱离 vue 使用，理论上在任何地方都可以使用(react 都可以)
 
@@ -55,7 +55,7 @@ vue3 中的 reactivity 是一个独立的包，可以完全脱离 vue 使用，�
 
 首先我们来分析第一件事。
 
-在 vue3 中使用了`Proxy`来代理对象，改写了对象的`setter`和`getter`操作，来实现依赖收集和响应触发。在初始化阶段，我们不详细说`setter`和`getter`的实现，先来看看`reactive`函数到底干了什么。
+vue3 使用了`Proxy`代理对象，改写了对象的`setter`和`getter`操作，来实现依赖收集和响应触发。在初始化阶段，我们先不详细说`setter`和`getter`的实现，先来看看`reactive`函数到底干了什么。
 
 ```typescript
 export function reactive<T extends object>(target: T) {
@@ -82,22 +82,22 @@ let activeEffect: ReactiveEffect | undefined
 
 export function effect<T = any>(fn: () => T) {
   const effect = createReactiveEffect(fn)
-  effect()
+  effect() // 立即执行一次
   return effect
 }
 
 function createReactiveEffect<T = any>(fn: () => T): ReactiveEffect<T> {
   const effect = function reactiveEffect(): unknown {
     if (!effectStack.includes(effect)) {
-      cleanup(effect) // effect 调用时会清除上一轮的依赖，防止本轮触发多余的依赖
+      cleanup(effect) // 防止 fn() 中含有 if 等条件判断语句导致依赖不同。所以每次执行函数时，都要重新更新一次依赖。
       try {
-        effectStack.push(effect) // 可能有 effect 中调用另一个 effect 的情况，模拟一个栈来处理
+        effectStack.push(effect) // 将本effect推到effect栈中
         activeEffect = effect
         // 立即执行一遍 fn()
         // fn() 执行过程会完成依赖收集，会用到 track
         return fn()
       } finally {
-        // 完成依赖收集后从池子中扔掉这个 effect
+        // 执行完以后将effect从栈中推出
         effectStack.pop()
         activeEffect = effectStack[effectStack.length - 1]
       }
@@ -107,6 +107,32 @@ function createReactiveEffect<T = any>(fn: () => T): ReactiveEffect<T> {
   return effect
 }
 ```
+
+这里还有几个小问题：
+
+1. **既然执行前`effectStack.push(effect)`，执行后`effectStack.pop()`。那为什么还要判断`effectStack.includes(effect)`这种情况呢？**
+
+   其实是解决在`fn()`中改变`state`的问题，比如
+
+   ```js
+   effect(() => state.num++)
+   ```
+
+   按正常逻辑是会不断的触发监听函数的，但通过`effectStack.includes(effect)`这么一个判断逻辑，自然而然就避免了递归循环。
+
+   在`tigger`函数中也有一个这样的判断
+
+   ```js
+   if (effect !== activeEffect) {
+     effects.add(effect)
+   }
+   ```
+
+   不会触发正在收集的依赖，防止循环调用。
+
+2. **为什么在收集依赖之前需要清除上一轮的依赖**
+
+   这样做是为了处理带有分支处理的情况。因为监听函数中，可能会由于 if 等条件判断语句导致的依赖数据不同。所以每次执行函数时，都要重新更新一次依赖。所以才有了`cleanup`这个逻辑。
 
 ## 依赖收集阶段
 
@@ -124,6 +150,10 @@ export const handler = {
 function createGetter() {
   return function get(target: object, key: string | symbol, receiver: object): any {
     const res = Reflect.get(target, key, receiver)
+    // 如果是js的内置方法，不做依赖收集
+    if (isSymbol(key) && builtInSymbols.has(key)) {
+      return res
+    }
     track(target, TrackOpTypes.GET, key)
     return isObject(res) ? reactive(res) : res
   }
@@ -132,11 +162,35 @@ function createGetter() {
 
 我们看到 getter 里面调用了`track`函数进行依赖收集，`track`具体怎么工作的我们之后再说。
 
-还有一个小细节是当访问的属性还是一个对象的时候，我们会递归的调用`reactive`函数，实现深层响应式。
+我们先来解释一个问题，为什么内置方法不做依赖收集？
+
+比如一个监听函数是这样
+
+```js
+const origin = {
+  a() {},
+}
+const observed = reactive(origin)
+effect(() => {
+  console.log(observed.a.toString())
+})
+```
+
+很明显，当`origin.a` 变化时，`observed.a.toString()`也是应该会变的，那为什么不用监听了呢？很简单，因为已经走到了`observed.a.toString()`已经触发了`getter`，没必要重复收集依赖。故而类似的内置方法，直接 return。
+
+还有一个小细节是当访问的属性还是一个对象的时候，我们会调用`reactive`函数，因为`Proxy`只能劫持一层，所以有嵌套的对象时，是劫持不了嵌套的对象的，所以源码中使用了 lazy 的方式，如果触发`getter`的 res 是一个对象，再调用`reactive`，实现深层响应式，这样还可以避免循环引用。
 
 在收集依赖阶段，我们需要收集一张“依赖收集表”，也就是图上的`targetMap`，key 为`Proxy`代理后的对象，value 为该对象对应的`depsMap`。
 
 depsMap 是一个 Map，key 值为触发 getter 时的属性值（此处为 `count`），而 value 则是**触发过该属性值**所对应的各个 effect。
+
+`targetMap`的定义如下：
+
+```typescript
+type Dep = Set<ReactiveEffect>
+type KeyToDepMap = Map<any, Dep>
+const targetMap = new WeakMap<any, KeyToDepMap>()
+```
 
 举个栗子：
 
@@ -184,16 +238,17 @@ export function track(target: object, type: TrackOpTypes, key: string | symbol) 
   }
 
   if (!dep.has(activeEffect)) {
-    /*
-    dep 到 effect 是为了 trigger 使用，
-    而 effect 到 dep 是为了 effect 调用时找到依赖于这个 effect 所有 dep，
-    从 dep 中删除这个调用过的 effect，用来清除上一轮的依赖，防止本轮触发多余的依赖 
-    */
+    // 将activeEffect add到集合dep中，供 trigger 调用
     dep.add(activeEffect)
+    // 并在effect的deps中也push这个effects集合dep 供cleanup清除上一轮的依赖，防止本轮触发多余的依赖
     activeEffect.deps.push(dep)
   }
 }
 ```
+
+`targetMap`的`depsMap`中存了`effect`的集合`dep`，而`effect`中又存了这个`dep`...乍看有点儿懵，而且为什么要双向存？
+
+其实我们已经知道了原因，就是`cleanup`，effect 通过`cleanup`，在自己被执行前，把自己从响应依赖映射中删除了。然后执行自身原始函数`fn`，然后触发数据的`get`，然后触发`track`，然后又会把本`effect`添加到相应的`Set`中。每次执行前，把自己从依赖映射中删除，执行过程中，又把自己加回去。保证每次的依赖都是最新的。
 
 ## 响应阶段
 
@@ -243,8 +298,7 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
   const add = (effectsToAdd: Set<ReactiveEffect> | undefined) => {
     if (effectsToAdd) {
       effectsToAdd.forEach(effect => {
-        // 不要添加自己当前的 effect，否则之后 run（mutate）的时候
-        // 遇到 effect(() => foo.value++) 会导致无限循环
+        // 不要添加自己当前的 effect，否则遇到 effect(() => foo.value++) 会导致无限循环
         if (effect !== activeEffect) {
           effects.add(effect)
         }
@@ -253,12 +307,14 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
   }
   // SET | ADD
   if (key !== undefined) {
+    // 添加key对应的effect
     add(depsMap.get(key))
   }
 
-  // iteration key on ADD | Map.SET
+  // iteration key on ADD
   switch (type) {
     case TriggerOpTypes.ADD:
+      // 增加数组元素会改变数组长度
       if (isArray(target) && isIntegerKey(key)) add(depsMap.get("length"))
   }
   // 简化版 scheduleRun，挨个执行 effect
@@ -272,7 +328,7 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
 
 ## 小细节
 
-### 多次触发 setter / getter
+### 避免多次 tigger
 
 当代理对象是数组时，`push` 操作会触发多次 `set` 执行，同时，也引发 `get` 操作
 
@@ -383,7 +439,7 @@ p.ary.push("c")
 // get value: ary
 ```
 
-所以在 vue3 使用了递归的方式来实现深度响应式
+所以在 vue3 使用了 lazy 的方式来实现深度响应式
 
 ```typescript
 function createGetter() {
