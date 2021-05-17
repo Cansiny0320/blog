@@ -44,7 +44,7 @@ console.log(child1.getName()) // kevin
 
 问题：
 
-1. 引用类型的属性被所有实例共享(所以属性通常在构造函数中定义而不是在原型上定义)，在使用原型实现继承的时候，原型实际上变成了另一个类型的实例，原先的实例属性变成了原型属性，举个例子：
+1. 引用类型的属性被所有实例共享，在使用原型实现继承的时候，子类的原型实际上变成了父类的实例，父类的实例属性变成了子类的原型的属性，举个例子：
 
    ```js
    function Parent() {
@@ -68,7 +68,7 @@ console.log(child1.getName()) // kevin
 
    `names`是引用类型，所有的`names`都指向同一块内存空间，而不是引用类型就不存在这个问题，每创建一个实例，都会重新分配一块内存空间。
 
-   2. 在创建 Child 的实例时，不能向 Parent 传参
+2. 在创建 Child 的实例时，不能向 Parent 传参
 
 ## 借用构造函数(经典继承)
 
@@ -120,7 +120,7 @@ console.log(child2.names) // ["kevin", "daisy"]
 
 缺点
 
-1. 必须在构造函数中定义方法，函数不能重用
+1. Parent 必须在构造函数中定义方法，每次创建实例都会创建一遍方法
 2. 子类不能访问父类原型上的方法
 
 ## 组合继承
@@ -146,7 +146,7 @@ function Child(name, age) {
 }
 
 Child.prototype = new Parent()
-Child.prototype.varructor = Child
+Child.prototype.constructor = Child
 
 var child1 = new Child("kevin", "18")
 
@@ -309,7 +309,7 @@ function object(o) {
 
 function prototype(child, parent) {
   var prototype = object(parent.prototype)
-  prototype.varructor = child
+  prototype.constructor = child
   child.prototype = prototype
 }
 
