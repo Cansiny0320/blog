@@ -264,8 +264,8 @@ fs.readdir(process.cwd(), function (error, files) {
 
 返回值为：
 
-```js
-;["a", "index.js", "package.json"]
+```json
+["a", "index.js", "package.json"]
 ```
 
 可以看到这里只返回了根目录下的文件和目录，并没有去深度遍历。所以如果需要获取所有文件名，就需要自己实现递归。
