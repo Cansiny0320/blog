@@ -317,8 +317,8 @@ export default a
 
 all export：
 
-```
-export * from 'c';
+```js
+export * from "c"
 ```
 
 分别对应 ExportNamedDeclaration、ExportDefaultDeclaration、ExportAllDeclaration 的节点
@@ -337,7 +337,7 @@ export * from "c"
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1623513911021.png)
 
-import 和 export 是语法级别的模块化实现，也是经常会操作的 AST。
+`import` 和 `export` 是语法级别的模块化实现，也是经常会操作的 AST。
 
 ### Program & Directive
 
