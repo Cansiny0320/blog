@@ -273,7 +273,7 @@ es module 是语法级别的模块规范，所以也有专门的 AST 节点。
 
 #### import
 
-import 有 3 种语法：
+`import` 有 3 种语法：
 
 named import：
 
