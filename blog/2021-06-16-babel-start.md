@@ -8,6 +8,10 @@ author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366
 tags: [babel]
 ---
 
+写代码的时候，我们经常会使用 babel 来进行 polyfill，但是 babel 是怎么做到的呢？这篇文章会对 babel 有一个大概的介绍
+
+<!--truncate-->
+
 ## babel 是啥？
 
 ### babel 的用途
