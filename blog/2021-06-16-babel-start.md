@@ -301,7 +301,7 @@ import * as b from "b"
 
 #### export
 
-export 也有 3 种语法：
+`export` 也有 3 种语法：
 
 named export：
 
