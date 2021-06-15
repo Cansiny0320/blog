@@ -762,3 +762,27 @@ pagination-nav__item:hover .pagination-nav__link {
     display: initial;
   }
 }
+
+/* markdown */
+
+html[data-theme="light"] .markdown blockquote {
+  border-left: 4px solid rgb(239, 112, 96);
+  padding: 10px 15px;
+  color: #3f3f3f;
+  background-color: #fff9f9;
+}
+
+html[data-theme="light"] .markdown code {
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-family: Fira Code Retina, "Sarasa Mono SC Nerd", "Sarasa Mono SC", "Sarasa Mono", Sarasa,
+    "Sarasa Mono SC Nerd", "Sarasa Mono SC", "Sarasa Mono", Sarasa !important;
+  font-size: 0.92rem;
+  color: #ff3502;
+  background-color: #f8f5ec;
+}
+
+html[data-theme="light"] .markdown strong {
+  padding: 0.1em;
+  color: #dc3545;
+}
