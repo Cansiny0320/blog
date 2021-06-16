@@ -766,7 +766,7 @@ pagination-nav__item:hover .pagination-nav__link {
 /* markdown */
 
 html[data-theme="light"] .markdown blockquote {
-    border-left: 4px solid rgb(239, 112, 96);
+    border-left: 6px solid rgb(239, 112, 96);
     color: #3f3f3f;
     background-color: #fff9f9;
 }
