@@ -1,6 +1,6 @@
 ---
 slug: babel-start
-title: 初探babel
+title: 初探 babel
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
@@ -32,11 +32,11 @@ babel 是一个转译器，暴露了很多 api，用这些 api 可以完成代�
 
 对代码进行 parse 之后，能够进行转换，是因为通过 AST 的结构能够理解代码。理解了代码之后，除了进行转换然后生成目标代码之外，也同样可以用于分析代码的信息，进行一些检查。
 
-- linter 工具就是分析 AST 的结构，对代码规范进行检查。
-- api 文档自动生成工具，可以提取源码中的注释，然后生成文档。
-- type checker 会根据从 AST 中提取的或者推导的类型信息，对 AST 进行类型是否一致的检查，从而减少运行时因类型导致的错误。
-- 压缩混淆工具，这个也是分析代码结构，进行删除死代码、变量名混淆、常量折叠等各种编译优化，生成体积更小、性能更优的代码。
-- js 解释器，除了对 AST 进行各种信息的提取和检查以外，我们还可以直接解释执行 AST。
+-   linter 工具就是分析 AST 的结构，对代码规范进行检查。
+-   api 文档自动生成工具，可以提取源码中的注释，然后生成文档。
+-   type checker 会根据从 AST 中提取的或者推导的类型信息，对 AST 进行类型是否一致的检查，从而减少运行时因类型导致的错误。
+-   压缩混淆工具，这个也是分析代码结构，进行删除死代码、变量名混淆、常量折叠等各种编译优化，生成体积更小、性能更优的代码。
+-   js 解释器，除了对 AST 进行各种信息的提取和检查以外，我们还可以直接解释执行 AST。
 
 ### babel 是转译器还是编译器？
 
@@ -64,9 +64,9 @@ babel 就是一个 Javascript Transpiler。
 
 babel 是 source-to-source 的转换，整体编译流程分为三步：
 
-- parse（解析）：通过 parse 把源码转换成 AST
-- transform（转换）：遍历 AST，调用各种 transform 插件对 AST 进行增删改
-- generate（生成）：将转换后的 AST 转换成字符串形式的代码，并生成 sourcemap
+-   parse（解析）：通过 parse 把源码转换成 AST
+-   transform（转换）：遍历 AST，调用各种 transform 插件对 AST 进行增删改
+-   generate（生成）：将转换后的 AST 转换成字符串形式的代码，并生成 sourcemap
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1623510239043.png)
 
@@ -126,11 +126,11 @@ Identifer 是标识符的意思，变量名、属性名、参数名等各种声�
 const name = "guang"
 
 function say(name) {
-  console.log(name)
+    console.log(name)
 }
 
 const obj = {
-  name: "guang",
+    name: "guang",
 }
 ```
 
@@ -255,9 +255,9 @@ class 的语法比较特殊，有专门的 AST 节点来表示。
 
 ```javascript
 class Guang extends Person {
-  name = "guang"
-  constructor() {}
-  eat() {}
+    name = "guang"
+    constructor() {}
+    eat() {}
 }
 ```
 
