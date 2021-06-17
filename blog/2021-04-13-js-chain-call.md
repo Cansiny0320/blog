@@ -1,6 +1,6 @@
 ---
 slug: js-chain-call
-title: JS链式调用和流程控制 - 由一道作业题想开去
+title: JS链式调用和流程控制
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
