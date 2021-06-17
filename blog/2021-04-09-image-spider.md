@@ -1,6 +1,6 @@
 ---
 slug: image-spider
-title: 记一次从网页爬取图片并下载到本地的过程和遇到的问题
+title: SPA 网页图片爬虫实战
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
@@ -20,10 +20,10 @@ tags: [JavaScript]
 
 `puppeteer`的 API 基本都是异步的，所以我们需要一个 async 函数包裹，首先来介绍一下`puppeteer`主要的 API：
 
-- `puppeteer.launch()` 返回一个 browser 实例
-- `browser.newPage()` 返回一个新页面 当然我推荐使用`(await browser.pages())[0]` 这样就直接使用当前页面，不用新建页面了
-- `page.goto(url)` 页面跳转
-- `page.evaluate(fn)` 相当于在这个页面的控制台执行函数，所以不可访问外部的变量，外部也不可以访问里面的变量，最后会返回一个 promise 包裹 return 的结果
+-   `puppeteer.launch()` 返回一个 browser 实例
+-   `browser.newPage()` 返回一个新页面 当然我推荐使用`(await browser.pages())[0]` 这样就直接使用当前页面，不用新建页面了
+-   `page.goto(url)` 页面跳转
+-   `page.evaluate(fn)` 相当于在这个页面的控制台执行函数，所以不可访问外部的变量，外部也不可以访问里面的变量，最后会返回一个 promise 包裹 return 的结果
 
 写爬虫的工具选择好后，接下来我们来分析一下页面，该网页的图片使用了懒加载，当图片到视窗的时候，src 才会被设置为真实的 url。
 
@@ -31,20 +31,20 @@ tags: [JavaScript]
 
 ```js
 await page.evaluate(async () => {
-  await new Promise((resolve, reject) => {
-    let totalHeight = 0
-    let distance = 100
-    const timer = setInterval(() => {
-      var scrollHeight = document.body.scrollHeight
-      window.scrollBy(0, distance)
-      totalHeight += distance
-      if (totalHeight >= scrollHeight) {
-        clearInterval(timer)
-        resolve()
-      }
-    }, 50)
-  })
-  return [...document.querySelectorAll("selector")].map(item => item.src)
+    await new Promise((resolve, reject) => {
+        let totalHeight = 0
+        let distance = 100
+        const timer = setInterval(() => {
+            var scrollHeight = document.body.scrollHeight
+            window.scrollBy(0, distance)
+            totalHeight += distance
+            if (totalHeight >= scrollHeight) {
+                clearInterval(timer)
+                resolve()
+            }
+        }, 50)
+    })
+    return [...document.querySelectorAll("selector")].map(item => item.src)
 })
 ```
 
@@ -54,16 +54,16 @@ await page.evaluate(async () => {
 
 ```js
 async function mkdir(path, result) {
-  fs.mkdir(path, { recursive: true }, err => {
-    if (err) console.log(err)
-    fs.writeFileSync(
-      `./data/${typeName}${START_PAGE}-${END_PAGE}.json`,
-      JSON.stringify(result),
-      err => {
+    fs.mkdir(path, { recursive: true }, err => {
         if (err) console.log(err)
-      },
-    )
-  })
+        fs.writeFileSync(
+            `./data/${typeName}${START_PAGE}-${END_PAGE}.json`,
+            JSON.stringify(result),
+            err => {
+                if (err) console.log(err)
+            },
+        )
+    })
 }
 ```
 
@@ -77,23 +77,23 @@ async function mkdir(path, result) {
 
 ```js
 const blockedResourceTypes = [
-  "media",
-  "font",
-  "texttrack",
-  "object",
-  "beacon",
-  "csp_report",
-  "image", // 因为我们只是爬取图片地址，不需要加载出来
+    "media",
+    "font",
+    "texttrack",
+    "object",
+    "beacon",
+    "csp_report",
+    "image", // 因为我们只是爬取图片地址，不需要加载出来
 ]
 page.setRequestInterception(true)
 page.on("request", async req => {
-  // 根据请求类型过滤
-  const resourceType = req.resourceType()
-  if (blockedResourceTypes.includes(resourceType)) {
-    req.abort()
-  } else {
-    req.continue()
-  }
+    // 根据请求类型过滤
+    const resourceType = req.resourceType()
+    if (blockedResourceTypes.includes(resourceType)) {
+        req.abort()
+    } else {
+        req.continue()
+    }
 })
 ```
 
@@ -101,14 +101,14 @@ page.on("request", async req => {
 
 ```js
 exports.formatProgress = function (current, total, title = "当前进度", barLength = 40) {
-  let percent = ((current / total) * 100).toFixed(2)
-  let done = Math.floor((current / total) * barLength)
-  let left = barLength - done
-  let str = `${title}：[${"".padStart(done, "#")}${"".padStart(
-    left,
-    "-",
-  )}]   ${percent}% ${current}/${total}`
-  return str
+    let percent = ((current / total) * 100).toFixed(2)
+    let done = Math.floor((current / total) * barLength)
+    let left = barLength - done
+    let str = `${title}：[${"".padStart(done, "#")}${"".padStart(
+        left,
+        "-",
+    )}]   ${percent}% ${current}/${total}`
+    return str
 }
 ```
 
@@ -124,22 +124,22 @@ exports.formatProgress = function (current, total, title = "当前进度", barLe
 
 ```js
 request
-  .get({
-    url,
-  })
-  .on("error", function (err) {
-    console.log(`request err: ${err} at ${url}`)
-  })
-  .pipe(
-    fs
-      .createWriteStream(`${dest}/${folder}/${name}`)
-      .on("error", err => {
-        console.log(`createWriteStream error: ${err} at ${url}`)
-      })
-      .on("close", err => {
-        if (err) console.log(`createWriteStream close error: ${err} at ${url}`)
-      }),
-  )
+    .get({
+        url,
+    })
+    .on("error", function (err) {
+        console.log(`request err: ${err} at ${url}`)
+    })
+    .pipe(
+        fs
+            .createWriteStream(`${dest}/${folder}/${name}`)
+            .on("error", err => {
+                console.log(`createWriteStream error: ${err} at ${url}`)
+            })
+            .on("close", err => {
+                if (err) console.log(`createWriteStream close error: ${err} at ${url}`)
+            }),
+    )
 ```
 
 看起来很美好，但我们真正使用的时候，还是会发现有很多问题
@@ -150,7 +150,7 @@ request
 const Bagpipe = require("bagpipe")
 const bagpipe = new Bagpipe(10)
 bagpipe.push(downloadImage, url, dest, item.title, reason => {
-  if (reason) console.log(reason)
+    if (reason) console.log(reason)
 })
 ```
 
@@ -158,12 +158,12 @@ bagpipe.push(downloadImage, url, dest, item.title, reason => {
 
 ```js
 request.get({
-  url,
-  headers: {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
-  },
-  proxy: "http://0.0.0.0:1082/", // 需要你自己本地有代理工具
+    url,
+    headers: {
+        "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
+    },
+    proxy: "http://0.0.0.0:1082/", // 需要你自己本地有代理工具
 })
 ```
 
@@ -171,7 +171,7 @@ request.get({
 
 ```js
 fs.writeFile(`${dest}/${folder}/${name}`, "", err => {
-  fs.createWriteStream()
+    fs.createWriteStream()
 })
 ```
 
