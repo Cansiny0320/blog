@@ -12,20 +12,20 @@ module.exports = {
   // },
   notes: {
     JavaScript: [
-      "notes/js/01-prototype/prototype",
-      "notes/js/02-eventloop/eventloop",
-      "notes/js/03-extends/extends",
-      "notes/js/04-scope-chain/scope-chain",
+      "notes/js/prototype",
+      "notes/js/eventloop/eventloop",
+      "notes/js/extends",
+      "notes/js/scope-chain",
       // "notes/js/03-es6/es6",
     ],
     JavaScript设计模式: [
-      "notes/JavaScript-design-patterns/01-intro/intro",
-      "notes/JavaScript-design-patterns/02-factory/factory",
+      "notes/JavaScript-design-patterns/intro",
+      "notes/JavaScript-design-patterns/factory",
     ],
     // 每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
-    leetcode: ["notes/leetcode/01-hot100/hot100"],
+    leetcode: ["notes/leetcode/hot100"],
   },
   books: {
-    你不知道的JS: ["books/You-Dont-Know-JS/01-What-is-Scope/what-is-scope"],
+    你不知道的JS: ["books/You-Dont-Know-JS/what-is-scope"],
   },
 }

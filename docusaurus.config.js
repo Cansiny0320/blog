@@ -71,7 +71,7 @@ module.exports = {
           items: [
             {
               label: "JS",
-              to: "docs/notes/js/01-prototype/prototype",
+              to: "docs/notes/js/prototype",
             },
             // {
             //   label: '每日一题',
@@ -79,7 +79,7 @@ module.exports = {
             // },
             {
               label: "leetcode",
-              to: "docs/notes/leetcode/01-hot100/hot100",
+              to: "docs/notes/leetcode/hot100",
             },
           ],
         },
@@ -89,7 +89,7 @@ module.exports = {
           items: [
             {
               label: "你不知道的JS",
-              to: "docs/books/You-Dont-Know-JS/01-What-is-Scope/what-is-scope",
+              to: "docs/books/You-Dont-Know-JS/what-is-scope",
             },
           ],
         },
