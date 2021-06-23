@@ -132,6 +132,7 @@ module.exports = {
       theme: require("prism-react-renderer/themes/github"),
       darkTheme: require("prism-react-renderer/themes/oceanicNext"),
       defaultLanguage: "javascript",
+      additionalLanguages: ["java"],
     },
   },
   presets: [
