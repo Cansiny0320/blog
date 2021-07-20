@@ -91,6 +91,10 @@ module.exports = {
               label: "你不知道的JS",
               to: "docs/books/You-Dont-Know-JS/what-is-scope",
             },
+            {
+              label: "babel 插件通关秘籍",
+              to: "docs/books/learn-babel-plugin/babel-start",
+            },
           ],
         },
         {

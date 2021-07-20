@@ -27,5 +27,9 @@ module.exports = {
   },
   books: {
     你不知道的JS: ["books/You-Dont-Know-JS/what-is-scope"],
+    babel插件通关秘籍: [
+      "books/learn-babel-plugin/babel-start",
+      "books/learn-babel-plugin/babel-plugin-try",
+    ],
   },
 }
