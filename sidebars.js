@@ -23,7 +23,7 @@ module.exports = {
       "notes/JavaScript-design-patterns/factory",
     ],
     // 每日一题: ['notes/everyday-one-question/01-JavaScript/everyday-one-question-js'],
-    leetcode: ["notes/leetcode/hot100"],
+    leetcode: ["notes/leetcode/hot100", "notes/leetcode/codeTop"],
   },
   books: {
     你不知道的JS: ["books/You-Dont-Know-JS/what-is-scope"],
