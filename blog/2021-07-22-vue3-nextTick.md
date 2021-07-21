@@ -18,6 +18,8 @@ tags: [JavaScript, SourceCode]
 
 在 vue 中数据发生变化后，dom 的更新是需要一定时间的，而我们在数据更新之后就立即去操作或者获取 dom 的话，其实还是操作和获取的未更新的 dom ，而我们可以调用 `nextTick` 拿到最新的 dom
 
+<!--truncate-->
+
 ```js
 import { createApp, nextTick } from "vue"
 
