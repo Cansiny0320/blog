@@ -86,3 +86,30 @@ var lengthOfLongestSubstring = function (s) {
   return max
 }
 ```
+
+## [比较版本号](https://leetcode-cn.com/problems/compare-version-numbers/)
+
+**分割 + 解析**
+
+版本号通过`.`分割，我们可以通过`split`将版本号分成一个一个的块，长度不足的可以在后面补`0`
+
+之后比较每个块的数字就可以
+
+```js
+var compareVersion = function (version1, version2) {
+  const v1 = version1.split(".")
+  const v2 = version2.split(".")
+  let n1, n2
+  let p = 0
+  while (p < Math.max(v1.length, v2.length)) {
+    n1 = p < v1.length ? parseInt(v1[p]) : 0
+    n2 = p < v2.length ? parseInt(v2[p]) : 0
+    if (n1 === n2) {
+      p++
+    } else {
+      return n1 - n2 > 0 ? 1 : -1
+    }
+  }
+  return 0
+}
+```
