@@ -58,3 +58,31 @@ var addStrings = function (num1, num2) {
   return ans.reverse().join("")
 }
 ```
+
+## [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+**双指针实现滑动窗口**
+
+其中比较巧妙的一点是，用`Set`存储已经遍历过的字符，这样右指针遇到有重复的字符的时候，不用改变右指针的位置，只需要将左指针向右移动以为，并删掉左指针之前指向的字符就可以了
+
+因为在`Set`里存的都是不重复的字符，这样避免了一些不必要的遍历
+
+```js
+var lengthOfLongestSubstring = function (s) {
+  const len = s.length
+  let j = -1
+  const sub = new Set()
+  let max = 0
+  for (let i = 0; i < len; i++) {
+    if (i != 0) {
+      sub.delete(s[i - 1])
+    }
+    while (j + 1 < len && !sub.has(s[j + 1])) {
+      sub.add(s[j + 1])
+      j++
+    }
+    max = Math.max(max, j - i + 1)
+  }
+  return max
+}
+```
