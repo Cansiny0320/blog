@@ -23,9 +23,10 @@ module.exports = {
       rel: "stylesheet",
     },
     {
-      href: "/katex/katex.min.css",
+      href: "./static/katex/katex.min.css",
       type: "text/css",
-      integrity: "sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X",
+      integrity:
+        "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc",
       crossorigin: "anonymous",
     },
     // {
