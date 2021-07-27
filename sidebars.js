@@ -16,6 +16,7 @@ module.exports = {
       "notes/js/eventloop/eventloop",
       "notes/js/extends",
       "notes/js/scope-chain",
+      "notes/js/garbage-collection",
       // "notes/js/03-es6/es6",
     ],
     JavaScript设计模式: [
