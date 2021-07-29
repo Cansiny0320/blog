@@ -35,6 +35,9 @@ module.exports = {
   ],
   themeConfig: {
     hideableSidebar: true,
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
     navbar: {
       title: "CANSINY",
       logo: {
