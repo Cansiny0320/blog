@@ -34,39 +34,39 @@ Parent.prototype.getName = function () {
 }
 
 function Child() {}
-
+// highlight-start
 Child.prototype = new Parent()
-
+// highlight-end
 var child1 = new Child()
 
 console.log(child1.getName()) // kevin
 ```
 
-问题：
+缺点：
 
-1. 引用类型的属性被所有实例共享，在使用原型实现继承的时候，子类的原型实际上变成了父类的实例，父类的实例属性变成了子类的原型的属性，举个例子：
+1. 引用类型的属性被所有实例共享
 
-   ```js
-   function Parent() {
-     this.names = ["kevin", "daisy"]
-   }
+```js
+function Parent() {
+  this.names = ["kevin", "daisy"]
+}
 
-   function Child() {}
+function Child() {}
 
-   Child.prototype = new Parent()
+Child.prototype = new Parent()
 
-   var child1 = new Child()
+var child1 = new Child()
 
-   child1.names.push("yayu")
+child1.names.push("yayu")
 
-   console.log(child1.names) // ["kevin", "daisy", "yayu"]
+console.log(child1.names) // ["kevin", "daisy", "yayu"]
 
-   var child2 = new Child()
+var child2 = new Child()
 
-   console.log(child2.names) // ["kevin", "daisy", "yayu"]
-   ```
+console.log(child2.names) // ["kevin", "daisy", "yayu"]
+```
 
-   `names`是引用类型，所有的`names`都指向同一块内存空间，而不是引用类型就不存在这个问题，每创建一个实例，都会重新分配一块内存空间。
+`names`是引用类型，所有的`names`都指向同一块内存空间，而不是引用类型就不存在这个问题，每创建一个实例，都会重新分配一块内存空间。
 
 2. 在创建 Child 的实例时，不能向 Parent 传参
 
@@ -78,7 +78,9 @@ function Parent() {
 }
 
 function Child() {
+  // highlight-start
   Parent.call(this)
+  // highlight-end
 }
 
 var child1 = new Child()
@@ -97,28 +99,27 @@ console.log(child2.names) // ["kevin", "daisy"]
 优点：
 
 1. 避免了引用类型的属性被所有实例共享
-
 2. 可以在 Child 中向 Parent 传参,例如：
 
-   ```js
-   function Parent(name) {
-     this.name = name
-   }
+```js
+function Parent(name) {
+  this.name = name
+}
 
-   function Child(name) {
-     Parent.call(this, name)
-   }
+function Child(name) {
+  Parent.call(this, name)
+}
 
-   var child1 = new Child("kevin")
+var child1 = new Child("kevin")
 
-   console.log(child1.name) // kevin
+console.log(child1.name) // kevin
 
-   var child2 = new Child("daisy")
+var child2 = new Child("daisy")
 
-   console.log(child2.name) // daisy
-   ```
+console.log(child2.name) // daisy
+```
 
-缺点
+缺点:
 
 1. Parent 必须在构造函数中定义方法，每次创建实例都会创建一遍方法
 2. 子类不能访问父类原型上的方法
@@ -140,13 +141,17 @@ Parent.prototype.getName = function () {
 }
 
 function Child(name, age) {
+  // highlight-start
   Parent.call(this, name)
+  // highlight-end
 
   this.age = age
 }
 
+// highlight-start
 Child.prototype = new Parent()
 Child.prototype.constructor = Child
+// highlight-end
 
 var child1 = new Child("kevin", "18")
 
@@ -286,12 +291,13 @@ function Child(name, age) {
   this.age = age
 }
 
-// 关键的三步
+// highlight-start
 var F = function () {}
 
 F.prototype = Parent.prototype
 
 Child.prototype = new F()
+// highlight-end
 
 var child1 = new Child("kevin", "18")
 
