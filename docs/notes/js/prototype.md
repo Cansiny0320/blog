@@ -1,7 +1,7 @@
 ---
 id: prototype
 title: 原型和原型链
-hide_title: true
+# hide_title: true
 # hide_table_of_contents: false
 # sidebar_label: Markdown :)
 # custom_edit_url: https://github.com/facebook/docusaurus/edit/master/docs/api-doc-markdown.md

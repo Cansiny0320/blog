@@ -1,7 +1,7 @@
 ---
 id: scope-chain
 title: 作用域链
-hide_title: true
+# hide_title: true
 
 # hide_table_of_contents: false
 

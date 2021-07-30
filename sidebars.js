@@ -17,6 +17,7 @@ module.exports = {
       "notes/js/extends",
       "notes/js/scope-chain",
       "notes/js/garbage-collection",
+      "notes/js/closure",
       // "notes/js/03-es6/es6",
     ],
     JavaScript设计模式: [
