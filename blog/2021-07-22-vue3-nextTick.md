@@ -35,6 +35,14 @@ const app = createApp({
 })
 ```
 
+## 调度器的目标
+
+浏览器为了实现异步任务，设计了 `Event Loop` 这个机制。在执行主执行栈的任务时，异步任务会被放入 `Task Queue` 中。当然，异步任务根据具体情况，会分别加入 `Macro Task Queue` 与 `Micro Task Queue` 中。待主执行栈的任务清空后，就会依次执行 `Task Queue` 中的任务。
+
+由此，调度器的实现就呼之欲出了。
+
+我们只要实现一种机制，将需要异步执行的任务塞入 `Task Queue` 中就可以了。简单来说，就是借助 `Promise` 或 `setTimeout` 等。尽管他们二者一个属于` Micro Task`，一个属于 `Macro Task`。但在这个主题下，他们从逻辑上讲是一致的。(vue 中使用的是 Promise 属于微任务 ，Preact 使用的是 requestAnimationFrame 和 setTimeout 属于宏任务，具体而言微任务优先级较高，宏任务优先级较低，但各有优势)
+
 ## 单元测试
 
 我们先来阅读一下单测快速了解一下源码
