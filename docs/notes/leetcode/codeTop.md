@@ -456,3 +456,42 @@ var lengthOfLIS = function (nums) {
   return tail.length
 }
 ```
+
+## [94. 二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+
+**方法一 递归**
+
+```js
+var inorderTraversal = function (root) {
+  const res = []
+  const inorder = root => {
+    if (!root) {
+      return
+    }
+    inorder(root.left)
+    res.push(root.val)
+    inorder(root.right)
+  }
+  inorder(root)
+  return res
+}
+```
+
+**方法二 迭代**
+
+```js
+var inorderTraversal = function (root) {
+  const res = []
+  const stk = []
+  while (root || stk.length) {
+    while (root) {
+      stk.push(root)
+      root = root.left
+    }
+    root = stk.pop()
+    res.push(root.val)
+    root = root.right
+  }
+  return res
+}
+```
