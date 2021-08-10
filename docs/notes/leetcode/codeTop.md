@@ -47,15 +47,15 @@ var addStrings = function (num1, num2) {
   let ans = []
   let carry = 0
   while (i >= 0 || j >= 0 || carry) {
-    const n1 = i >= 0 ? num1.charAt(i) - "0" : 0
-    const n2 = j >= 0 ? num2.charAt(j) - "0" : 0
+    const n1 = i >= 0 ? num1.charAt(i) - '0' : 0
+    const n2 = j >= 0 ? num2.charAt(j) - '0' : 0
     const sum = n1 + n2 + carry
     carry = Math.floor(sum / 10)
     ans.push(sum % 10)
     i--
     j--
   }
-  return ans.reverse().join("")
+  return ans.reverse().join('')
 }
 ```
 
@@ -97,8 +97,8 @@ var lengthOfLongestSubstring = function (s) {
 
 ```js
 var compareVersion = function (version1, version2) {
-  const v1 = version1.split(".")
-  const v2 = version2.split(".")
+  const v1 = version1.split('.')
+  const v2 = version2.split('.')
   let n1, n2
   let p = 0
   while (p < Math.max(v1.length, v2.length)) {
@@ -338,5 +338,121 @@ const bfs = (list, ans) => {
   })
   if (!nextList.length) return
   bfs(nextList, ans)
+}
+```
+
+## [300. 最长递增子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+
+**方法一 动态规划**
+
+首先考虑题目问什么，就把什么定义成状态。题目问最长上升子序列的长度，其实可以把「子序列的长度」定义成状态，但是发现「状态转移」不好做。
+
+基于「动态规划」的状态设计需要满足「无后效性」的设计思想，可以将状态定义为「以 `nums[i]` 结尾 的「上升子序列」的长度」。
+
+> 「无后效性」的设计思想：让不确定的因素确定下来，以保证求解的过程形成一个逻辑上的有向无环图。这题不确定的因素是某个元素是否被选中，而我们设计状态的时候，让 nums[i] 必需被选中，这一点是「让不确定的因素确定下来」，也是我们这样设计状态的原因。
+
+1. 定义状态:
+
+`dp[i]` 表示：以 `nums[i]` 结尾 的「上升子序列」的长度。注意：这个定义中 `nums[i]` 必须被选取，且必须是这个子序列的最后一个元素；
+
+2. 状态转移方程：
+
+如果一个较大的数接在较小的数后面，就会形成一个更长的子序列。只要 `nums[i]` 严格大于在它位置之前的某个数，那么 `nums[i]` 就可以接在这个数后面形成一个更长的上升子序列。
+
+$$
+  dp[i] = \max_{0 \leq j<i,nums[j]<nums[i]}dp[j] + 1
+$$
+
+3. 初始化：
+
+`dp[i] = 1`，1 个字符显然是长度为 1 的上升子序列。
+
+4. 输出：
+
+不能返回最后一个状态值，最后一个状态值只表示以 nums[len - 1] 结尾的「上升子序列」的长度，状态数组 dp 的最大值才是题目要求的结果。
+
+$$
+  \max_{0 \leq i \leq len -1}dp[i]
+$$
+
+5. 空间优化：
+
+遍历到一个新数的时候，之前所有的状态值都得保留，因此无法优化空间。
+
+```js
+var lengthOfLIS = function (nums) {
+  const len = nums.length
+  const dp = new Array(len).fill(1)
+  for (let i = 1; i < len; i++) {
+    let preMax = 1
+    for (let j = 0; j < i; j++) {
+      if (nums[j] < nums[i]) {
+        preMax = Math.max(dp[j], preMax)
+        dp[i] = preMax + 1
+      }
+    }
+  }
+  return Math.max(...dp)
+}
+```
+
+**方法二 贪心+二分查找**
+
+1. 定义新状态（特别重要）
+
+`tail[i]` 表示：长度为 `i + 1` 的**所有**上升子序列的结尾的最小值。
+
+说明：
+
+- 数组 `tail` 不是问题中的「最长上升子序列」（下文还会强调），不能命名为`LIS`。数组 `tail` 只是用于求解 `LIS` 问题的状态数组；
+- `tail[0]` 表示长度为 1 的所有上升子序列中，结尾最小的元素的数值。以题目中的示例为例 `[10, 9, 2, 5, 3, 7, 101, 18]` 中，容易发现长度为 2 的所有上升子序列中，结尾最小的是子序列 `[2, 3]` ，因此 `tail[1] = 3`；
+- 下标和长度有数值为 1 的偏差；
+  状态定义其实也描述了状态转移方程。
+
+1. 状态转移方程：
+
+因为只需要维护状态数组 `tail` 的定义，它的长度就是最长上升子序列的长度。下面说明在遍历中，如何维护状态数组 `tail` 的定义。
+
+1.  在遍历数组 `nums` 的过程中，看到一个新数 `num`，如果这个数**严格**大于有序数组 `tail` 的最后一个元素，就把 `num` 放在有序数组 `tail` 的后面，否则进入第 2 点；
+2.  在有序数组 `tail` 中查找第 1 个等于大于 `num` 的那个数，让他变为 `num`；
+    - 如果有序数组 `tail` 中存在 等于 `num` 的元素，什么都不做，因为以 `num` 结尾的最短的「上升子序列」已经存在；
+    - 如果有序数组 `tail` 中存在 大于 `num` 的元素，找到第 1 个，让它变小，这样我们就找到了一个结尾更小的相同长度的上升子序列。
+
+说明：
+
+- 我们再看一下数组 `tail[i]` 的定义：长度为 i + 1 的 所有 最长上升子序列的结尾的最小值。因此，在遍历的过程中，我们试图让一个大的值变小是合理的；
+- 这一步可以认为是「贪心算法」，总是做出在当前看来最好的选择，当前「最好的选择」是：当前只让让第 1 个严格大于 `nums[i]` 的数变小，变成 `nums[i]`，这一步操作是「无后效性」的；
+- 由于是在有序数组中的操作，因此可以使用「二分查找算法」。
+
+3. 初始化：
+
+遍历第 1 个数 `nums[0]`，直接放在有序数组 `tail` 的开头 `tail[0] = nums[0]`。
+
+4. 输出：
+
+有序数组 `tail` 的长度，就是所求的「最长上升子序列」的长度。
+
+```js
+var lengthOfLIS = function (nums) {
+  const len = nums.length
+  const tail = [nums[0]]
+  for (let i = 1; i < len; i++) {
+    if (nums[i] > tail[tail.length - 1]) {
+      tail.push(nums[i])
+    } else {
+      let left = 0
+      let right = tail.length - 1
+      while (left < right) {
+        const mid = (left + right) >> 1
+        if (tail[mid] < nums[i]) {
+          left = mid + 1
+        } else {
+          right = mid
+        }
+      }
+      tail[left] = nums[i]
+    }
+  }
+  return tail.length
 }
 ```
