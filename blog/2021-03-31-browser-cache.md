@@ -68,6 +68,12 @@ push cache 是`HTTP/2`的内容，它是浏览器缓存的最后一道防线，*
 
 浏览器缓存策略分为两种：`强缓存`和`协商缓存`，并且缓存策略都是通过设置 `HTTP Header` 来实现的。
 
+强缓存 —— `缓存控制` 缓存没有过期就直接使用缓存
+
+弱缓存 —— `缓存校验` 缓存已经过期，判断一下缓存文件是否修改，未修改就使用缓存，否则使用新的资源文件
+
+这样也理解了“协商缓存需要配合强缓存使用，如果不启用强缓存的话，协商缓存根本没有意义” 这句话的意思，没有强缓存就根本没有缓存，更无从说起使用协商缓存了
+
 ### 强缓存
 
 浏览器首先使用的是强缓存
@@ -152,7 +158,10 @@ Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识
 在 html 的 head 标签中加入下面内容，就可以禁止浏览器读取缓存
 
 ```html
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta
+  http-equiv="Cache-Control"
+  content="no-cache, no-store, must-revalidate"
+/>
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 ```
@@ -173,14 +182,16 @@ main.js?v=2.0
 当然版本号也可以自动添加随机数，不过这样就违背了版本号的初衷了，这样同样浏览器在资源没修改的时候也不能加载缓存，影响体验 随机版本号的添加方法，使用一个随机函数即可，当然，这样就只能通过 js 中写 js 的调用语句，比如
 
 ```js
-document.write(" <script src='test.js?v= " + Math.random() + " '></s " + " cript> ")
+document.write(
+  " <script src='test.js?v= " + Math.random() + " '></s " + ' cript> ',
+)
 ```
 
 或者是
 
 ```js
-var js = document.createElement(" script ")
-js.src = " test.js" + "?v=" + Math.random()
+var js = document.createElement(' script ')
+js.src = ' test.js' + '?v=' + Math.random()
 document.body.appendChild(js)
 ```
 
