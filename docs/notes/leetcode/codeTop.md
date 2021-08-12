@@ -517,3 +517,30 @@ const fib = n => {
   return dp[n]
 }
 ```
+
+## [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
+
+**动态规划**
+
+状态定义：`dp[i]`表示凑齐 i 元所需最少的硬币个数
+
+状态转移方程：`dp[i] = min(dp[i],dp[i - coin] + 1)` ，其中 `coin` 为 `coins` 中的每个元素
+
+初始状态：`dp[0] = 0`
+
+输出：如果没有能组成总金额的话输出 `-1`，否则输出`dp[amount]`
+
+```js
+var coinChange = function (coins, amount) {
+  const dp = new Array(amount + 1).fill(Infinity)
+  dp[0] = 0
+  for (let i = 1; i <= amount; i++) {
+    for (let coin of coins) {
+      if (coin <= i) {
+        dp[i] = Math.min(dp[i], dp[i - coin] + 1)
+      }
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount]
+}
+```
