@@ -237,7 +237,7 @@ img {
 
 **3D transform、will-change 设置为 opacity、transform 等 以及 包含 opacity、transform 的 CSS 过渡和动画 这 3 个经常遇到的提升合成层的情况请重点记住。**
 
-另外除了上述直接导致 PaintLayers 提升为 GraphicsLayer，还有下面这种因为 B 被提升，导致 A 也被**隐式提升**的情况，详见此文: [GPU Animation: Doing It Right](https%3A%2F%2Fwww.smashingmagazine.com%2F2016%2F12%2Fgpu-animation-doing-it-right%2F)
+另外除了上述直接导致 PaintLayers 提升为 GraphicsLayer，还有下面这种因为 B 被提升，导致 A 也被**隐式提升**的情况，详见此文: [CSS GPU Animation: Doing It Right](https://www.smashingmagazine.com/2016/12/gpu-animation-doing-it-right/)
 
 每个合成层 GraphicsLayer 都拥有一个 GraphicsContext，GraphicsContext 会为该 Layer 开辟一段位图，也就意味着每个 GraphicsLayer 都拥有一个位图。GraphicsLayer 负责将自己的 PaintLayer 及其子代所包含的 LayoutObject 绘制到位图里。然后将位图作为纹理交给 GPU。所以现在 GPU 收到了 HTML 元素的 GraphicsLayer 的纹理，也可能还收到某些因为有 3d transform 之类属性而提升为 GraphicsLayer 的元素的纹理。
 
