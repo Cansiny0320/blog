@@ -5,7 +5,7 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
-tags: [Browser]
+tags: [浏览器]
 ---
 
 ## 前言
@@ -24,6 +24,8 @@ tags: [Browser]
 5. paint：这一步记录需要调用绘制的方法 `draw calls`，在光栅化 `Rasterization` 时，`draw calls` 会被执行。
 6. Composite Layers：某些特殊的渲染层会被认为是合成层（Compositing Layers），Composite 负责处理它们
 7. 然后将这些信息交给`compositor thread` 处理，然后给 GPU 打印到屏幕
+
+<!--truncate-->
 
 ## 构建 DOM 树
 
