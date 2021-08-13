@@ -1,25 +1,10 @@
-# 个人博客
+<h1 style="text-align:center">Cansiny's Blog</h1>
 
-使用 [Docusaurus 2](https://v2.docusaurus.io/)静态网站生成器构建。
+我的博客地址：https://cansiny0320.vercel.app/
 
-### 安装
+## ✨ 最近更新
 
-```
-$ yarn
-```
-
-### 本地开发
-
-```
-$ yarn start
-```
-
-### Build
-
-```
-$ yarn build
-```
-
-### 部署
-
-[https://vercel.com/](https://vercel.com/dashboard)
+- [浏览器页面渲染的核心流程详解](https://cansiny0320.vercel.app/browser-render-process)
+- [vue3 nextTick 原理分析](https://cansiny0320.vercel.app/vue3-nextTick)
+- [vue3 数据响应式原理分析](https://cansiny0320.vercel.app/reactivity)
+- [详解浏览器缓存](https://cansiny0320.vercel.app/browser-cache)
