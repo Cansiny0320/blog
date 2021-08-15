@@ -92,7 +92,7 @@ tags: [浏览器, 网络协议]
 
 TLS1.3 版本中握手过程是这样子的
 
-![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629026714557.png)
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629029763237.png)
 
 大体上和 TLS 1.2 的握手方式差不多，不过和 TLS 1.2 相比少了一个 RTT， 服务端不必等待对方验证证书之后才拿到`client_params`，而是直接在第一次握手的时候就能够拿到, 拿到之后立即生成`pre_random`，节省了之前不必要的等待时间。
 
