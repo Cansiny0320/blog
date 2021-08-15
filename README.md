@@ -4,6 +4,8 @@
 
 ## ✨ 最近更新
 
+- [一文总结从输入 URL 到页面呈现发生了什么](https://cansiny0320.vercel.app/url2pageshow)
+
 - [浏览器页面渲染的核心流程详解](https://cansiny0320.vercel.app/browser-render-process)
 - [vue3 nextTick 原理分析](https://cansiny0320.vercel.app/vue3-nextTick)
 - [vue3 数据响应式原理分析](https://cansiny0320.vercel.app/reactivity)
