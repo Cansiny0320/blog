@@ -12,6 +12,8 @@ tags: [JavaScript, SourceCode]
 
 Redux 是 JavaScript 状态容器，能提供可预测化的状态管理。
 
+<!--truncate-->
+
 它认为：
 
 - Web 应用是一个状态机，视图与状态是一一对应的。
@@ -51,7 +53,7 @@ Redux 也规定，一个 State 对应一个 View。只要 State 相同，View �
 
 ## 源码分析
 
-源码分析使用简化版代码，点击查看[完整代码]()
+源码分析使用简化版代码，点击查看[完整代码](https://github.com/Cansiny0320/mini-redux)
 
 ### createStore
 
@@ -183,10 +185,6 @@ export default function applyMiddleware(...middlewares) {
   }
 }
 ```
-
-##
-
-##
 
 较为关键的是这一步`const dispatch = compose(...chain)(store.dispatch)`，将中间件进行组合
 
