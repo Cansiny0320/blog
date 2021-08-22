@@ -5,6 +5,9 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629018536264.png
+description: 总结从输入 URL 到页面呈现发生了什么
+keywords: [浏览器, 网络协议]
 tags: [浏览器, 网络协议]
 ---
 

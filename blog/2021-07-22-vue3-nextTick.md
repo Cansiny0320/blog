@@ -5,6 +5,8 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+description: vue3 nextTick 原理分析
+keywords: [vue, vue3, nextTick]
 tags: [JavaScript, SourceCode]
 ---
 
@@ -21,15 +23,15 @@ tags: [JavaScript, SourceCode]
 <!--truncate-->
 
 ```js
-import { createApp, nextTick } from "vue"
+import { createApp, nextTick } from 'vue'
 
 const app = createApp({
   setup() {
-    const message = ref("Hello!")
+    const message = ref('Hello!')
     const changeMessage = async newMessage => {
       message.value = newMessage
       await nextTick()
-      console.log("Now DOM is updated")
+      console.log('Now DOM is updated')
     }
   },
 })
@@ -52,14 +54,14 @@ const app = createApp({
 ### nextTick
 
 ```typescript
-it("nextTick", async () => {
+it('nextTick', async () => {
   const calls: string[] = []
   const dummyThen = Promise.resolve().then()
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
   }
   nextTick(job1)
   job2()
@@ -67,7 +69,7 @@ it("nextTick", async () => {
   await dummyThen
   // job1 will be pushed in nextTick
   expect(calls.length).toBe(2)
-  expect(calls).toMatchObject(["job2", "job1"])
+  expect(calls).toMatchObject(['job2', 'job1'])
 })
 ```
 
@@ -78,19 +80,19 @@ it("nextTick", async () => {
 #### 基本用法
 
 ```typescript
-it("basic usage", async () => {
+it('basic usage', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
   }
   queueJob(job1)
   queueJob(job2)
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["job1", "job2"])
+  expect(calls).toEqual(['job1', 'job2'])
 })
 ```
 
@@ -102,37 +104,37 @@ it("basic usage", async () => {
 it("should insert jobs in ascending order of job's id when flushing", async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
 
     queueJob(job2)
     queueJob(job3)
   }
 
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
     queueJob(job4)
     queueJob(job5)
   }
   job2.id = 10
 
   const job3 = () => {
-    calls.push("job3")
+    calls.push('job3')
   }
   job3.id = 1
 
   const job4 = () => {
-    calls.push("job4")
+    calls.push('job4')
   }
 
   const job5 = () => {
-    calls.push("job5")
+    calls.push('job5')
   }
 
   queueJob(job1)
 
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["job1", "job3", "job2", "job4", "job5"])
+  expect(calls).toEqual(['job1', 'job3', 'job2', 'job4', 'job5'])
 })
 ```
 
@@ -141,13 +143,13 @@ it("should insert jobs in ascending order of job's id when flushing", async () =
 #### queueJob 会去重队列中的 job
 
 ```typescript
-it("should dedupe queued jobs", async () => {
+it('should dedupe queued jobs', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
   }
   queueJob(job1)
   queueJob(job2)
@@ -155,7 +157,7 @@ it("should dedupe queued jobs", async () => {
   queueJob(job2)
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["job1", "job2"])
+  expect(calls).toEqual(['job1', 'job2'])
 })
 ```
 
@@ -189,13 +191,13 @@ it("should dedupe queued jobs", async () => {
 #### 基本用法
 
 ```typescript
-it("basic usage", async () => {
+it('basic usage', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
 
   queuePreFlushCb(cb1)
@@ -203,7 +205,7 @@ it("basic usage", async () => {
 
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2"])
+  expect(calls).toEqual(['cb1', 'cb2'])
 })
 ```
 
@@ -212,16 +214,16 @@ it("basic usage", async () => {
 #### preFlushCb 会去重队列中的 preFlushCb
 
 ```typescript
-it("should dedupe queued preFlushCb", async () => {
+it('should dedupe queued preFlushCb', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
   const cb3 = () => {
-    calls.push("cb3")
+    calls.push('cb3')
   }
 
   queuePreFlushCb(cb1)
@@ -232,7 +234,7 @@ it("should dedupe queued preFlushCb", async () => {
 
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2", "cb3"])
+  expect(calls).toEqual(['cb1', 'cb2', 'cb3'])
 })
 ```
 
@@ -241,20 +243,20 @@ it("should dedupe queued preFlushCb", async () => {
 #### 链式 queuePreFlushCb
 
 ```typescript
-it("chained queuePreFlushCb", async () => {
+it('chained queuePreFlushCb', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     // cb2 will be executed after cb1 at the same tick
     queuePreFlushCb(cb2)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
   queuePreFlushCb(cb1)
 
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2"])
+  expect(calls).toEqual(['cb1', 'cb2'])
 })
 ```
 
@@ -265,20 +267,20 @@ it("chained queuePreFlushCb", async () => {
 #### preFlushCb 中的 queueJob
 
 ```typescript
-it("queueJob inside preFlushCb", async () => {
+it('queueJob inside preFlushCb', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const cb1 = () => {
     // queueJob in postFlushCb
-    calls.push("cb1")
+    calls.push('cb1')
     queueJob(job1)
   }
 
   queuePreFlushCb(cb1)
   await nextTick()
-  expect(calls).toEqual(["cb1", "job1"])
+  expect(calls).toEqual(['cb1', 'job1'])
 })
 ```
 
@@ -287,24 +289,24 @@ it("queueJob inside preFlushCb", async () => {
 #### preFlushCb 中的 queueJob 和 preFlushCb
 
 ```typescript
-it("queueJob & preFlushCb inside preFlushCb", async () => {
+it('queueJob & preFlushCb inside preFlushCb', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     queueJob(job1)
     // cb2 should execute before the job
     queuePreFlushCb(cb2)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
 
   queuePreFlushCb(cb1)
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2", "job1"])
+  expect(calls).toEqual(['cb1', 'cb2', 'job1'])
 })
 ```
 
@@ -313,21 +315,21 @@ it("queueJob & preFlushCb inside preFlushCb", async () => {
 #### queueJob 中的 preFlushCb
 
 ```typescript
-it("preFlushCb inside queueJob", async () => {
+it('preFlushCb inside queueJob', async () => {
   const calls: string[] = []
   const job1 = () => {
     queuePreFlushCb(cb1)
     queuePreFlushCb(cb2)
     flushPreFlushCbs(undefined, job1)
-    calls.push("job1")
+    calls.push('job1')
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     // a cb triggers its parent job, which should be skipped
     queueJob(job1)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
 })
 ```
@@ -337,7 +339,7 @@ it("preFlushCb inside queueJob", async () => {
 #### 在 postFlushCb 队列中的 preFlushCb
 
 ```typescript
-it("queue preFlushCb inside postFlushCb", async () => {
+it('queue preFlushCb inside postFlushCb', async () => {
   const cb = jest.fn()
   queuePostFlushCb(() => {
     queuePreFlushCb(cb)
@@ -354,17 +356,17 @@ it("queue preFlushCb inside postFlushCb", async () => {
 #### 基本用法
 
 ```typescript
-describe("queuePostFlushCb", () => {
-  it("basic usage", async () => {
+describe('queuePostFlushCb', () => {
+  it('basic usage', async () => {
     const calls: string[] = []
     const cb1 = () => {
-      calls.push("cb1")
+      calls.push('cb1')
     }
     const cb2 = () => {
-      calls.push("cb2")
+      calls.push('cb2')
     }
     const cb3 = () => {
-      calls.push("cb3")
+      calls.push('cb3')
     }
 
     queuePostFlushCb([cb1, cb2])
@@ -372,7 +374,7 @@ describe("queuePostFlushCb", () => {
 
     expect(calls).toEqual([])
     await nextTick()
-    expect(calls).toEqual(["cb1", "cb2", "cb3"])
+    expect(calls).toEqual(['cb1', 'cb2', 'cb3'])
   })
 })
 ```
@@ -382,16 +384,16 @@ describe("queuePostFlushCb", () => {
 #### queuePostFlushCb 会去重队列中的 postFlushCb
 
 ```typescript
-it("should dedupe queued postFlushCb", async () => {
+it('should dedupe queued postFlushCb', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
   const cb3 = () => {
-    calls.push("cb3")
+    calls.push('cb3')
   }
 
   queuePostFlushCb([cb1, cb2])
@@ -402,7 +404,7 @@ it("should dedupe queued postFlushCb", async () => {
 
   expect(calls).toEqual([])
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2", "cb3"])
+  expect(calls).toEqual(['cb1', 'cb2', 'cb3'])
 })
 ```
 
@@ -411,20 +413,20 @@ it("should dedupe queued postFlushCb", async () => {
 #### 刷新时 queuePostFlushCb
 
 ```typescript
-it("queuePostFlushCb while flushing", async () => {
+it('queuePostFlushCb while flushing', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     // cb2 will be executed after cb1 at the same tick
     queuePostFlushCb(cb2)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
   queuePostFlushCb(cb1)
 
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2"])
+  expect(calls).toEqual(['cb1', 'cb2'])
 })
 ```
 
@@ -435,20 +437,20 @@ it("queuePostFlushCb while flushing", async () => {
 #### postFlushCb 内的 queueJob
 
 ```typescript
-it("queueJob inside postFlushCb", async () => {
+it('queueJob inside postFlushCb', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const cb1 = () => {
     // queueJob in postFlushCb
-    calls.push("cb1")
+    calls.push('cb1')
     queueJob(job1)
   }
 
   queuePostFlushCb(cb1)
   await nextTick()
-  expect(calls).toEqual(["cb1", "job1"])
+  expect(calls).toEqual(['cb1', 'job1'])
 })
 ```
 
@@ -457,25 +459,25 @@ it("queueJob inside postFlushCb", async () => {
 #### postFlushCb 内的 queueJob 和 postFlushCb
 
 ```typescript
-it("queueJob & postFlushCb inside postFlushCb", async () => {
+it('queueJob & postFlushCb inside postFlushCb', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     queuePostFlushCb(cb2)
     // job1 will executed before cb2
     // Job has higher priority than postFlushCb
     queueJob(job1)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
 
   queuePostFlushCb(cb1)
   await nextTick()
-  expect(calls).toEqual(["cb1", "job1", "cb2"])
+  expect(calls).toEqual(['cb1', 'job1', 'cb2'])
 })
 ```
 
@@ -484,20 +486,20 @@ it("queueJob & postFlushCb inside postFlushCb", async () => {
 #### queueJob 内的 postFlushCb
 
 ```typescript
-it("postFlushCb inside queueJob", async () => {
+it('postFlushCb inside queueJob', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
     // postFlushCb in queueJob
     queuePostFlushCb(cb1)
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
 
   queueJob(job1)
   await nextTick()
-  expect(calls).toEqual(["job1", "cb1"])
+  expect(calls).toEqual(['job1', 'cb1'])
 })
 ```
 
@@ -506,25 +508,25 @@ it("postFlushCb inside queueJob", async () => {
 #### queueJob 和 postFlushCb 在 queueJob 中
 
 ```typescript
-it("queueJob & postFlushCb inside queueJob", async () => {
+it('queueJob & postFlushCb inside queueJob', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
     // cb1 will executed after job2
     // Job has higher priority than postFlushCb
     queuePostFlushCb(cb1)
     queueJob(job2)
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
 
   queueJob(job1)
   await nextTick()
-  expect(calls).toEqual(["job1", "job2", "cb1"])
+  expect(calls).toEqual(['job1', 'job2', 'cb1'])
 })
 ```
 
@@ -533,28 +535,28 @@ it("queueJob & postFlushCb inside queueJob", async () => {
 #### 嵌套的 queueJob 与 postFlush
 
 ```typescript
-it("nested queueJob w/ postFlushCb", async () => {
+it('nested queueJob w/ postFlushCb', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
 
     queuePostFlushCb(cb1)
     queueJob(job2)
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
     queuePostFlushCb(cb2)
   }
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
 
   queueJob(job1)
   await nextTick()
-  expect(calls).toEqual(["job1", "job2", "cb1", "cb2"])
+  expect(calls).toEqual(['job1', 'job2', 'cb1', 'cb2'])
 })
 ```
 
@@ -563,21 +565,21 @@ it("nested queueJob w/ postFlushCb", async () => {
 #### 无效作业
 
 ```typescript
-test("invalidateJob", async () => {
+test('invalidateJob', async () => {
   const calls: string[] = []
   const job1 = () => {
-    calls.push("job1")
+    calls.push('job1')
     invalidateJob(job2)
     job2()
   }
   const job2 = () => {
-    calls.push("job2")
+    calls.push('job2')
   }
   const job3 = () => {
-    calls.push("job3")
+    calls.push('job3')
   }
   const job4 = () => {
-    calls.push("job4")
+    calls.push('job4')
   }
   // queue all jobs
   queueJob(job1)
@@ -587,7 +589,7 @@ test("invalidateJob", async () => {
   expect(calls).toEqual([])
   await nextTick()
   // job2 should be called only once
-  expect(calls).toEqual(["job1", "job2", "job3", "job4"])
+  expect(calls).toEqual(['job1', 'job2', 'job3', 'job4'])
 })
 ```
 
@@ -596,20 +598,20 @@ test("invalidateJob", async () => {
 #### 根据 id 对作业进行排序
 
 ```typescript
-test("sort job based on id", async () => {
+test('sort job based on id', async () => {
   const calls: string[] = []
-  const job1 = () => calls.push("job1")
+  const job1 = () => calls.push('job1')
   // job1 has no id
-  const job2 = () => calls.push("job2")
+  const job2 = () => calls.push('job2')
   job2.id = 2
-  const job3 = () => calls.push("job3")
+  const job3 = () => calls.push('job3')
   job3.id = 1
 
   queueJob(job1)
   queueJob(job2)
   queueJob(job3)
   await nextTick()
-  expect(calls).toEqual(["job3", "job2", "job1"])
+  expect(calls).toEqual(['job3', 'job2', 'job1'])
 })
 ```
 
@@ -618,20 +620,20 @@ test("sort job based on id", async () => {
 #### 根据 id 对 SchedulerCbs 进行排序
 
 ```typescript
-test("sort SchedulerCbs based on id", async () => {
+test('sort SchedulerCbs based on id', async () => {
   const calls: string[] = []
-  const cb1 = () => calls.push("cb1")
+  const cb1 = () => calls.push('cb1')
   // cb1 has no id
-  const cb2 = () => calls.push("cb2")
+  const cb2 = () => calls.push('cb2')
   cb2.id = 2
-  const cb3 = () => calls.push("cb3")
+  const cb3 = () => calls.push('cb3')
   cb3.id = 1
 
   queuePostFlushCb(cb1)
   queuePostFlushCb(cb2)
   queuePostFlushCb(cb3)
   await nextTick()
-  expect(calls).toEqual(["cb3", "cb2", "cb1"])
+  expect(calls).toEqual(['cb3', 'cb2', 'cb1'])
 })
 ```
 
@@ -640,19 +642,19 @@ test("sort SchedulerCbs based on id", async () => {
 #### 避免重复的 postFlushCb 调用
 
 ```typescript
-test("avoid duplicate postFlushCb invocation", async () => {
+test('avoid duplicate postFlushCb invocation', async () => {
   const calls: string[] = []
   const cb1 = () => {
-    calls.push("cb1")
+    calls.push('cb1')
     queuePostFlushCb(cb2)
   }
   const cb2 = () => {
-    calls.push("cb2")
+    calls.push('cb2')
   }
   queuePostFlushCb(cb1)
   queuePostFlushCb(cb2)
   await nextTick()
-  expect(calls).toEqual(["cb1", "cb2"])
+  expect(calls).toEqual(['cb1', 'cb2'])
 })
 ```
 
@@ -661,8 +663,8 @@ test("avoid duplicate postFlushCb invocation", async () => {
 #### nextTick 应捕获调度程序刷新错误
 
 ```typescript
-test("nextTick should capture scheduler flush errors", async () => {
-  const err = new Error("test")
+test('nextTick should capture scheduler flush errors', async () => {
+  const err = new Error('test')
   queueJob(() => {
     throw err
   })
@@ -672,7 +674,7 @@ test("nextTick should capture scheduler flush errors", async () => {
     expect(e).toBe(err)
   }
   expect(
-    `Unhandled error during execution of scheduler flush`,
+    `Unhandled error during execution of scheduler flush`
   ).toHaveBeenWarned()
 
   // this one should no longer error
@@ -685,7 +687,7 @@ test("nextTick should capture scheduler flush errors", async () => {
 #### 默认情况下应防止自触发作业
 
 ```typescript
-test("should prevent self-triggering jobs by default", async () => {
+test('should prevent self-triggering jobs by default', async () => {
   let count = 0
   const job = () => {
     if (count < 3) {
@@ -705,7 +707,7 @@ test("should prevent self-triggering jobs by default", async () => {
 #### 应该允许明确标记的作业触发自身
 
 ```typescript
-test("should allow explicitly marked jobs to trigger itself", async () => {
+test('should allow explicitly marked jobs to trigger itself', async () => {
   // normal job
   let count = 0
   const job = () => {
@@ -738,7 +740,7 @@ test("should allow explicitly marked jobs to trigger itself", async () => {
 #### 应该防止重复队列
 
 ```typescript
-test("should prevent duplicate queue", async () => {
+test('should prevent duplicate queue', async () => {
   let count = 0
   const job = () => {
     count++
@@ -756,7 +758,7 @@ test("should prevent duplicate queue", async () => {
 #### flushPostFlushCbs
 
 ```typescript
-test("flushPostFlushCbs", async () => {
+test('flushPostFlushCbs', async () => {
   let count = 0
 
   const queueAndFlush = (hook: Function) => {
@@ -780,7 +782,7 @@ test("flushPostFlushCbs", async () => {
 #### 不运行 stopped reactive effects
 
 ```typescript
-test("should not run stopped reactive effects", async () => {
+test('should not run stopped reactive effects', async () => {
   const spy = jest.fn()
 
   // simulate parent component that toggles child
@@ -866,7 +868,7 @@ let postFlushIndex = 0
 ```typescript
 export function nextTick<T = void>(
   this: T,
-  fn?: (this: T) => void,
+  fn?: (this: T) => void
 ): Promise<void> {
   const p = currentFlushPromise || resolvedPromise
   return fn ? p.then(this ? fn.bind(this) : fn) : p
@@ -892,7 +894,7 @@ export function queueJob(job: SchedulerJob) {
     (!queue.length ||
       !queue.includes(
         job,
-        isFlushing && job.allowRecurse ? flushIndex + 1 : flushIndex,
+        isFlushing && job.allowRecurse ? flushIndex + 1 : flushIndex
       )) &&
     job !== currentPreFlushParentJob
   ) {
@@ -933,7 +935,7 @@ function queueCb(
   cb: SchedulerJobs,
   activeQueue: SchedulerJob[] | null,
   pendingQueue: SchedulerJob[],
-  index: number,
+  index: number
 ) {
   if (!isArray(cb)) {
     if (
@@ -1059,7 +1061,7 @@ if (queue.length || pendingPreFlushCbs.length || pendingPostFlushCbs.length) {
 ```typescript
 export function flushPreFlushCbs(
   seen?: CountMap,
-  parentJob: SchedulerJob | null = null,
+  parentJob: SchedulerJob | null = null
 ) {
   if (pendingPreFlushCbs.length) {
     currentPreFlushParentJob = parentJob
@@ -1134,7 +1136,7 @@ if (activePostFlushCbs) {
 ```typescript
 // #1947 flushPostFlushCbs should handle nested calls
 // e.g. app.mount inside app.mount
-test("flushPostFlushCbs", async () => {
+test('flushPostFlushCbs', async () => {
   let count = 0
 
   const queueAndFlush = (hook: Function) => {

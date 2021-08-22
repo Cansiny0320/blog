@@ -1,10 +1,13 @@
 ---
 slug: node-start
-title: node 入门
+title: node.js 入门
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1622560197064.png
+description: node.js 入门教程
+keywords: [node.js, 教程, 入门]
 tags: [JavaScript]
 ---
 
@@ -82,7 +85,7 @@ $ npm -v
 **引入模块**
 
 ```js
-const fs = require("fs")
+const fs = require('fs')
 ```
 
 **导出模块**
@@ -107,7 +110,7 @@ console.log(add.add(1, 2)) // 3
 而第二种
 
 ```js
-const add = require("./add")
+const add = require('./add')
 
 console.log(add(1, 2)) // 3
 ```
@@ -120,11 +123,11 @@ console.log(add(1, 2)) // 3
 
 ```js
 // fs.js
-module.exports = () => console.log("fs")
+module.exports = () => console.log('fs')
 ```
 
 ```js
-const fs = require("fs")
+const fs = require('fs')
 
 console.log(fs)
 /**
@@ -139,7 +142,7 @@ console.log(fs)
 使用了核心模块
 
 ```js
-const fs = require("./fs")
+const fs = require('./fs')
 
 console.log(fs) // [Function (anonymous)]
 ```
@@ -174,7 +177,7 @@ node 内置了一些基本的模块供我们使用，默认使用`CommonJS`规�
 
 ```js
 // 异步读文件
-fs.readFile("./data.json", (error, data) => {
+fs.readFile('./data.json', (error, data) => {
   if (error) {
     console.log(error)
   } else {
@@ -184,17 +187,17 @@ fs.readFile("./data.json", (error, data) => {
 
 const data = [
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
 ]
 
 // 异步写文件
-fs.writeFile("./data2.json", JSON.stringify(data), error => {
+fs.writeFile('./data2.json', JSON.stringify(data), error => {
   if (error) console.log(error)
 })
 
@@ -212,7 +215,7 @@ fs.writeFileSync(filename, data)
 返回一个文件或目录的信息
 
 ```js
-fs.stat("./index.js", (err, stats) => {
+fs.stat('./index.js', (err, stats) => {
   console.log(stats)
 })
 ```
@@ -253,7 +256,7 @@ export interface StatsBase<T> {
 执行以下代码：
 
 ```js
-const fs = require("fs")
+const fs = require('fs')
 
 fs.readdir(process.cwd(), function (error, files) {
   if (!error) {
@@ -289,7 +292,7 @@ fs.rmkdir(path , callback)
 用于连接路径。该方法的主要用途在于，会正确使用当前系统的路径分隔符，Unix 系统是"`/`"，Windows 系统是" `\`"。
 
 ```js
-console.log(path.join("/path", "/user")) //\path\user
+console.log(path.join('/path', '/user')) //\path\user
 ```
 
 - `path.resolve(...paths)`
@@ -297,9 +300,9 @@ console.log(path.join("/path", "/user")) //\path\user
 用于构建绝对路径，保证无论在什么目录下执行 node 程序都可以正确找到文件地址
 
 ```js
-const path = require("path")
+const path = require('path')
 
-console.log(path.resolve(__dirname, "./data.json")) // D:\frontend\demo\class\node\data.json
+console.log(path.resolve(__dirname, './data.json')) // D:\frontend\demo\class\node\data.json
 ```
 
 #### `http`
@@ -313,16 +316,16 @@ console.log(path.resolve(__dirname, "./data.json")) // D:\frontend\demo\class\no
 监听端口
 
 ```js
-const http = require("http")
+const http = require('http')
 
 //创建http服务器
 const server = http.createServer((req, res) => {
-  res.end("hello world")
+  res.end('hello world')
 })
 
 //监听8000端口,等待连接
 server.listen(8000, () => {
-  console.log("server is running at http://localhost:8000")
+  console.log('server is running at http://localhost:8000')
 })
 ```
 
@@ -374,14 +377,14 @@ server.listen(8000, () => {
 服务端
 
 ```js
-const http = require("http")
-const querystring = require("querystring")
+const http = require('http')
+const querystring = require('querystring')
 
 const server = http.createServer((req, res) => {
   const { url, method } = req
   console.log(method, url)
-  const path = url.split("?")[0]
-  const query = querystring.parse(url.split("?")[1])
+  const path = url.split('?')[0]
+  const query = querystring.parse(url.split('?')[1])
 
   const responseData = {
     url,
@@ -391,19 +394,19 @@ const server = http.createServer((req, res) => {
   }
 
   res.writeHead(200, {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   })
 
-  if (method === "GET") {
+  if (method === 'GET') {
     res.end(JSON.stringify(responseData))
   }
-  if (method === "POST") {
-    let postData = ""
+  if (method === 'POST') {
+    let postData = ''
     req
-      .on("data", chunk => {
+      .on('data', chunk => {
         postData += chunk
       })
-      .on("end", () => {
+      .on('end', () => {
         responseData.postData = postData
         res.end(postData)
       })
@@ -412,21 +415,21 @@ const server = http.createServer((req, res) => {
 
 //监听8000端口,等待连接
 server.listen(8000, () => {
-  console.log("server is running at http://localhost:8000")
+  console.log('server is running at http://localhost:8000')
 })
 ```
 
 客户端
 
 ```js
-const http = require("http")
-http.get("http://localhost:8000/data", res => {
-  let data = ""
-  res.setEncoding("utf-8")
-  res.on("data", chunk => {
+const http = require('http')
+http.get('http://localhost:8000/data', res => {
+  let data = ''
+  res.setEncoding('utf-8')
+  res.on('data', chunk => {
     data += chunk
   })
-  res.on("end", () => {
+  res.on('end', () => {
     res.statusCode = 200
     console.log(JSON.parse(data))
   })
@@ -434,44 +437,44 @@ http.get("http://localhost:8000/data", res => {
 
 const data = JSON.stringify([
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
   {
-    name: "wjx",
-    age: "20",
+    name: 'wjx',
+    age: '20',
   },
 ])
 
 const options = {
-  hostname: "localhost",
+  hostname: 'localhost',
   port: 8000,
-  path: "/data",
-  method: "POST",
+  path: '/data',
+  method: 'POST',
   headers: {
-    "Content-Type": "application/json",
-    "Content-Length": data.length,
+    'Content-Type': 'application/json',
+    'Content-Length': data.length,
   },
 }
 const req = http.request(options, res => {
-  res.on("data", d => {
+  res.on('data', d => {
     process.stdout.write(d)
   })
 })
 
-req.on("error", error => {
+req.on('error', error => {
   console.error(error)
 })
 

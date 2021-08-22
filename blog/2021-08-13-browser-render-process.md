@@ -5,6 +5,9 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1628844171354.png
+description: 浏览器页面渲染的核心流程详解
+keywords: [浏览器, 页面渲染, 重绘, 回流]
 tags: [浏览器]
 ---
 

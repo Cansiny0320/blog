@@ -5,6 +5,9 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629355306002.png
+description: Redux 原理分析
+keywords: [Redux, 源码]
 tags: [JavaScript, SourceCode]
 ---
 

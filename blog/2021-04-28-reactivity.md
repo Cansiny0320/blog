@@ -1,10 +1,13 @@
 ---
 slug: reactivity
-title: vue3数据响应式原理分析
+title: vue3 数据响应式原理分析
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg
+description: vue3 数据响应式原理分析
+keywords: [vue, vue3, 源码，reactivity]
 tags: [JavaScript, SourceCode]
 ---
 
@@ -64,7 +67,10 @@ export function reactive<T extends object>(target: T) {
   return createReactiveObject(target, handler)
 }
 
-export function createReactiveObject(target: object, handler: ProxyHandler<any>) {
+export function createReactiveObject(
+  target: object,
+  handler: ProxyHandler<any>
+) {
   const observed = new Proxy(target, handler)
   return observed
 }
@@ -150,7 +156,11 @@ export const handler = {
 }
 
 function createGetter() {
-  return function get(target: object, key: string | symbol, receiver: object): any {
+  return function get(
+    target: object,
+    key: string | symbol,
+    receiver: object
+  ): any {
     const res = Reflect.get(target, key, receiver)
     // 如果是js的内置方法，不做依赖收集
     if (isSymbol(key) && builtInSymbols.has(key)) {
@@ -203,15 +213,15 @@ const state = reactive({
 })
 
 const effect1 = effect(() => {
-  console.log("effect1: " + state.count)
+  console.log('effect1: ' + state.count)
 })
 
 const effect2 = effect(() => {
-  console.log("effect2: " + state.age)
+  console.log('effect2: ' + state.age)
 })
 
 const effect3 = effect(() => {
-  console.log("effect3: " + state.count, state.age)
+  console.log('effect3: ' + state.count, state.age)
 })
 ```
 
@@ -224,7 +234,11 @@ const effect3 = effect(() => {
 我们来看看`track`是怎么实现的，
 
 ```typescript
-export function track(target: object, type: TrackOpTypes, key: string | symbol) {
+export function track(
+  target: object,
+  type: TrackOpTypes,
+  key: string | symbol
+) {
   if (activeEffect === undefined) {
     return
   }
@@ -270,7 +284,7 @@ function createSetter() {
     target: object,
     key: string | symbol,
     value: unknown,
-    receiver: object,
+    receiver: object
   ): boolean {
     const hadKey = hasOwn(target, key)
     const oldValue = (target as any)[key]
@@ -317,7 +331,7 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
   switch (type) {
     case TriggerOpTypes.ADD:
       // 增加数组元素会改变数组长度
-      if (isArray(target) && isIntegerKey(key)) add(depsMap.get("length"))
+      if (isArray(target) && isIntegerKey(key)) add(depsMap.get('length'))
   }
   // 简化版 scheduleRun，挨个执行 effect
   effects.forEach(effect => {
@@ -338,16 +352,16 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
 let data = [1, 2, 3]
 let p = new Proxy(data, {
   get(target, key, receiver) {
-    console.log("get value:", key)
+    console.log('get value:', key)
     return Reflect.get(target, key, receiver)
   },
   set(target, key, value, receiver) {
-    console.log("set value:", key, value)
+    console.log('set value:', key, value)
     return Reflect.set(target, key, value, receiver)
   },
 })
 
-p.unshift("a")
+p.unshift('a')
 
 // get value: unshift
 // get value: length
@@ -368,25 +382,27 @@ p.unshift("a")
 我们来看看 vue3 是怎么解决这个问题的
 
 ```typescript
-export const hasOwn = (val: object, key: string | symbol): key is keyof typeof val =>
-  Object.prototype.hasOwnProperty.call(val, key)
+export const hasOwn = (
+  val: object,
+  key: string | symbol
+): key is keyof typeof val => Object.prototype.hasOwnProperty.call(val, key)
 
 function createSetter() {
   return function set(
     target: object,
     key: string | symbol,
     value: unknown,
-    receiver: object,
+    receiver: object
   ): boolean {
     console.log(target, key, value)
     const hadKey = hasOwn(target, key)
     const oldValue = (target as any)[key]
     const result = Reflect.set(target, key, value, receiver)
     if (!hadKey) {
-      console.log("trigger ... is a add OperationType")
+      console.log('trigger ... is a add OperationType')
       trigger(target, TriggerOpTypes.ADD, key)
     } else if (value !== oldValue) {
-      console.log("trigger ... is a set OperationType")
+      console.log('trigger ... is a set OperationType')
       trigger(target, TriggerOpTypes.SET, key)
     }
     return result
@@ -416,14 +432,14 @@ state.push(1)
 还有一个细节就是，`Proxy`只能代理一层，比如
 
 ```javascript
-let data = { foo: "foo", bar: { key: 1 }, ary: ["a", "b"] }
+let data = { foo: 'foo', bar: { key: 1 }, ary: ['a', 'b'] }
 let p = new Proxy(data, {
   get(target, key, receiver) {
-    console.log("get value:", key)
+    console.log('get value:', key)
     return Reflect.get(target, key, receiver)
   },
   set(target, key, value, receiver) {
-    console.log("set value:", key, value)
+    console.log('set value:', key, value)
     return Reflect.set(target, key, value, receiver)
   },
 })
@@ -436,7 +452,7 @@ p.bar.key = 2
 执行代码，可以看到并没有触发 `set` 的输出，反而是触发了 `get` ，因为 `set` 的过程中访问了 `bar` 这个属性。 由此可见，`proxy` 代理的对象只能代理到第一层，而对象内部的深度侦测，是需要开发者自己实现的。同样的，对于对象内部的数组也是一样。
 
 ```javascript
-p.ary.push("c")
+p.ary.push('c')
 
 // get value: ary
 ```
@@ -445,7 +461,11 @@ p.ary.push("c")
 
 ```typescript
 function createGetter() {
-  return function get(target: object, key: string | symbol, receiver: object): any {
+  return function get(
+    target: object,
+    key: string | symbol,
+    receiver: object
+  ): any {
     const res = Reflect.get(target, key, receiver)
     track(target, TrackOpTypes.GET, key)
     return isObject(res) ? reactive(res) : res

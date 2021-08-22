@@ -5,6 +5,9 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615703736574.png
+description: 详解浏览器缓存的种类和机制
+keywords: [前端, 浏览器, 缓存, 性能优化]
 tags: [性能优化, 浏览器, 缓存]
 ---
 
@@ -183,7 +186,7 @@ main.js?v=2.0
 
 ```js
 document.write(
-  " <script src='test.js?v= " + Math.random() + " '></s " + ' cript> ',
+  " <script src='test.js?v= " + Math.random() + " '></s " + ' cript> '
 )
 ```
 

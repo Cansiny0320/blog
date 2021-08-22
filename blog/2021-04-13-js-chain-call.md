@@ -5,6 +5,8 @@ author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
+description: JS链式调用和流程控制
+keywords: [链式调用]
 tags: [JavaScript]
 ---
 
@@ -13,24 +15,24 @@ tags: [JavaScript]
 <!--truncate-->
 
 ```js
-Student("fxy")
+Student('fxy')
 // =>输出：
 // Hi! This is fxy!
 
-Student("fxy").sleep(3).study("javascript")
+Student('fxy').sleep(3).study('javascript')
 // =>输出：
 // Hi! This is fxy!
 //等待3秒
 // Wake up after 3
 // Study javascript~
 
-Student("fxy").study("javascript").study("Vue")
+Student('fxy').study('javascript').study('Vue')
 // =>输出：
 // Hi! This is fxy!
 // Study javascript~
 // Study Vue~
 
-Student("fxy").sleepFirst(5).study("Ajax")
+Student('fxy').sleepFirst(5).study('Ajax')
 // =>输出
 // //等待5s
 // Wake up after 5
@@ -113,7 +115,7 @@ setTimeout(() => {
 第一个很简单，
 
 ```js
-Student("fxy")
+Student('fxy')
 ```
 
 讲函数 push 进队列后，经过 setTimeout 调用 next()方法执行函数，打印信息
@@ -121,7 +123,7 @@ Student("fxy")
 第二个
 
 ```js
-Student("fxy").sleep(3).study("javascript")
+Student('fxy').sleep(3).study('javascript')
 // Hi! This is fxy!
 // 等待3秒
 // Wake up after 3
@@ -131,9 +133,9 @@ Student("fxy").sleep(3).study("javascript")
 首先提醒一点，以上链式调用等同于
 
 ```js
-Student("fxy")
+Student('fxy')
 Student.sleep(3)
-Student.study("javascript")
+Student.study('javascript')
 ```
 
 三个同步任务执行，所以在 cbs 里应该有`[Student,sleep,study]`（用函数名代替输出）
@@ -145,7 +147,7 @@ Student.study("javascript")
 第三个经过上面的解释很简单了，我们直接来看第四个
 
 ```js
-Student("fxy").sleepFirst(5).study("Ajax")
+Student('fxy').sleepFirst(5).study('Ajax')
 // 等待5s
 // Wake up after 5
 // Hi! This is fxy!
@@ -175,8 +177,8 @@ Student.sleepFirst = function (time) {
 一个学员看了我上面的实现之后，执行了下面这段输出
 
 ```js
-Student("fxy")
-Student("fxy").sleep(3).study("javascript")
+Student('fxy')
+Student('fxy').sleep(3).study('javascript')
 ```
 
 输出结果也很让人迷惑
