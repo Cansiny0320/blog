@@ -37,7 +37,7 @@ Teacher.prototype.constructor = Teacher // 修正 constructor 指向
 
 ### this
 
-当一个函数独立调用的时候，在严格模式下 this 指向 undefined，在非严格模式下，指向 undefined 的时候，自动指向全局对象(浏览器中就是 window，nodejs 中是 global)
+当一个函数独立调用的时候，在严格模式下 this 指向 undefined，在非严格模式下，指向 undefined 的时候，自动指向全局对象 (浏览器中就是 window，nodejs 中是 global)
 
 作为对象方法调用就指向对象
 
@@ -65,9 +65,9 @@ function fun() {
 }
 var obj = {
   a: 2,
-  b: fun, //b指向fun函数
+  b: fun, //b 指向 fun 函数
 }
-var t = fun //变量t指向fun函数
+var t = fun //变量 t 指向 fun 函数
 console.log(t()) //1
 ```
 
@@ -143,7 +143,7 @@ Object Array Function
 **怎么阻止事件冒泡**
 
 1. 给子元素加`event.stopPropagation( )` ，只阻止事件往上冒泡，不阻止事件本身
-2. 在时间处理函数中返回`false` ，不仅阻止了事件往上冒泡，而且阻止了事件本身(默认事件)
+2. 在时间处理函数中返回`false` ，不仅阻止了事件往上冒泡，而且阻止了事件本身 (默认事件)
 
 **阻止默认事件**
 
@@ -200,25 +200,25 @@ Promise.prototype.then = function (onResolved) {
 
 ```js
 async function async1() {
-  console.log("async1 start")
+  console.log('async1 start')
   await async2()
-  console.log("async1 end")
+  console.log('async1 end')
 }
 async function async2() {
-  console.log("async2")
+  console.log('async2')
 }
-console.log("script start")
+console.log('script start')
 setTimeout(function () {
-  console.log("setTimeout")
+  console.log('setTimeout')
 }, 0)
 async1()
 new Promise(function (resolve) {
-  console.log("promise1")
+  console.log('promise1')
   resolve()
 }).then(function () {
-  console.log("promise2")
+  console.log('promise2')
 })
-console.log("script end")
+console.log('script end')
 //chrome v89.0.4389.90
 //script start
 //async1 start
@@ -249,7 +249,10 @@ console.log("script end")
 
 ```js
 Array.prototype.iMap = function iMap(fn, context) {
-  return this.reduce((acc, cur, index) => [...acc, fn.call(context, cur, index, this)], [])
+  return this.reduce(
+    (acc, cur, index) => [...acc, fn.call(context, cur, index, this)],
+    []
+  )
 }
 
 Array.prototype.iReduce = function iReduce(fn, initial) {
@@ -263,8 +266,9 @@ Array.prototype.iReduce = function iReduce(fn, initial) {
 
 Array.prototype.iFilter = function iFilter(fn, context) {
   return this.reduce(
-    (acc, cur, index) => (fn.call(context, cur, index, this) ? [...acc, cur] : acc),
-    [],
+    (acc, cur, index) =>
+      fn.call(context, cur, index, this) ? [...acc, cur] : acc,
+    []
   )
 }
 
@@ -278,7 +282,7 @@ Array.prototype.iFlat = function iFlat(depth = 1) {
 }
 
 Function.prototype.iCall = function iCall(context = window, ...args) {
-  const tmpKey = Symbol("tmp")
+  const tmpKey = Symbol('tmp')
   context[tmpKey] = this
   const result = context[tmpKey](...args)
   delete context[tmpKey]
@@ -314,7 +318,7 @@ function iInstanceof(left, right) {
 
 function debounce(fn, delay) {
   let timer = null
-  // 用箭头函数避免this指向问题
+  // 用箭头函数避免 this 指向问题
   return (...args) => {
     clearTimeout(timer)
     timer = setTimeout(fn, delay, ...args)
@@ -364,13 +368,13 @@ function throttle(fn, delay) {
 
 ### 知道 BFC 是什么吗？BFC 有什么用？如何触发 BFC？
 
-> BFC 即块级格式上下文,是页面盒模型布局中的一种 CSS 渲染模式，浮动元素和绝对定位元素,非块级盒子的块级容器及 overflow 值不为"visiable"的块级盒子。
+> BFC 即块级格式上下文，是页面盒模型布局中的一种 CSS 渲染模式，浮动元素和绝对定位元素，非块级盒子的块级容器及 overflow 值不为"visiable"的块级盒子。
 
 触发方式 float,position 为 absolute 或 fixed,display 不为 block
 
 **BFC 应用**
 
-- 给父元素设置 BFC 可以防止浮动导致父元素高度塌陷(清除浮动)
+- 给父元素设置 BFC 可以防止浮动导致父元素高度塌陷 (清除浮动)
 - 两个块分别设置 BFC 可以避免外边距折叠
 
 ## 浏览器和计算机网络
@@ -381,7 +385,7 @@ function throttle(fn, delay) {
 
 1. DNS 域名解析
 
-   DNS 是域名和 ip 的对应关系，浏览器提供了 DNS 数据缓存功能，如果一个域名已经解析过，那么会把解析的结果缓存下来，下次处理直接走缓存，不需要经过`DNS解析`。
+   DNS 是域名和 ip 的对应关系，浏览器提供了 DNS 数据缓存功能，如果一个域名已经解析过，那么会把解析的结果缓存下来，下次处理直接走缓存，不需要经过`DNS 解析`。
 
 2. 建立 TCP 连接
 
@@ -396,7 +400,7 @@ function throttle(fn, delay) {
    `UDP`：
 
    - 面向无连接：`UDP`发送数据不需要和`TCP`一样需要进行三次握手建立连接，只是数据的搬运工。
-   - 不可靠性： 首先不可靠体现在无连接上，通信不需要建立连接，想发就发，这样的情况肯定不可靠。再就是`UDP`没有拥塞控制，会一直以恒定的速度发送数据，这样在网络不好的情况下可能会导致丢包，但是在某些实时性要求高的场景(比如电话会议)就需要`UDP`而不是`TCP`。
+   - 不可靠性： 首先不可靠体现在无连接上，通信不需要建立连接，想发就发，这样的情况肯定不可靠。再就是`UDP`没有拥塞控制，会一直以恒定的速度发送数据，这样在网络不好的情况下可能会导致丢包，但是在某些实时性要求高的场景 (比如电话会议) 就需要`UDP`而不是`TCP`。
 
    `TCP`:
 
@@ -410,17 +414,17 @@ function throttle(fn, delay) {
 
    > ACK：此标志表示应答域有效，就是说前面所说的 TCP 应答号将会包含在 TCP 数据包中；有两个取值：0 和 1，为 1 的时候表示应答域有效，反之为 0。TCP 协议规定，只有 ACK=1 时有效，也规定连接建立后所有发送的报文的 ACK 必须为 1。
    >
-   > SYN(SYNchronization)：在连接建立时用来同步序号。当 SYN=1 而 ACK=0 时，表明这是一个连接请求报文。对方若同意建立连接，则应在响应报文中使 SYN=1 和 ACK=1. 因此, SYN 置 1 就表示这是一个连接请求或连接接受报文。
+   > SYN(SYNchronization)：在连接建立时用来同步序号。当 SYN=1 而 ACK=0 时，表明这是一个连接请求报文。对方若同意建立连接，则应在响应报文中使 SYN=1 和 ACK=1. 因此，SYN 置 1 就表示这是一个连接请求或连接接受报文。
    >
    > FIN(finis）即完，终结的意思， 用来释放一个连接。当 FIN = 1 时，表明此报文段的发送方的数据已经发送完毕，并要求释放连接。
 
-   第一次握手：客户端发送一个`SYN`报文，设置 `SYN = 1`，初始序号`seq = x` , 客户端变为`SYN-SENT`状态。
+   第一次握手：客户端发送一个`SYN`报文，设置 `SYN = 1`，初始序号`seq = x` ，客户端变为`SYN-SENT`状态。
 
-   第二次握手：服务端接收到`SYN报文`，返回`SYN = 1`和`seq=y`和`ACK(seq + 1)`，自己变成了`SYN-REVD`。
+   第二次握手：服务端接收到`SYN 报文`，返回`SYN = 1`和`seq=y`和`ACK(seq + 1)`，自己变成了`SYN-REVD`。
 
    第三次握手：客户端收到`SYN`报文之后，会发送`ACK(seq+1)`报文给服务端，客户端变成了`ESTABLISHED`状态；服务端收到`ACK`之后，也变成了`ESTABLISHED`状态。
 
-   SYN 是需要消耗一个序列号，下次发送对应的 ACK 序列号要加 1。规则:
+   SYN 是需要消耗一个序列号，下次发送对应的 ACK 序列号要加 1。规则：
 
    > 凡是需要对端确认的，一定消耗 TCP 报文的序列号。
 
@@ -462,15 +466,15 @@ function throttle(fn, delay) {
 
    **响应完成之后怎么办？TCP 连接就断开了吗？**
 
-   不一定。这时候要判断`Connection`字段, 如果请求头或响应头中包含**Connection: Keep-Alive**，表示建立了持久连接，这样`TCP`连接会一直保持，之后请求统一站点的资源会复用这个连接。
+   不一定。这时候要判断`Connection`字段，如果请求头或响应头中包含**Connection: Keep-Alive**，表示建立了持久连接，这样`TCP`连接会一直保持，之后请求统一站点的资源会复用这个连接。
 
-   否则断开`TCP`连接, 请求-响应流程结束。
+   否则断开`TCP`连接，请求 - 响应流程结束。
 
 4. 渲染页面
 
    1. 解析 HTML，生成 DOM 树，解析 CSS，生成 CSSOM 树
-   2. 将 DOM 树和 CSSOM 树结合，生成渲染树(Render Tree)
-   3. Layout(回流):根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）
+   2. 将 DOM 树和 CSSOM 树结合，生成渲染树 (Render Tree)
+   3. Layout(回流):根据生成的渲染树，进行回流 (Layout)，得到节点的几何信息（位置，大小）
    4. Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素
    5. Display:将像素发送给 GPU，展示在页面上。
 
@@ -486,7 +490,7 @@ function throttle(fn, delay) {
 
    第三次挥手：服务端发送`FIN`，进入`LAST_ACK`状态、
 
-   第四次挥手：客户端接收后，变为`TIME-WAIT`状态，发送`ACK`给服务端，然后需要等待`2MSL`,确认服务端收到`ACK`后，关闭连接，挥手结束
+   第四次挥手：客户端接收后，变为`TIME-WAIT`状态，发送`ACK`给服务端，然后需要等待`2MSL`，确认服务端收到`ACK`后，关闭连接，挥手结束
 
    **理解记忆**
 
@@ -498,7 +502,7 @@ function throttle(fn, delay) {
 
    第四次挥手：客户端收到关闭请求，向服务端确认收到
 
-   **等待 2MSL(报文最大生存时间)的意义**
+   **等待 2MSL(报文最大生存时间) 的意义**
 
    - 保证客户端发送的最后一个 ACK 报文段能够到达服务端
 
@@ -511,7 +515,7 @@ function throttle(fn, delay) {
 
    **为什么要四次挥手**
 
-   因为服务端在接收到`FIN`, 往往不会立即返回`FIN`, 必须等到服务端所有的报文都发送完毕了，才能发`FIN`。因此先发一个`ACK`表示已经收到客户端的`FIN`，延迟一段时间才发`FIN`。这就造成了四次挥手。
+   因为服务端在接收到`FIN`，往往不会立即返回`FIN`，必须等到服务端所有的报文都发送完毕了，才能发`FIN`。因此先发一个`ACK`表示已经收到客户端的`FIN`，延迟一段时间才发`FIN`。这就造成了四次挥手。
 
    如果只有三次，等于说服务端将`ACK`和`FIN`的发送合并为一次挥手（第二次和第三次），这个时候长时间的延迟可能会导致客户端误以为`FIN`没有到达客户端，从而让客户端不断的重发`FIN`。
 
@@ -531,9 +535,9 @@ HTTPS 即 HTTP+SSL/TLS，HTTP 和 TCP 之间的一个安全层
 
    2. 非对称加密：发送方用公钥加密，接收方拿私钥解密（性能差，中间人可以篡改公钥）
 
-      **所以我们可以使用对称加密+非对称加密的方式，使用 RSA 算法将对称加密的密钥发过去，之后使用对称加密**
+      **所以我们可以使用对称加密 + 非对称加密的方式，使用 RSA 算法将对称加密的密钥发过去，之后使用对称加密**
 
-   3. 认证 ：CA 制作证书（发送方的公钥+CA 数字签名（CA 的私钥加密发送方的信息）），接收方用 CA 的公钥解密，可以验证是否有中间人欺骗，但是中间人还是可以胡乱篡改内容。
+   3. 认证 ：CA 制作证书（发送方的公钥 +CA 数字签名（CA 的私钥加密发送方的信息）），接收方用 CA 的公钥解密，可以验证是否有中间人欺骗，但是中间人还是可以胡乱篡改内容。
 
    4. 完整性：使用单向 Hash 算法得到 hash 并发送，另一方验证得到内容的 hash 跟收到的 hash 是否一致 验证完整性
 
@@ -560,7 +564,7 @@ HTTPS 即 HTTP+SSL/TLS，HTTP 和 TCP 之间的一个安全层
 
 对请求头进行压缩，使用 HPACK 算法
 
-在服务器和客户端之间建立哈希表，将用到的字段存放在这张表中，那么在传输的时候对于之前出现过的值，只需要把**索引**(比如 0，1，2，...)传给对方即可，对方拿到索引查表就行了。这种**传索引**的方式，可以说让请求头字段得到极大程度的精简和复用。
+在服务器和客户端之间建立哈希表，将用到的字段存放在这张表中，那么在传输的时候对于之前出现过的值，只需要把**索引**(比如 0，1，2，...) 传给对方即可，对方拿到索引查表就行了。这种**传索引**的方式，可以说让请求头字段得到极大程度的精简和复用。
 
 > **小贴士**
 >
@@ -596,7 +600,7 @@ HTTPS 即 HTTP+SSL/TLS，HTTP 和 TCP 之间的一个安全层
 
 - 链接层：负责在以太网、WiFi 这样的底层网络上发送原始数据包，使用 MAC 地址来标记网络上的设备
 - 网络层：IP 协议就处在这一层，用 IP 地址取代 MAC 地址
-- 传输层：这个层次协议的职责是保证数据在 IP 地址标记的两点之间“可靠”地传输 TCP、UDP
+- 传输层：这个层次协议的职责是保证数据在 IP 地址标记的两点之间 “可靠” 地传输 TCP、UDP
 - 应用层：Telnet、SSH、FTP、SMTP、HTTP
 
 ### 跨域
@@ -643,14 +647,14 @@ HTTPS 即 HTTP+SSL/TLS，HTTP 和 TCP 之间的一个安全层
 
 因此，`Access-Control-Allow-Origin`字段是服务器用来决定浏览器是否拦截这个响应，这是必需的字段。与此同时，其它一些可选的功能性的字段，用来描述如果不会拦截，这些字段将会发挥各自的作用。
 
-**Access-Control-Allow-Credentials**。这个字段是一个布尔值，表示是否允许发送 Cookie，对于跨域请求，浏览器对这个字段默认值设为 false，而如果需要拿到浏览器的 Cookie，需要添加这个响应头并设为`true`, 并且在前端也需要设置`withCredentials`属性:
+**Access-Control-Allow-Credentials**。这个字段是一个布尔值，表示是否允许发送 Cookie，对于跨域请求，浏览器对这个字段默认值设为 false，而如果需要拿到浏览器的 Cookie，需要添加这个响应头并设为`true`，并且在前端也需要设置`withCredentials`属性：
 
 ```js
 let xhr = new XMLHttpRequest()
 xhr.withCredentials = true
 ```
 
-**Access-Control-Expose-Headers**。这个字段是给 XMLHttpRequest 对象赋能，让它不仅可以拿到基本的 6 个响应头字段（包括`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`和`Pragma`）, 还能拿到这个字段声明的**响应头字段**。比如这样设置:
+**Access-Control-Expose-Headers**。这个字段是给 XMLHttpRequest 对象赋能，让它不仅可以拿到基本的 6 个响应头字段（包括`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`和`Pragma`），还能拿到这个字段声明的**响应头字段**。比如这样设置：
 
 ```text
 Access-Control-Expose-Headers: aaa
@@ -662,9 +666,9 @@ Access-Control-Expose-Headers: aaa
 
 - **预检请求**
 
-  对于非简单请求会发一个 `OPTIONS` 预检请求，同时会加上`Origin`源地址和`Host`目标地址,同时也会加上两个关键的字段: Access-Control-Request-Method、Access-Control-Request-Headers
+  对于非简单请求会发一个 `OPTIONS` 预检请求，同时会加上`Origin`源地址和`Host`目标地址，同时也会加上两个关键的字段: Access-Control-Request-Method、Access-Control-Request-Headers
 
-  - Access-Control-Request-Method, 列出 CORS 请求用到哪个 HTTP 方法
+  - Access-Control-Request-Method，列出 CORS 请求用到哪个 HTTP 方法
   - Access-Control-Request-Headers，指定 CORS 请求将要加上什么请求头
 
 - **响应字段**
@@ -709,16 +713,16 @@ Access-Control-Expose-Headers: aaa
 
 简单来说，就是当我们对 DOM 结构的修改引发 DOM 几何尺寸变化的时候，会发生`回流`的过程。
 
-具体一点，有以下的操作会触发回流:
+具体一点，有以下的操作会触发回流：
 
-      1. 一个 DOM 元素的几何属性变化，常见的几何属性有`width`、`height`、`padding`、`margin`、`left`、`top`、`border` 等等, 这个很好理解。
+      1. 一个 DOM 元素的几何属性变化，常见的几何属性有`width`、`height`、`padding`、`margin`、`left`、`top`、`border` 等等，这个很好理解。
       2. 使 DOM 节点发生`增减`或者`移动`。
       3. 读写 `offset`族、`scroll`族和`client`族属性的时候，浏览器为了获取这些值，需要进行回流操作。
       4. 调用 `window.getComputedStyle` 方法。
 
 **回流过程**
 
-依照上面的渲染流水线，触发回流的时候，如果 DOM 结构发生改变，则重新渲染 DOM 树，然后将后面的流程(包括主线程之外的任务)全部走一遍。
+依照上面的渲染流水线，触发回流的时候，如果 DOM 结构发生改变，则重新渲染 DOM 树，然后将后面的流程 (包括主线程之外的任务) 全部走一遍。
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1616469572200.png)
 
@@ -742,7 +746,7 @@ Access-Control-Expose-Headers: aaa
 
 **GPU 加速的原因**
 
-在合成的情况下，会直接跳过布局和绘制流程，直接进入`非主线程`处理的部分，即直接交给`合成线程`处理。交给它处理有两大好处:
+在合成的情况下，会直接跳过布局和绘制流程，直接进入`非主线程`处理的部分，即直接交给`合成线程`处理。交给它处理有两大好处：
 
 1. 能够充分发挥`GPU`的优势。合成线程生成位图的过程中会调用线程池，并在其中使用`GPU`进行加速生成，而 GPU 是擅长处理位图数据的。
 2. 没有占用主线程的资源，即使主线程卡住了，效果依然能够流畅地展示。
@@ -755,7 +759,7 @@ Access-Control-Expose-Headers: aaa
 
 3. 对于 resize、scroll 等进行防抖/节流处理
 
-4. 添加 will-change: tranform ，让渲染引擎为其单独实现一个图层，当这些变换发生时，仅仅只是利用合成线程去处理这些变换，而不牵扯到主线程，大大提高渲染效率。当然这个变化不限于`tranform`, 任何可以实现合成效果的 CSS 属性都能用`will-change`来声明。这里有一个实际的例子，一行`will-change: tranform`拯救一个项目，[点击直达](https://juejin.im/post/5da52531518825094e373372)
+4. 添加 will-change: tranform ，让渲染引擎为其单独实现一个图层，当这些变换发生时，仅仅只是利用合成线程去处理这些变换，而不牵扯到主线程，大大提高渲染效率。当然这个变化不限于`tranform`，任何可以实现合成效果的 CSS 属性都能用`will-change`来声明。这里有一个实际的例子，一行`will-change: tranform`拯救一个项目，[点击直达](https://juejin.im/post/5da52531518825094e373372)
 
    ### 常见的 HTTP 状态码以及作用
 
@@ -786,7 +790,7 @@ Access-Control-Expose-Headers: aaa
 1. Service Worker：运行在浏览器背后的独立线程，是对请求的一种拦截，也因此必须是 HTTPS，首先需要注册 SW，install 事件后可以对资源进行缓存，之后 fetch 事件可以判断是否命中缓存，没有命中就可以调用 fetch 获取，可编程的控制缓存哪些文件、如何匹配缓存、如何读取缓存
 2. Memory Cache：内存中的缓存，容量小访问快时效短
 3. Disk Cache：磁盘中的缓存，强缓存和协商缓存就放到 Disk Cache 和 Memory Cache
-4. Push Cache：HTTP/2 的，只在会话中存在,一旦会话结束就被释放。[HTTP/2 push is tougher than I thought](https://jakearchibald.com/2017/h2-push-tougher-than-i-thought/)
+4. Push Cache：HTTP/2 的，只在会话中存在，一旦会话结束就被释放。[HTTP/2 push is tougher than I thought](https://jakearchibald.com/2017/h2-push-tougher-than-i-thought/)
 
 **强缓存**
 

@@ -6,13 +6,12 @@ author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 description: 前端异步发展过程
-keywords: [前端, 异步, promise, callback, Generator, async]
 tags: [JavaScript]
 ---
 
 ## 💬 前言
 
-> 异步编程的语法目标，就是怎样让它更像同步编程。——阮一峰 《深入掌握 ECMAScript 6 异步编程》
+> 异步编程的语法目标，就是怎样让它更像同步编程。——阮一峰《深入掌握 ECMAScript 6 异步编程》
 
 <!--truncate-->
 
@@ -75,16 +74,16 @@ Promise.prototype.then = function (onResolved) {
 
 ```js
 Promise.prototype.then = function (onResolved) {
-  // 这里叫做promise2
+  // 这里叫做 promise2
   return new Promise(resolve => {
     this.cbs.push(() => {
       const res = onResolved(this.data)
       if (res instanceof Promise) {
-        // resolve的权力被交给了user promise
+        // resolve 的权力被交给了 user promise
         res.then(resolve)
       } else {
-        // 如果是普通值 就直接resolve
-        // 依次执行cbs里的函数 并且把值传递给cbs
+        // 如果是普通值 就直接 resolve
+        // 依次执行 cbs 里的函数 并且把值传递给 cbs
         resolve(res)
       }
     })
@@ -127,9 +126,9 @@ promise1.then(res => {
 
 ```js
 Promise.prototype.then = function (onResolved) {
-  // 这里叫做promise2
+  // 这里叫做 promise2
   return new Promise(resolve => {
-    // 这里的this其实是promise1
+    // 这里的 this 其实是 promise1
     this.cbs.push(() => {})
   })
 }
@@ -141,14 +140,14 @@ Promise.prototype.then = function (onResolved) {
 // promise2
 return new Promise(resolve => {
   this.cbs.push(() => {
-    // onResolved就对应then传入的函数
+    // onResolved 就对应 then 传入的函数
     const res = onResolved(this.data)
-    // 例子中的情况 用户自己返回了一个user promise
+    // 例子中的情况 用户自己返回了一个 user promise
     if (res instanceof Promise) {
-      // user promise的情况
-      // 用户会自己决定何时resolve promise2
-      // 只有promise2被resolve以后
-      // then下面的链式调用函数才会继续执行
+      // user promise 的情况
+      // 用户会自己决定何时 resolve promise2
+      // 只有 promise2 被 resolve 以后
+      // then 下面的链式调用函数才会继续执行
       res.then(resolve)
     } else {
       resolve(res)
@@ -165,7 +164,7 @@ if (res instanceof Promise) {
 }
 ```
 
-结合下面这个例子来看:
+结合下面这个例子来看：
 
 ```js
 new Promise(resolve => {
@@ -195,7 +194,7 @@ new Promise(resolve => {
 
 ### 😲 完整实现
 
-上面介绍了一下 Promise 的核心部分，下面我们根据 [Promises/A+规范](https://promisesaplus.com/) 实现一个较为完整的 Promise
+上面介绍了一下 Promise 的核心部分，下面我们根据 [Promises/A+ 规范](https://promisesaplus.com/) 实现一个较为完整的 Promise
 
 Promise 有三种状态`pending`、`resolved`、`rejected`，在一个 Promise 中状态只能改变一次。
 
@@ -243,7 +242,7 @@ class Promise {
 }
 ```
 
-上面这个 Promise 明显还有许多问题:
+上面这个 Promise 明显还有许多问题：
 
 - 如果我们的`executor`里有异步操作，那么调用`then`方法的时候，`status`可能还是`pending`状态。我们可以用两个数组分别存放回调函数`onFulfilledCallbacks`和`onRejectedCallbacks`，在执行`resolve`和`reject`函数的时候，再遍历数组中的函数执行。
 
@@ -643,7 +642,7 @@ function* requestGen() {
       if (!error && response.statusCode == 200) {
         // console.log(response.body)
 
-        // 注意这里，引用了外部的迭代器itor
+        // 注意这里，引用了外部的迭代器 itor
         itor.next(response.body)
       }
     })
@@ -651,7 +650,7 @@ function* requestGen() {
 
   const url = 'https://www.baidu.com'
 
-  // 使用yield发起三个请求，每个请求成功后再继续调next
+  // 使用 yield 发起三个请求，每个请求成功后再继续调 next
   const r1 = yield sendRequest(url)
   console.log('r1', r1)
   const r2 = yield sendRequest(url)
@@ -662,7 +661,7 @@ function* requestGen() {
 
 const itor = requestGen()
 
-// 手动调第一个next
+// 手动调第一个 next
 itor.next()
 ```
 
@@ -695,7 +694,7 @@ function run(fn) {
   next()
 }
 
-// 使用thunk方法
+// 使用 thunk 方法
 const request = require('request')
 const requestThunk = Thunk(request)
 
@@ -718,17 +717,17 @@ run(requestGen)
 
 这段代码里面的 Thunk 函数返回了好几层函数，我们从他的使用入手一层一层剥开看：
 
-1. `requestThunk`是 Thunk 运行的返回值，也就是第一层返回值，参数是`request`，也就是:
+1. `requestThunk`是 Thunk 运行的返回值，也就是第一层返回值，参数是`request`，也就是：
 
    ```js
    function(...args) {
      return function(callback) {
-       return request.call(this, ...args, callback);   // 注意这里调用的是request
+       return request.call(this, ...args, callback);   // 注意这里调用的是 request
      }
    }
    ```
 
-2. `run`函数的参数是生成器，我们看看他到底干了啥:
+2. `run`函数的参数是生成器，我们看看他到底干了啥：
 
    1. run 里面先调用生成器，拿到迭代器`gen`，然后自定义了一个`next`方法，并调用这个`next`方法，为了便于区分，我这里称这个自定义的`next`为局部`next`
 
@@ -763,7 +762,7 @@ Thunk 函数就是这样一种可以自动执行 Generator 的函数，因为 Th
 const fetch = require('node-fetch')
 const co = require('co')
 co(function* () {
-  // 直接用fetch，简单多了，fetch返回的就是Promise
+  // 直接用 fetch，简单多了，fetch 返回的就是 Promise
   const r1 = yield fetch('https://www.baidu.com')
   const r2 = yield fetch('https://www.baidu.com')
   const r3 = yield fetch('https://www.baidu.com')
@@ -781,7 +780,7 @@ co(function* () {
 
 ### 🤨 源码分析
 
-`co`的源码并不多，总共两百多行，一半都是在进行 yield 后面的参数检测和处理，检测他是不是 Promise，如果不是就转换为 Promise，所以即使你 yield 后面传的 thunk，他还是会转换成 Promise 处理。转换 Promise 的代码相对比较独立和简单，我这里不详细展开了，这里主要还是讲一讲核心方法`co(gen)`。下面是我复制的去掉了注释的简化代码:
+`co`的源码并不多，总共两百多行，一半都是在进行 yield 后面的参数检测和处理，检测他是不是 Promise，如果不是就转换为 Promise，所以即使你 yield 后面传的 thunk，他还是会转换成 Promise 处理。转换 Promise 的代码相对比较独立和简单，我这里不详细展开了，这里主要还是讲一讲核心方法`co(gen)`。下面是我复制的去掉了注释的简化代码：
 
 ```js
 function co(gen) {
@@ -899,6 +898,6 @@ function fn() {
 
 [最简实现 Promise，支持异步链式调用（20 行）](https://juejin.cn/post/6844904094079926286)
 
-[手写一个 Promise/A+,完美通过官方 872 个测试用例](https://juejin.cn/post/6844904116913700877)
+[手写一个 Promise/A+，完美通过官方 872 个测试用例](https://juejin.cn/post/6844904116913700877)
 
 [从 Generator 入手读懂 co 模块源码](https://juejin.cn/post/6844904133577670664)

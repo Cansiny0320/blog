@@ -7,7 +7,6 @@ author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1622560197064.png
 description: node.js 入门教程
-keywords: [node.js, 教程, 入门]
 tags: [JavaScript]
 ---
 
@@ -57,10 +56,10 @@ Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时环境，就是�
 
 **Node.js 能做什么**
 
-说 Node.js 能做什么,不如说说我用 Node.js 做了什么吧。
+说 Node.js 能做什么，不如说说我用 Node.js 做了什么吧。
 
 - 爬虫 爬图片 [爬小说](https://github.com/Cansiny0320/book-spider)...
-- 自动化脚本,优化重复性劳作
+- 自动化脚本，优化重复性劳作
 - [在线聊天室](https://github.com/Cansiny0320/lan-chat-room)
 - [QQ 机器人](https://github.com/Cansiny0320/qq-group-bot)
 - ...
@@ -117,7 +116,7 @@ console.log(add(1, 2)) // 3
 
 应该很好理解吧
 
-同时我们又有了一个问题，如果我的文件模块和核心模块(node 提供的模块)同名，node 会使用哪一个？
+同时我们又有了一个问题，如果我的文件模块和核心模块 (node 提供的模块) 同名，node 会使用哪一个？
 
 我们来测试一下
 
@@ -171,7 +170,7 @@ node 内置了一些基本的模块供我们使用，默认使用`CommonJS`规�
 
 #### `fs`
 
-`fs模块`就是文件系统模块，负责读写文件。`nodeJs`内置的`fs模块`提供了异步和同步的方法
+`fs 模块`就是文件系统模块，负责读写文件。`nodeJs`内置的`fs 模块`提供了异步和同步的方法
 
 同步方法就是在异步 API 后面加一个 `Sync` 后缀
 
@@ -277,7 +276,7 @@ fs.readdir(process.cwd(), function (error, files) {
 //删除文件
 fs.unlink(path , callback)
 //截断文件
-fs.truncate(path , len ,  callback) 返回true和flase
+fs.truncate(path , len ,  callback) 返回 true 和 flase
 //创建目录
  fs.mkdir(path , [mode] , callback)
 //删除目录
@@ -318,12 +317,12 @@ console.log(path.resolve(__dirname, './data.json')) // D:\frontend\demo\class\no
 ```js
 const http = require('http')
 
-//创建http服务器
+//创建 http 服务器
 const server = http.createServer((req, res) => {
   res.end('hello world')
 })
 
-//监听8000端口,等待连接
+//监听 8000 端口，等待连接
 server.listen(8000, () => {
   console.log('server is running at http://localhost:8000')
 })
@@ -413,7 +412,7 @@ const server = http.createServer((req, res) => {
   }
 })
 
-//监听8000端口,等待连接
+//监听 8000 端口，等待连接
 server.listen(8000, () => {
   console.log('server is running at http://localhost:8000')
 })
@@ -486,7 +485,7 @@ req.end()
 
 > _npm_ 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具
 
-简单来说，npm 上面有很多的开源库可供我们使用,我们也可以将自己的库发布到 npm 供他人使用
+简单来说，npm 上面有很多的开源库可供我们使用，我们也可以将自己的库发布到 npm 供他人使用
 
 ### cnpm
 
@@ -552,7 +551,7 @@ npm i --save-dev / -D <pkg> # 安装依赖到 devDependencies
 npm i -g <pkg> #安装依赖到全局
 ```
 
-install 命令总是安装模块的最新版本（指正式发布的最新版本），如果要安装模块的指定版本，可以在模块名后面加上@和版本号。
+install 命令总是安装模块的最新版本（指正式发布的最新版本），如果要安装模块的指定版本，可以在模块名后面加上 @和版本号。
 
 ### node_modules
 
@@ -560,6 +559,6 @@ install 命令总是安装模块的最新版本（指正式发布的最新版本
 
 ## refs
 
-[「万字整理 」这里有一份 Node.js 入门指南和实践,请注意查收 ❤️](https://juejin.cn/post/6844904029219192839)
+[「万字整理 」这里有一份 Node.js 入门指南和实践，请注意查收 ❤️](https://juejin.cn/post/6844904029219192839)
 
 [Node.js 中文网](http://nodejs.cn/)

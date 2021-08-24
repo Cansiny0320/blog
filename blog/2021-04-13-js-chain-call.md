@@ -1,16 +1,15 @@
 ---
 slug: js-chain-call
-title: JS链式调用和流程控制
+title: JS 链式调用和流程控制
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
-description: JS链式调用和流程控制
-keywords: [链式调用]
+description: JS 链式调用和流程控制
 tags: [JavaScript]
 ---
 
-博主在某工作室担任前端导师(知识搬运工)的时候，遇到了其他导师出了一道 JS 题目，要求实现以下输出
+博主在某工作室担任前端导师 (知识搬运工) 的时候，遇到了其他导师出了一道 JS 题目，要求实现以下输出
 
 <!--truncate-->
 
@@ -22,7 +21,7 @@ Student('fxy')
 Student('fxy').sleep(3).study('javascript')
 // =>输出：
 // Hi! This is fxy!
-//等待3秒
+//等待 3 秒
 // Wake up after 3
 // Study javascript~
 
@@ -34,7 +33,7 @@ Student('fxy').study('javascript').study('Vue')
 
 Student('fxy').sleepFirst(5).study('Ajax')
 // =>输出
-// //等待5s
+// //等待 5s
 // Wake up after 5
 // Hi! This is fxy!
 // Study Ajax
@@ -42,7 +41,7 @@ Student('fxy').sleepFirst(5).study('Ajax')
 
 本篇文章不叙述实现过程，主要分析一下执行过程和原理，实现如下：
 
-参考:[关于 js 的 链式调用和流程控制 （sleep）](https://blog.csdn.net/qq_37653449/article/details/83933724)
+参考：[关于 js 的 链式调用和流程控制（sleep）](https://blog.csdn.net/qq_37653449/article/details/83933724)
 
 ```js
 function Student(name) {
@@ -118,14 +117,14 @@ setTimeout(() => {
 Student('fxy')
 ```
 
-讲函数 push 进队列后，经过 setTimeout 调用 next()方法执行函数，打印信息
+讲函数 push 进队列后，经过 setTimeout 调用 next() 方法执行函数，打印信息
 
 第二个
 
 ```js
 Student('fxy').sleep(3).study('javascript')
 // Hi! This is fxy!
-// 等待3秒
+// 等待 3 秒
 // Wake up after 3
 // Study javascript~
 ```
@@ -148,7 +147,7 @@ Student.study('javascript')
 
 ```js
 Student('fxy').sleepFirst(5).study('Ajax')
-// 等待5s
+// 等待 5s
 // Wake up after 5
 // Hi! This is fxy!
 // Study Ajax
@@ -197,7 +196,7 @@ Student('fxy').sleep(3).study('javascript')
 
 首先时为什么`Student`怎么只输出了一次？
 
-很简单，因为我们的`cbs`是定义在`Student()`函数里面的，两次调用`Student()`函数，相当于初始化了两次`cbs`,所以有一个`Student`里的输出被漏掉了。如果我们将`cbs`定义在`Student()`函数外面就会输出两次。
+很简单，因为我们的`cbs`是定义在`Student()`函数里面的，两次调用`Student()`函数，相当于初始化了两次`cbs`，所以有一个`Student`里的输出被漏掉了。如果我们将`cbs`定义在`Student()`函数外面就会输出两次。
 
 ```js
 // Hi! This is fxy!

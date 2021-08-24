@@ -6,7 +6,6 @@ author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 description: vue3 nextTick 原理分析
-keywords: [vue, vue3, nextTick]
 tags: [JavaScript, SourceCode]
 ---
 
@@ -1122,7 +1121,7 @@ export function flushPostFlushCbs(seen?: CountMap) {
 }
 ```
 
-`flushPostFlushCbs` 和 `flushPreFlushCbs` 逻辑大同小异，`flushPostFlushCbs` 其中还会处理嵌套的情况,让嵌套的函数执行一次
+`flushPostFlushCbs` 和 `flushPreFlushCbs` 逻辑大同小异，`flushPostFlushCbs` 其中还会处理嵌套的情况，让嵌套的函数执行一次
 
 ```typescript
 if (activePostFlushCbs) {

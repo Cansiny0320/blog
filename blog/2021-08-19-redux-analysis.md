@@ -7,7 +7,6 @@ author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629355306002.png
 description: Redux 原理分析
-keywords: [Redux, 源码]
 tags: [JavaScript, SourceCode]
 ---
 
@@ -22,7 +21,7 @@ Redux 是 JavaScript 状态容器，能提供可预测化的状态管理。
 - Web 应用是一个状态机，视图与状态是一一对应的。
 - 所有的状态，保存在一个对象里面。
 
-我们先来看看“状态容器”、“视图与状态一一对应”以及“一个对象”这三个概念的具体体现。
+我们先来看看 “状态容器”、“视图与状态一一对应” 以及 “一个对象” 这三个概念的具体体现。
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629290427369.png)
 
@@ -32,7 +31,7 @@ Redux 也规定，一个 State 对应一个 View。只要 State 相同，View �
 
 比如，当前页面分三种状态：loading（加载中）、success（加载成功）或者 error（加载失败），那么这三个就分别唯一对应着一种视图。
 
-现在我们对“状态容器”以及“视图与状态一一对应”有所了解了，那么 Redux 是怎么实现可预测化的呢？我们再来看下 Redux 的工作流程。
+现在我们对 “状态容器” 以及 “视图与状态一一对应” 有所了解了，那么 Redux 是怎么实现可预测化的呢？我们再来看下 Redux 的工作流程。
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1629355306002.png)
 
@@ -134,7 +133,7 @@ function dispatch(action) {
 }
 ```
 
-可以看到，`subscribe`函数将我们传入的`listener`加入`listeners`数组，然后在 dispatch`的时候执行每个`listener`,这样就达到了更新订阅的目的
+可以看到，`subscribe`函数将我们传入的`listener`加入`listeners`数组，然后在 dispatch`的时候执行每个`listener`，这样就达到了更新订阅的目的
 
 `subscribe`函数还会返回一个`unsubscribe`函数，用来取消订阅的`listener`
 
@@ -151,7 +150,7 @@ export default function combineReducers(reducers) {
       const reducer = reducers[key]
       // 之前的 key 的 state
       const previousStateForKey = state[key]
-      // 执行 分 reducer，获得新的state
+      // 执行 分 reducer，获得新的 state
       const nextStateForKey = reducer(previousStateForKey, action)
       nextState[key] = nextStateForKey
     })

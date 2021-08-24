@@ -7,7 +7,6 @@ author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg
 description: vue3 数据响应式原理分析
-keywords: [vue, vue3, 源码，reactivity]
 tags: [JavaScript, SourceCode]
 ---
 
@@ -19,7 +18,7 @@ tags: [JavaScript, SourceCode]
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1619512811924-reacivity.jpeg)
 
-vue3 中的 reactivity 是一个独立的包，可以完全脱离 vue 使用，理论上在任何地方都可以使用(react 都可以)
+vue3 中的 reactivity 是一个独立的包，可以完全脱离 vue 使用，理论上在任何地方都可以使用 (react 都可以)
 
 我们先来看看 reactivity 包的使用
 
@@ -99,13 +98,13 @@ function createReactiveEffect<T = any>(fn: () => T): ReactiveEffect<T> {
     if (!effectStack.includes(effect)) {
       cleanup(effect) // 防止 fn() 中含有 if 等条件判断语句导致依赖不同。所以每次执行函数时，都要重新更新一次依赖。
       try {
-        effectStack.push(effect) // 将本effect推到effect栈中
+        effectStack.push(effect) // 将本 effect 推到 effect 栈中
         activeEffect = effect
         // 立即执行一遍 fn()
         // fn() 执行过程会完成依赖收集，会用到 track
         return fn()
       } finally {
-        // 执行完以后将effect从栈中推出
+        // 执行完以后将 effect 从栈中推出
         effectStack.pop()
         activeEffect = effectStack[effectStack.length - 1]
       }
@@ -162,7 +161,7 @@ function createGetter() {
     receiver: object
   ): any {
     const res = Reflect.get(target, key, receiver)
-    // 如果是js的内置方法，不做依赖收集
+    // 如果是 js 的内置方法，不做依赖收集
     if (isSymbol(key) && builtInSymbols.has(key)) {
       return res
     }
@@ -192,7 +191,7 @@ effect(() => {
 
 还有一个小细节是当访问的属性还是一个对象的时候，我们会调用`reactive`函数，因为`Proxy`只能劫持一层，所以有嵌套的对象时，是劫持不了嵌套的对象的，所以源码中使用了 lazy 的方式，如果触发`getter`的 res 是一个对象，再调用`reactive`，实现深层响应式，这样还可以避免循环引用。
 
-在收集依赖阶段，我们需要收集一张“依赖收集表”，也就是图上的`targetMap`，key 为`Proxy`代理后的对象，value 为该对象对应的`depsMap`。
+在收集依赖阶段，我们需要收集一张 “依赖收集表”，也就是图上的`targetMap`，key 为`Proxy`代理后的对象，value 为该对象对应的`depsMap`。
 
 depsMap 是一个 Map，key 值为触发 getter 时的属性值（此处为 `count`），而 value 则是**触发过该属性值**所对应的各个 effect。
 
@@ -254,9 +253,9 @@ export function track(
   }
 
   if (!dep.has(activeEffect)) {
-    // 将activeEffect add到集合dep中，供 trigger 调用
+    // 将 activeEffect add 到集合 dep 中，供 trigger 调用
     dep.add(activeEffect)
-    // 并在effect的deps中也push这个effects集合dep 供cleanup清除上一轮的依赖，防止本轮触发多余的依赖
+    // 并在 effect 的 deps 中也 push 这个 effects 集合 dep 供 cleanup 清除上一轮的依赖，防止本轮触发多余的依赖
     activeEffect.deps.push(dep)
   }
 }
@@ -323,7 +322,7 @@ export function trigger(target: object, type: TriggerOpTypes, key?: unknown) {
   }
   // SET | ADD
   if (key !== undefined) {
-    // 添加key对应的effect
+    // 添加 key 对应的 effect
     add(depsMap.get(key))
   }
 
@@ -423,9 +422,9 @@ state.push(1)
 
 当我们设置值本身的时候是一个 add 操作，`hasOwn(target, key)`显然返回 `false`，
 
-而 length 是一个自身属性，`hasOwn(target, key)`返回`true`，且`oldvalue === value`,所以没有触发 trigger。
+而 length 是一个自身属性，`hasOwn(target, key)`返回`true`，且`oldvalue === value`，所以没有触发 trigger。
 
-所以通过 **判断 key 是否为 target 自身属性，以及设置 val 是否跟 target[key]相等** 可以确定 `trigger` 的类型，并且避免多余的 `trigger`。
+所以通过 **判断 key 是否为 target 自身属性，以及设置 val 是否跟 target[key] 相等** 可以确定 `trigger` 的类型，并且避免多余的 `trigger`。
 
 ### 深度响应式
 
@@ -473,7 +472,7 @@ function createGetter() {
 }
 ```
 
-判断了`res`是否是一个对象，是对象的话就再走一遍`reactive`,并且会将这个对象存入`reactiveMap`中，提高性能。
+判断了`res`是否是一个对象，是对象的话就再走一遍`reactive`，并且会将这个对象存入`reactiveMap`中，提高性能。
 
 ```typescript
 // 已经有了对应的 proxy
