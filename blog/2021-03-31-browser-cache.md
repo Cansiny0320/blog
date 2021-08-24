@@ -7,7 +7,7 @@ author_url: https://github.com/Cansiny0320
 author_image_url: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618298366420-logo.jpg
 image: https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1615703736574.png
 description: 详解浏览器缓存的种类和机制
-tags: [性能优化，浏览器，缓存]
+tags: [性能优化,浏览器,缓存]
 ---
 
 import Zmage from "@site/src/components/react-zmage-ssr"
@@ -135,7 +135,7 @@ Last-Modified: Tue, 30 Mar 2021 03:30:52 GMT
 
 #### ETag 和 If-None-Match
 
-Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识 (由服务器生成)，只要资源有变化，Etag 就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的 Etag 值放到 request header 里的`If-None-Match`里，服务器只需要比较客户端传来的 If-None-Match 跟自己服务器上该资源的 ETag 是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
+Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识（由服务器生成），只要资源有变化，Etag 就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的 Etag 值放到 request header 里的`If-None-Match`里，服务器只需要比较客户端传来的 If-None-Match 跟自己服务器上该资源的 ETag 是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
 
 如果服务器发现 ETag 匹配不上，那么会返回 200 和新的资源（当然也包括了新的 ETag）发给客户端；
 
@@ -211,16 +211,16 @@ MD5 相当于一个文件的身份证号，每个文件的 MD5 都不一样，�
 
 > _Cache-Control: max-age=31536000_
 
-通常在处理这类资源时，给它们的 Cache-Control 配置一个很大的 `max-age=31536000` (一年)，这样浏览器之后请求相同的 URL 会命中强制缓存。而为了解决更新的问题，就需要在文件名 (或者路径) 中添加 hash， 版本号等动态字符，之后更改动态字符，从而达到更改引用 URL 的目的，让之前的强制缓存失效 (其实并未立即失效，只是不再使用了而已)。
-在线提供的类库 (如 `jquery-3.3.1.min.js`, `lodash.min.js` 等) 均采用这个模式。
+通常在处理这类资源时，给它们的 Cache-Control 配置一个很大的 `max-age=31536000`（一年），这样浏览器之后请求相同的 URL 会命中强制缓存。而为了解决更新的问题，就需要在文件名（或者路径）中添加 hash， 版本号等动态字符，之后更改动态字符，从而达到更改引用 URL 的目的，让之前的强制缓存失效（其实并未立即失效，只是不再使用了而已）。
+在线提供的类库（如 `jquery-3.3.1.min.js`, `lodash.min.js` 等）均采用这个模式。
 
 ## 用户行为对浏览器缓存的影响
 
 所谓用户行为对浏览器缓存的影响，指的就是用户在浏览器如何操作时，会触发怎样的缓存策略。主要有 3 种：
 
 - 打开网页，地址栏输入地址： 查找 disk cache 中是否有匹配。如有则使用；如没有则发送网络请求。
-- 普通刷新 (F5)：因为 TAB 并没有关闭，因此 memory cache 是可用的，会被优先使用 (如果匹配的话)。其次才是 disk cache。
-- 强制刷新 (Ctrl + F5)：浏览器不使用缓存，因此发送的请求头部均带有 `Cache-control: no-cache`(为了兼容，还带了 `Pragma: no-cache`)，服务器直接返回 200 和最新内容。
+- 普通刷新 (F5)：因为 TAB 并没有关闭，因此 memory cache 是可用的，会被优先使用（如果匹配的话）。其次才是 disk cache。
+- 强制刷新 (Ctrl + F5)：浏览器不使用缓存，因此发送的请求头部均带有 `Cache-control: no-cache`（为了兼容，还带了 `Pragma: no-cache`)，服务器直接返回 200 和最新内容。
 
 ## ref
 
