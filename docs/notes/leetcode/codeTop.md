@@ -210,7 +210,7 @@ var sumNumbers = function (root) {
 
 我们定义 dp[n] 为以 nums[n] 结尾的子数组最大和，我们可以想到 dp[n] 的最大值应该等于 dp[n - 1] 考虑加不加上 nums[n]，所以我们比较`dp[n - 1] + nums[n]`和`nums[n]` 的大小，其中较大的为 dp[n] 的值
 
-那么有以下状态转移公式:
+那么有以下状态转移公式：
 
 $$
 dp[n] = max{dp[n - 1] + nums[n],nums[n]}
@@ -351,7 +351,7 @@ const bfs = (list, ans) => {
 
 > 「无后效性」的设计思想：让不确定的因素确定下来，以保证求解的过程形成一个逻辑上的有向无环图。这题不确定的因素是某个元素是否被选中，而我们设计状态的时候，让 nums[i] 必需被选中，这一点是「让不确定的因素确定下来」，也是我们这样设计状态的原因。
 
-1. 定义状态:
+1. 定义状态：
 
 `dp[i]` 表示：以 `nums[i]` 结尾 的「上升子序列」的长度。注意：这个定义中 `nums[i]` 必须被选取，且必须是这个子序列的最后一个元素；
 
@@ -360,7 +360,7 @@ const bfs = (list, ans) => {
 如果一个较大的数接在较小的数后面，就会形成一个更长的子序列。只要 `nums[i]` 严格大于在它位置之前的某个数，那么 `nums[i]` 就可以接在这个数后面形成一个更长的上升子序列。
 
 $$
-  dp[i] = \max_{0 \leq j<i,nums[j]<nums[i]}dp[j] + 1
+dp[i] = \max_{0 \leq j<i,nums[j]<nums[i]}dp[j] + 1
 $$
 
 3. 初始化：
@@ -372,7 +372,7 @@ $$
 不能返回最后一个状态值，最后一个状态值只表示以 nums[len - 1] 结尾的「上升子序列」的长度，状态数组 dp 的最大值才是题目要求的结果。
 
 $$
-  \max_{0 \leq i \leq len -1}dp[i]
+\max_{0 \leq i \leq len -1}dp[i]
 $$
 
 5. 空间优化：
@@ -502,7 +502,7 @@ var inorderTraversal = function (root) {
 
 状态定义：`dp[i]`表示斐波那契数列第 i 项的值
 
-状态转移方程：`dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007` (本题要求取模)
+状态转移方程：`dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007` （本题要求取模）
 
 初始状态：`dp = [0,1]`
 
@@ -544,3 +544,33 @@ var coinChange = function (coins, amount) {
   return dp[amount] === Infinity ? -1 : dp[amount]
 }
 ```
+
+## [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+
+**先排序，后看区间**
+
+我们首先将`intervals`数组根据`start`升序排序来保证每个区间是连续的，接着用`ans`数组来保存结果。
+
+首先将排序后的数组`sorted`的第一个区间放入`ans`中，之后的`sorted`每个区间与`ans`的最后一个区间比较：
+
+- 如果当前区间的`curEnd`小于`lastEnd`，说明区间不重合，直接将当前区间加入`ans`
+- 否则区间重合，将`ans`的最后一个区间的`end`更新为`curEnd`和`lastEnd`之中较大的值
+
+```js
+var merge = function (intervals) {
+  let ans = []
+  let sorted = intervals.sort((left, right) => left[0] - right[0])
+  ans.push(sorted[0])
+  for (let i = 1; i < sorted.length; i++) {
+    const [_, lastEnd] = ans[ans.length - 1]
+    const [curStart, curEnd] = sorted[i]
+    if (curStart > lastEnd) {
+      ans.push(sorted[i])
+    } else {
+      ans[ans.length - 1][1] = Math.max(lastEnd, curEnd)
+    }
+  }
+  return ans
+}
+```
+
