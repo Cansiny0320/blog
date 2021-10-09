@@ -574,3 +574,93 @@ var merge = function (intervals) {
 }
 ```
 
+## [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+
+**网格题的 DFS 基本框架**
+
+对于这种网格的题我们可以将它想成是一个四叉树，即上、下、左、右，四个方向
+
+遍历过程中会出现一些越界的问题，我们利用**“先污染后治理”**的思想来统一遍历过程，即可以超出边界，下一轮遍历再判断是否超出边界
+
+对于二叉树来说就是节点是否为 null，而对于网格来说就是是否超出网格范围，若超出则直接返回
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1633767902598.png)
+
+于是，我们可以建立这么一个框架
+
+```js
+function dfs(grid,i,j) {
+    // 如果越界直接返回
+    if(!inArea(grid,i,j)) {
+        return
+    }
+    
+    // 访问上下左右
+    dfs(grid,i+1,j)
+    dfs(grid,i-1,j)
+    dfs(grid,i,j+1)
+    dfs(grid,i,j-1)
+}
+```
+
+接下来，我们还需要避免一个问题，那就是之前遍历过的点，之后就不需要遍历了，防止死循环出现，如图：
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1633768223111.png)
+
+所以我们需要标记一下已经遍历过的格子
+
+```js
+function dfs(grid,i,j) {
+    // 如果越界或不是未遍历过的陆地直接返回
+    if(!inArea(grid,i,j) || grid[i][j] != '1') {
+        return
+    }
+    
+    // 标记陆地为已遍历
+    grid[i][j] = '2'
+    
+    // 访问上下左右
+    dfs(grid,i+1,j)
+    dfs(grid,i-1,j)
+    dfs(grid,i,j+1)
+    dfs(grid,i,j-1)
+}
+```
+
+对于本题，代码如下：
+
+```js
+var numIslands = function (grid) {
+  let count = 0
+  
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] == '1') {
+        dfs(grid, i, j)
+        ++count;
+      } 
+    }
+  }
+
+  return count
+};
+
+function dfs(grid, i, j) {
+  if (!inArea(grid, i, j) || grid[i][j] != '1') {
+    return
+  }
+
+  grid[i][j] = '2'
+
+  dfs(grid, i + 1, j)
+  dfs(grid, i - 1, j)
+  dfs(grid, i, j + 1)
+  dfs(grid, i, j - 1)
+}
+
+
+function inArea(grid, i, j) {
+  return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length
+}
+```
+
