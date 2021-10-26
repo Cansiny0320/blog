@@ -38,6 +38,10 @@ module.exports = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 5,
+    },
     navbar: {
       title: 'CANSINY',
       logo: {
