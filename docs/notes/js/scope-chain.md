@@ -1,6 +1,6 @@
 ---
 id: scope-chain
-title: 作用域链
+title: 作用域和作用域链
 # hide_title: true
 
 # hide_table_of_contents: false
@@ -9,37 +9,71 @@ title: 作用域链
 
 # custom_edit_url: https://github.com/facebook/docusaurus/edit/master/docs/api-doc-markdown.md
 
-description: 作用域链
+description: 作用域和作用域链
 keywords:
   - JavaScript
 # image: https://i.imgur.com/mErPwqL.png
 ---
 
-> 原文链接：[JavaScript 深入之作用域链](https://github.com/mqyqingfeng/Blog/issues/6)
-
 ## 前言
 
-在[《JavaScript 深入之执行上下文栈》](https://github.com/mqyqingfeng/Blog/issues/4)中讲到，当 JavaScript 代码执行一段可执行代码(executable code)时，会创建对应的执行上下文(execution context)。
+在 [《JavaScript 深入之执行上下文栈》](https://github.com/mqyqingfeng/Blog/issues/4) 中讲到，当 JavaScript 代码执行一段可执行代码 (executable code) 时，会创建对应的执行上下文 (execution context)
 
 对于每个执行上下文，都有三个重要属性：
 
-- 变量对象(Variable object，VO)
-- 作用域链(Scope chain)
+- 变量对象 (Variable object，VO)
+- 作用域链 (Scope chain)
 - this
 
 今天重点讲讲作用域链。
+
+## 作用域
+
+作用域是指程序源代码中定义变量的区域。
+
+作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。
+
+JavaScript 采用词法作用域 (lexical scoping)，也就是静态作用域。
+
+### 词法作用域
+
+因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。
+
+而与词法作用域相对的是动态作用域（bash 使用），函数的作用域是在函数调用的时候才决定的。
+
+### 块级作用域
+
+在没有`ES6 的 let`之前，js 没有块级作用域
+
+```js
+for(var i = 1; i <= 5; i ++){
+  setTimeout(function timer(){
+    console.log(i)
+  }, 0)
+}
+// 全是 6
+```
+
+```js
+for(let i = 1; i <= 5; i++){
+  setTimeout(function timer(){
+    console.log(i)
+  },0)
+}
+// 1 2 3 4 5
+```
 
 ## 作用域链
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1618244094646-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE.png)
 
-在[《JavaScript 深入之变量对象》](https://github.com/mqyqingfeng/Blog/issues/5)中讲到，当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。
+在 [《JavaScript 深入之变量对象》](https://github.com/mqyqingfeng/Blog/issues/5) 中讲到，当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级（词法层面上的父级）执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。
 
 下面，让我们以一个函数的创建和激活两个时期来讲解作用域链是如何创建和变化的。
 
 ## 函数创建
 
-在[《JavaScript 深入之词法作用域和动态作用域》](https://github.com/mqyqingfeng/Blog/issues/3)中讲到，函数的作用域在函数定义的时候就决定了。
+在 [《JavaScript 深入之词法作用域和动态作用域》](https://github.com/mqyqingfeng/Blog/issues/3) 中讲到，函数的作用域在函数定义的时候就决定了。
 
 这是因为函数有一个内部属性 [[scope]]，当函数创建的时候，就会保存所有父变量对象到其中，你可以理解 [[scope]] 就是所有父变量对象的层级链，但是注意：[[scope]] 并不代表完整的作用域链！
 
@@ -53,7 +87,7 @@ function foo() {
 }
 ```
 
-函数创建时，各自的[[scope]]为：
+函数创建时，各自的 [[scope]] 为：
 
 ```js
 foo[[scope]] = [globalContext.VO]
@@ -88,7 +122,7 @@ checkscope()
 
 执行过程如下：
 
-1. checkscope 函数被创建，保存作用域链到 内部属性[[scope]]
+1. checkscope 函数被创建，保存作用域链到 内部属性 [[scope]]
 
    ```js
    checkscope[[scope]] = [globalContext.VO]
@@ -100,7 +134,7 @@ checkscope()
    ECStack = [checkscopeContext, globalContext]
    ```
 
-3. checkscope 函数并不立刻执行，开始做准备工作，第一步：复制函数[[scope]]属性创建作用域链
+3. checkscope 函数并不立刻执行，开始做准备工作，第一步：复制函数 [[scope]] 属性创建作用域链
 
    ```js
    checkscopeContext = {
@@ -155,3 +189,7 @@ checkscope()
    ```js
    ECStack = [globalContext]
    ```
+
+## 参考文章
+
+[JavaScript 深入之作用域链](https://github.com/mqyqingfeng/Blog/issues/6)
