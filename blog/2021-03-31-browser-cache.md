@@ -151,13 +151,11 @@ ETag 是服务器响应请求时，返回当前资源文件的一个唯一标识
 
 ## 缓存机制
 
-强制缓存优先于协商缓存进行，若强制缓存 (Expires 和 Cache-Control) 生效则直接使用缓存，若不生效则进行协商缓存 (Last-Modified / If-Modified-Since 和 Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，返回 200，重新返回资源和缓存标识，再存入浏览器缓存中；生效则返回 304，继续使用缓存。具体流程图如下：
+强制缓存优先于协商缓存进行，若强制缓存 (Expires 和 Cache-Control) 生效则直接使用缓存，若不生效则进行协商缓存 (Last-Modified / If-Modified-Since 和 ETag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，返回 200，重新返回资源和缓存标识，再存入浏览器缓存中；生效则返回 304，继续使用缓存。具体流程图如下：
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1617154053085.png)
 
-看到这里，不知道你是否存在这样一个疑问：**如果什么缓存策略都没设置，那么浏览器会怎么处理？**
-
-对于这种情况，浏览器会采用一个启发式的算法，通常会取响应头中的 Date 减去 Last-Modified 值的 10% 作为缓存时间。
+如果 Expires，Cache-Control: max-age，或 Cache-Control:s-maxage 都没有在响应头中出现，并且设置了 Last-Modified 时，那么浏览器默认会采用一个启发式的算法，即启发式缓存。通常会取响应头的 Date - Last-Modified 值的 10% 作为缓存时间
 
 ## 实际场景应用缓存策略
 
