@@ -80,7 +80,7 @@ push cache 是`HTTP/2`的内容，它是浏览器缓存的最后一道防线，*
 
 浏览器首先使用的是强缓存
 
-使用强缓存的时候不会发送`HTTP`请求，直接从缓存中读取资源，返回状态码为 200，size 显示为 from disk cache 或 from memory cache。
+强缓存不会向服务器发送请求，直接从缓存中读取资源，返回状态码为 200，size 显示为 from disk cache 或 from memory cache。
 
 强缓存可以通过设置两种 HTTP Header 实现：`Expires` 和 `Cache-Control`
 
@@ -94,7 +94,7 @@ Expires: Wed, 22 Nov 2019 08:41:00 GMT
 
 表示资源在`2019 年 11 月 22 号 8 点 41 分`过期，过期了就得向服务端发请求。
 
-这个方式看上去没什么问题，合情合理，但其实潜藏了一个坑，那就是**服务器的时间和浏览器的时间可能并不一致**，那服务器返回的这个过期时间可能就是不准确的。因此这种方式很快在后来的 HTTP1.1 版本中被抛弃了。
+但 Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效。
 
 #### Cache-Control(HTTP/1.1)
 
@@ -118,11 +118,11 @@ cache-control: public, max-age=31536000
 
 浏览器在请求头中携带缓存标识，服务器根据缓存标识决定是否使用缓存，协商缓存生效则返回 304 和 Not Modified，失效则返回 200 和请求结果
 
-协商缓存可以可以通过设置两种 HTTP Header 实现：`Last-Modified` 和 `ETag`
+协商缓存可以可以通过设置两种 HTTP Header 实现：`Last-Modified / If-Modified-Since` 和 `ETag / If-None-Match`
 
 #### Last-Modified 和 If-Modified-Since
 
-浏览器第一次访问资源时，response header 携带 Last-Modified（资源在服务器上的最后修改时间，最小单位 s），浏览器接收后缓存，下一次请求这个资源时 request header 携带 `If-Modified-Since`，如果修改时间没有变化，就使用缓存，返回 304，否则返回新资源和 200
+浏览器第一次访问资源时，response header 携带 `Last-Modified`（资源在服务器上的最后修改时间，最小单位 s），浏览器接收后缓存，下一次请求这个资源时 request header 携带 `If-Modified-Since`（上次返回的`Last-Modified`的值），如果修改时间没有变化，就使用缓存，返回 304，否则返回新资源和 200
 
 ```http
 Last-Modified: Tue, 30 Mar 2021 03:30:52 GMT
@@ -131,15 +131,23 @@ Last-Modified: Tue, 30 Mar 2021 03:30:52 GMT
 **Last-Modified 存在一些弊端**
 
 - 如果本地打开缓存文件，即使没有对文件进行修改，但还是会造成 Last-Modified 被修改，服务端不能命中缓存导致发送相同的资源
-- 因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改完成文件，那么服务端会认为资源还是命中了，不会返回正确的资源
+- 因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改文件，那么服务端会认为资源还是没有变化，不会返回正确的资源
 
 #### ETag 和 If-None-Match
 
-Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识（由服务器生成），只要资源有变化，Etag 就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的 Etag 值放到 request header 里的`If-None-Match`里，服务器只需要比较客户端传来的 If-None-Match 跟自己服务器上该资源的 ETag 是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
+ETag 的优先级比 Last-Modified 更高
+
+ETag 是服务器响应请求时，返回当前资源文件的一个唯一标识（由服务器生成），只要资源有变化，ETag 就会重新生成。浏览器在下一次加载资源向服务器发送请求时，会将上一次返回的 ETag 值放到 request header 里的`If-None-Match`里，服务器只需要比较客户端传来的 If-None-Match 跟自己服务器上该资源的 ETag 是否一致，就能很好地判断资源相对客户端而言是否被修改过了。
 
 如果服务器发现 ETag 匹配不上，那么会返回 200 和新的资源（当然也包括了新的 ETag）发给客户端；
 
 如果 ETag 是一致的，则直接返回 304 知会客户端直接使用本地缓存即可。
+
+具体为什么要用 ETag，主要出于下面几种情况考虑：
+
+- 一些文件也许会周期性的更改，但是他的内容并不改变（仅仅改变的修改时间），这个时候我们并不希望客户端认为这个文件被修改了，而重新 GET；
+- 某些文件修改非常频繁，比如在秒以下的时间内进行修改，（比方说 1s 内修改了 N 次），`If-Modified-Since`能检查到的粒度是秒级的，这种修改无法判断（或者说 UNIX 记录 MTIME 只能精确到秒）；
+- 某些服务器不能精确的得到文件的最后修改时间。
 
 ## 缓存机制
 
