@@ -47,7 +47,7 @@ babel 是一个转译器，暴露了很多 api，用这些 api 可以完成代�
 
 ### babel 是转译器还是编译器？
 
-先说结论**babel 是转译器**
+先说结论** babel 是转译器**
 
 来解释一下为什么，编译指的是将一种编程语言转成另一种编程语言，主要是高级语言到低级语言的转换。
 
@@ -111,7 +111,7 @@ babel 会深度优先遍历整个 AST，然后构建可以表示转换后代码�
 
 AST 也是有标准的，JS parser 的 AST 大多是 [ESTree 标准](https://github.com/estree/estree)，从 SpiderMonkey 的 AST 标准扩展而来。
 
-> Babel 使用一个基于 [ESTree](https://github.com/estree/estree) 并修改过的 AST，它的内核说明文档可以在[这里]([https://github](https://github/). com/babel/babel/blob/master/doc/ast/spec. md)找到
+> Babel 使用一个基于 [ESTree](https://github.com/estree/estree) 并修改过的 AST，它的内核说明文档可以在 [这里](https://github/.com/babel/babel/blob/master/doc/ast/spec.md) 找到
 
 接下来我们来了解一下 AST 中的常见节点
 
@@ -364,11 +364,11 @@ babel 的 AST 最外层节点是 File，它有 program、comments、tokens 等�
 
 ### AST 可视化查看工具
 
-当然，我们并不需要记什么内容对应什么 AST 节点，可以通过[astexplorer.net](https://astexplorer.net/)这个网站来直观的查看。
+当然，我们并不需要记什么内容对应什么 AST 节点，可以通过 [astexplorer.net](https://astexplorer.net/) 这个网站来直观的查看。
 
 ![img](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c26502def1b84a36a54ab09c7b071e73~tplv-k3u1fbpfcp-watermark.image)
 
-这个网站可以查看代码 parse 以后的结果，但是如果想查看全部的 AST 可以在[babel parser 仓库里的 AST 文档](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md)里查，或者直接去看 @babel/types 的[ typescript 类型定义](https://github.com/babel/babel/blob/main/packages/babel-types/src/ast-types/generated/index.ts)。
+这个网站可以查看代码 parse 以后的结果，但是如果想查看全部的 AST 可以在 [babel parser 仓库里的 AST 文档](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md) 里查，或者直接去看 @babel/types 的 [ typescript 类型定义](https://github.com/babel/babel/blob/main/packages/babel-types/src/ast-types/generated/index.ts)。
 
 ## refs
 
