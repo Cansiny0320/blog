@@ -10,7 +10,7 @@ description: 浏览器页面渲染的核心流程详解
 tags: [浏览器]
 ---
 
-## 前言
+## 流程
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1628844171354.png)
 
@@ -19,19 +19,17 @@ tags: [浏览器]
 分为以下几个步骤：
 
 1. parse HTML：解析 HTML 文本构建 DOM Tree
-2. Recalc Styles：样式计算，生成 CSSOM Tree
-
-3. Layout：计算可见元素几何信息 (位置、尺寸) 生成 Layout Tree，也就是我们常说的重排 reflow
-4. update layer tree：创建层叠上下文和元素层级顺序，即建立 Layer Tree
-5. paint：这一步记录需要调用绘制的方法 `draw calls`，在光栅化 `Rasterization` 时，`draw calls` 会被执行。
-6. Composite Layers：某些特殊的渲染层会被认为是合成层（Compositing Layers），Composite 负责处理它们
-7. 然后将这些信息交给`compositor thread` 处理，然后给 GPU 打印到屏幕
+2. Recalc Styles：样式计算，计算出每个 DOM 节点的样式
+3. Layout：计算可见元素几何信息 （位置、尺寸） 生成布局树（`Layout Tree`），也就是我们常说的重排 reflow
+4. update layer tree：对节点进行分层，建立图层树（`Layer Tree`）
+5. paint：为每个图层生成绘制列表，并提交到合成线程，合成线程将图层分图块，并栅格化将图块转换成位图
+6. Composite Layers：在每个层上完成绘制过程之后，浏览器会将所有层按照合理的顺序合并成一个图层，然后显示在屏幕上
 
 <!--truncate-->
 
 ## 构建 DOM 树
 
-这部分取自三元大佬的文章[第 4 篇：说一说从输入 URL 到页面呈现发生了什么？——解析算法篇](https://juejin.cn/post/6844904021308735502#heading-34)
+这部分取自三元大佬的文章 [第 4 篇：说一说从输入 URL 到页面呈现发生了什么？——解析算法篇](https://juejin.cn/post/6844904021308735502#heading-34)
 
 由于浏览器无法直接理解 `HTML 字符串`，因此需要将这一系列的字节流转换为一种有意义并且方便操作的数据结构，这种数据结构就是`DOM Tree`。`DOM Tree`本质上是一个以`document`为根节点的多叉树。
 
@@ -79,7 +77,7 @@ tags: [浏览器]
 之前提到过，DOM 树是一个以`document`为根节点的多叉树。因此解析器首先会创建一个`document`对象。标记生成器会把每个标记的信息发送给**建树器**。**建树器**接收到相应的标记时，会**创建对应的 DOM 对象**。创建这个`DOM 对象`后会做两件事情：
 
 1. 将`DOM 对象`加入 DOM 树中。
-2. 将对应标记压入存放开放 (与`闭合标签`意思对应) 元素的栈中。
+2. 将对应标记压入存放开放 （与`闭合标签`意思对应） 元素的栈中。
 
 还是拿下面这个例子说：
 
@@ -146,33 +144,19 @@ if (t->isCloseTag(brTag) && m_document->inCompatMode()) {
 
 这时候直接忽略里面的`form`。
 
-## 构建 CSSOM 树
+> **注意**
+>
+> - `JS` 阻塞 `DOM` 解析
+>
+> - 浏览器遇到 `<script>`且没有`defer`或`async`属性的 标签时，会触发页面渲染，因而如果前面`CSS`资源尚未加载完毕时，浏览器会等待它加载完毕在执行脚本。
 
-构建 CSSOM 树和构建 DOM 树的过程非常相似，当浏览器接收到一段 CSS，浏览器首先要做的是识别出 Token，然后构建节点并生成 CSSOM Tree
+## 样式计算
 
-直接上一个例子
+首先，浏览器是无法直接识别 CSS 样式文本的，因此渲染引擎接收到 CSS 文本之后第一件事情就是将其转化为一个结构化的对象，即 styleSheets，计算出 DOM 节点的样式
 
-```css
-body {
-  font-size: 16px;
-}
-p {
-  font-weight: bold;
-}
-span {
-  color: red;
-}
-p span {
-  display: none;
-}
-img {
-  float: right;
-}
-```
-
-最终会生成下面这样的树结构
-
-![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1628841046427.png)
+> **注意**
+>
+> `CSS` 不会阻塞 `DOM` 的解析，但会阻塞 `DOM` 渲染。
 
 ## 布局树构建、布局及绘制
 
@@ -188,7 +172,7 @@ img {
 
 有了`Layout Tree`之后我们是不是就可以遍历渲染树将每个`LayoutObject`的内容绘制到页面上了呢？
 
-不，浏览器还有一个[层叠上下文](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)，就是决定元素间相互覆盖关系 (比如 z-index) 的东西。这使得文档流中位置靠前位置的元素有可能覆盖靠后的元素。上述 DFS 过程只能无脑让文档流靠后的元素覆盖前面元素。
+不，浏览器还有一个 [层叠上下文](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)，就是决定元素间相互覆盖关系 （比如 z-index) 的东西。这使得文档流中位置靠前位置的元素有可能覆盖靠后的元素。上述 DFS 过程只能无脑让文档流靠后的元素覆盖前面元素。
 
 因此，有了`PaintLayer`。
 
@@ -227,14 +211,14 @@ img {
 
 注：渲染层提升为合成层有一个先决条件，该渲染层必须是 SelfPaintingLayer（基本可认为是上文介绍的 NormalPaintLayer）。以下所讨论的渲染层提升为合成层的情况都是在该渲染层为 SelfPaintingLayer 前提下的。
 
-> - **3D 或透视变换**(perspective、transform) CSS 属性
+> - **3D 或透视变换** (perspective、transform) CSS 属性
 > - 使用加速视频解码的 元素
 > - 拥有 3D (WebGL) 上下文或加速的 2D 上下文的 元素
-> - 混合插件 (如 Flash)
+> - 混合插件 （如 Flash)
 > - **对 opacity、transform、fliter、backdropfilter 应用了 animation 或者 transition（需要是 active 的 animation 或者 transition，当 animation 或者 transition 效果未开始或结束后，提升合成层也会失效）**
 > - **will-change 设置为 opacity、transform、top、left、bottom、right（其中 top、left 等需要设置明确的定位属性，如 relative 等）**
 > - 拥有加速 CSS 过滤器的元素
-> - 元素有一个 z-index 较低且包含一个复合层的兄弟元素 (换句话说就是该元素在复合层上面渲染)
+> - 元素有一个 z-index 较低且包含一个复合层的兄弟元素 （换句话说就是该元素在复合层上面渲染）
 > - ….. 所有情况的详细列表参见淘宝 fed 文章：[无线性能优化：Composite](https://fed.taobao.org/blog/2016/04/26/performance-composite/)
 
 **3D transform、will-change 设置为 opacity、transform 等 以及 包含 opacity、transform 的 CSS 过渡和动画 这 3 个经常遇到的提升合成层的情况请重点记住。**
@@ -247,7 +231,7 @@ img {
 
 所以在元素存在 transform、opacity 等属性的 css animation 或者 css transition 时，动画处理会很高效，这些属性在动画中不需要重绘，只需要重新合成即可。
 
-随便说一下：如何查看页面中的合成层？
+顺便说一下：如何查看页面中的合成层？
 
 我们可以使用 Chrome DevTools 工具来查看页面中合成层的情况
 
@@ -261,7 +245,7 @@ img {
 
 ### 绘制
 
-接下来渲染引擎会将图层的绘制拆分成一个个绘制指令，比如先画背景、再描绘边框......然后将这些指令按顺序组合成一个待绘制列表，相当于给后面的绘制操作做了一波计划。
+接下来渲染引擎会将图层的绘制拆分成一个个绘制指令，比如先画背景、再描绘边框。..... 然后将这些指令按顺序组合成一个待绘制列表，相当于给后面的绘制操作做了一波计划。
 
 还是在 `Layers` 面板，我们能看到详细的绘制列表
 
@@ -361,7 +345,7 @@ console.log(domB.offsetWidth)
 
 ### 合成
 
-还有一种情况，是直接合成。比如利用 CSS3 的`transform`、`opacity`、`filter`这些属性就可以实现合成的效果，也就是大家常说的**GPU 加速**。
+还有一种情况，是直接合成。比如利用 CSS3 的`transform`、`opacity`、`filter`这些属性就可以实现合成的效果，也就是大家常说的** GPU 加速**。
 
 提升为合成层简单说来有以下几点好处：
 
@@ -403,7 +387,7 @@ console.log(domB.offsetWidth)
 
 ## 参考文章
 
-[(1.6w 字) 浏览器灵魂之问，请问你能接得住几个？](https://juejin.cn/post/6844904021308735502)
+[(1.6w 字） 浏览器灵魂之问，请问你能接得住几个？](https://juejin.cn/post/6844904021308735502)
 
 [渲染页面：浏览器的工作原理](https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work)
 
