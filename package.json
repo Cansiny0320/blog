@@ -7,7 +7,8 @@
     "clear": "docusaurus clear",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy"
+    "deploy": "docusaurus deploy",
+    "new": "node scripts/new.js"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-beta.7",
@@ -19,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
     "classnames": "^2.3.1",
+    "dayjs": "^1.10.8",
     "hast-util-is-element": "1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -41,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.3"
   }
 }
