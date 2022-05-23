@@ -63,25 +63,34 @@ var addStrings = function (num1, num2) {
 
 **双指针实现滑动窗口**
 
-其中比较巧妙的一点是，用`Set`存储已经遍历过的字符，这样右指针遇到有重复的字符的时候，不用改变右指针的位置，只需要将左指针向右移动以为，并删掉左指针之前指向的字符就可以了
+遍历字符串，用 map 来存子串的字符，key 是 字符，value 是字符的个数，右指针每拿到一个字符 c ，就将 map[c] 的值加一，那么当 map[c] > 1 时，说明已经有字符重复，需要将左指针向右移动，左指针拿到的的字符 d，将 map[d] 的值减一，直到 map[c] == 1，即我们已经删除了重复的字符，这时候就可以记录最大长度。
 
-因为在`Set`里存的都是不重复的字符，这样避免了一些不必要的遍历
+需要注意的是，map 没有初始化，直接 `map[c]++` 会有问题，我们需要判断一下 `map[c]` 为 undefined 的情况
 
 ```js
+map[c] = map[c] === undefined ? 1 : map[c] + 1
+```
+
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
 var lengthOfLongestSubstring = function (s) {
-  const len = s.length
-  let j = -1
-  const sub = new Set()
+  const map = {}
+  let left = 0,
+    right = 0
   let max = 0
-  for (let i = 0; i < len; i++) {
-    if (i != 0) {
-      sub.delete(s[i - 1])
+  while (right < s.length) {
+    const c = s[right]
+    right++
+    map[c] = map[c] === undefined ? 1 : map[c] + 1
+    while (map[c] > 1) {
+      const d = s[left]
+      left++
+      map[d]--
     }
-    while (j + 1 < len && !sub.has(s[j + 1])) {
-      sub.add(s[j + 1])
-      j++
-    }
-    max = Math.max(max, j - i + 1)
+    max = Math.max(max, right - left)
   }
   return max
 }
@@ -173,10 +182,7 @@ var hasPathSum = function (root, targetSum) {
   if (root.left === null && root.right === null) {
     return targetSum - root.val === 0
   }
-  return (
-    hasPathSum(root.left, targetSum - root.val) ||
-    hasPathSum(root.right, targetSum - root.val)
-  )
+  return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val)
 }
 ```
 
@@ -589,17 +595,17 @@ var merge = function (intervals) {
 于是，我们可以建立这么一个框架
 
 ```js
-function dfs(grid,i,j) {
-    // 如果越界直接返回
-    if(!inArea(grid,i,j)) {
-        return
-    }
-    
-    // 访问上下左右
-    dfs(grid,i+1,j)
-    dfs(grid,i-1,j)
-    dfs(grid,i,j+1)
-    dfs(grid,i,j-1)
+function dfs(grid, i, j) {
+  // 如果越界直接返回
+  if (!inArea(grid, i, j)) {
+    return
+  }
+
+  // 访问上下左右
+  dfs(grid, i + 1, j)
+  dfs(grid, i - 1, j)
+  dfs(grid, i, j + 1)
+  dfs(grid, i, j - 1)
 }
 ```
 
@@ -610,20 +616,20 @@ function dfs(grid,i,j) {
 所以我们需要标记一下已经遍历过的格子
 
 ```js
-function dfs(grid,i,j) {
-    // 如果越界或不是未遍历过的陆地直接返回
-    if(!inArea(grid,i,j) || grid[i][j] != '1') {
-        return
-    }
-    
-    // 标记陆地为已遍历
-    grid[i][j] = '2'
-    
-    // 访问上下左右
-    dfs(grid,i+1,j)
-    dfs(grid,i-1,j)
-    dfs(grid,i,j+1)
-    dfs(grid,i,j-1)
+function dfs(grid, i, j) {
+  // 如果越界或不是未遍历过的陆地直接返回
+  if (!inArea(grid, i, j) || grid[i][j] != '1') {
+    return
+  }
+
+  // 标记陆地为已遍历
+  grid[i][j] = '2'
+
+  // 访问上下左右
+  dfs(grid, i + 1, j)
+  dfs(grid, i - 1, j)
+  dfs(grid, i, j + 1)
+  dfs(grid, i, j - 1)
 }
 ```
 
@@ -632,18 +638,18 @@ function dfs(grid,i,j) {
 ```js
 var numIslands = function (grid) {
   let count = 0
-  
+
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       if (grid[i][j] == '1') {
         dfs(grid, i, j)
-        ++count;
-      } 
+        ++count
+      }
     }
   }
 
   return count
-};
+}
 
 function dfs(grid, i, j) {
   if (!inArea(grid, i, j) || grid[i][j] != '1') {
@@ -658,9 +664,7 @@ function dfs(grid, i, j) {
   dfs(grid, i, j - 1)
 }
 
-
 function inArea(grid, i, j) {
   return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length
 }
 ```
-
