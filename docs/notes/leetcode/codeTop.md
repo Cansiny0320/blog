@@ -151,41 +151,12 @@ var sumNumbers = function (root) {
 
 而前序数组的第一个值就是`root`，所以遍历中序数组找到`root`即可（这里可以用 map 保存中序数组中每个值的位置来优化）
 
-遍历字符串，用 map 来存子串的字符，key 是 字符，value 是字符的个数，右指针每拿到一个字符 c ，就将 map[c] 的值加一，那么当 map[c] > 1 时，说明已经有字符重复，需要将左指针向右移动，左指针拿到的的字符 d，将 map[d] 的值减一，直到 map[c] == 1，即我们已经删除了重复的字符，这时候就可以记录最大长度。
-
-需要注意的是，map 没有初始化，直接 `map[c]++` 会有问题，我们需要判断一下 `map[c]` 为 undefined 的情况
-
-```js
-map[c] = map[c] === undefined ? 1 : map[c] + 1
-```
-
-````js
-/**
- * @param {string} s
- * @return {number}
- */
-var lengthOfLongestSubstring = function (s) {
-  const map = {}
-  let left = 0,
-    right = 0
-  let max = 0
-  while (right < s.length) {
-    const c = s[right]
-    right++
-    map[c] = map[c] === undefined ? 1 : map[c] + 1
-    while (map[c] > 1) {
-      const d = s[left]
-      left++
-      map[d]--
-    }
-    max = Math.max(max, right - left)
 然后我们就需要根据中序数组`root`的位置来分割左子树和右子树
 
 ![img](https://labuladong.gitee.io/algo/images/%e4%ba%8c%e5%8f%89%e6%a0%91%e7%b3%bb%e5%88%972/4.jpeg)
 
 ```js
 var buildTree = function (preorder, inorder) {
-
   // slice 切分数组 速度较慢
   // if (preorder.length === 0) return null
   // const rootValue = preorder[0]
@@ -200,17 +171,16 @@ var buildTree = function (preorder, inorder) {
   }
 
   return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, hash)
-};
+}
 
 function build(preorder, p_start, p_end, inorder, i_start, i_end, hash) {
-
   if (p_start > p_end) {
     return null
   }
   const rootVal = preorder[p_start]
   const index = hash.get(rootVal)
 
-  const leftChild = index - i_start;
+  const leftChild = index - i_start
 
   const root = new TreeNode(rootVal)
 
@@ -220,7 +190,7 @@ function build(preorder, p_start, p_end, inorder, i_start, i_end, hash) {
 
   return root
 }
-````
+```
 
 ### [199. 二叉树的右视图](https://leetcode-cn.com/problems/binary-tree-right-side-view/)
 
