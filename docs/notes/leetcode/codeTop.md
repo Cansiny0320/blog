@@ -330,7 +330,7 @@ var reverseList = function (head) {
 }
 ```
 
-**循环**
+**迭代**
 
 我们的目的是不断地让当前节点指向前一个节点（头结点指向`null`）
 
@@ -338,7 +338,9 @@ var reverseList = function (head) {
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657471324799.png)
 
-循环过程
+迭代过程
+
+`cur` 指向 `pre` 后，`pre` 和 `cur` 的位置不断前移，最后返回观察图，应该返回 `pre`
 
 ![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657472252680.png)
 
