@@ -13,6 +13,8 @@ keywords:
 # image: https://i.imgur.com/mErPwqL.png
 ---
 
+尽量说人话
+
 ## 二叉树
 
 ### 模板
@@ -273,22 +275,72 @@ var hasCycle = function (head) {
 
 ### [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
 
-首先我们确定我们的主要思想，原本的链表是 a -> b -> c，我们应该在遍历的同时形成 a <- b -> c 到
+**递归**
 
-a <- b <- c 的链表，即是我们所求的反转链表。
+使用递归，我们需要先明确三点：递归函数的输出、输出和递归函数的终止条件
 
-首先想到要做到 a <- b 这种，那么，当前节点`cur`一定要指向上一个节点`pre`。
+把整个函数当做一个递归函数来看
 
-但是我们需要注意的一点是，我们需要一个`tmp`变量来暂存`cur.next`，这样我们就能在改变了`cur.next`后，依然能拿到正确的`cur.next`，进行下面的遍历
+首先是第一点，我们输入的是头结点 `head`
 
-这样我们要做的事就分为了这几步：
+那么第二点，输出就是反转之后的链表的头节点，就叫`last`好了
 
-1. 初始化`pre = null`、`cur = head`
+最后是第三点，什么时候/条件结束？这个一下子想不出来也没关系，我们先来想想递归的过程应该是怎么样的？
 
-2. 用`tmp`暂存`cur.next`
-3. `cur`指向`pre`
-4. `cur`赋值为`tmp`，继续遍历链表
-5. 终止条件为`cur == null`，这时`pre`应该正好在尾节点，也就是反转后链表的头节点，返回`pre`即可
+开始递归
+
+```js
+const last = reverseList(head.next)
+```
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657469953066.png)
+
+我们会得到这样的状态：
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657470100480.png)
+
+现在就只有 `head` 节点的指向不对了，`head` 应该指向 `null`，而`2`应该指向`1`
+
+所以我们需要
+
+```js
+head.next.next = head.next // 将 2 指向 head
+head.next = null // 将 head 指向 null
+```
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657470351063.png)
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657470368259.png)
+
+链表成功反转
+
+清楚了递归过程之后，终止条件也很容易想到了，就是`head.next == null`的情况，即到了最后一个节点，直接返回该节点即可
+
+```js
+var reverseList = function (head) {
+  // head == null 处理输入数据为 null 的情况
+  // head.next == null 是递归终止条件
+  if (head == null || head.next == null) {
+    return head
+  }
+  const last = reverseList(head.next)
+  head.next.next = head
+  head.next = null
+  return last
+}
+```
+
+**循环**
+
+我们的目的是不断地让当前节点指向前一个节点（头结点指向`null`）
+
+初始状态
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657471324799.png)
+
+循环过程
+
+![](https://cansiny.oss-cn-shanghai.aliyuncs.com/images/1657472252680.png)
 
 ```js
 var reverseList = function (head) {
@@ -296,7 +348,9 @@ var reverseList = function (head) {
   let cur = head
   while (cur) {
     const tmp = cur.next
+    // 当前节点指向前一个节点
     cur.next = pre
+    // 位置前移
     pre = cur
     cur = tmp
   }
