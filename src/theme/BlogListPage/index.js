@@ -5,14 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import BlogPostItem from '@theme/BlogPostItem'
 import BlogListPaginator from '@theme/BlogListPaginator'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub, faGoogle, faZhihu, faJ } from '@fortawesome/free-brands-svg-icons'
+import {
+  faGithub,
+  faGoogle,
+  faZhihu,
+  faJ,
+} from '@fortawesome/free-brands-svg-icons'
 
 import JuejinIcon from '@site/static/icons/juejin.svg'
 
@@ -69,7 +74,11 @@ function BlogListPage(props) {
   // });
 
   return (
-    <Layout title={title} description={description} wrapperClassName='blog-list__page'>
+    <Layout
+      title={title}
+      description={description}
+      wrapperClassName='blog-list__page'
+    >
       <Head>
         <meta
           name='keywords'
@@ -82,9 +91,11 @@ function BlogListPage(props) {
         <animated.div className='hero'>
           <div className='bloghome__intro'>
             <animated.div style={animatedTexts[0]} className='hero_text'>
-              Hello! 我是<span className='intro__name'>嘉欣</span>
+              Hello！我是<span className='intro__name'>嘉欣</span>
             </animated.div>
-            <animated.p style={animatedTexts[1]}>记录一下学习和日常生活</animated.p>
+            <animated.p style={animatedTexts[1]}>
+              记录一下学习和日常生活
+            </animated.p>
             {/* <animated.p style={animatedTexts[3]}>
               QQ 1 群：644722908，2 群：1004912565
             </animated.p> */}
@@ -94,7 +105,7 @@ function BlogListPage(props) {
                 href="https://space.bilibili.com/302954484?from=search&seid=1788147379248960737"
                 className="bloghome__follow"
               >
-                去B站关注 ({(Math.round(followers) / 10000).toFixed(1)} 万)
+                去 B 站关注 ({(Math.round(followers) / 10000).toFixed(1)} 万)
               </a>
             </animated.div> */}
           </div>
@@ -165,7 +176,8 @@ function BlogListPage(props) {
                 {isListView && (
                   <div className='bloghome__posts-list'>
                     {items.map(({ content: BlogPostContent }, index) => {
-                      const { metadata: blogMetaData, frontMatter } = BlogPostContent
+                      const { metadata: blogMetaData, frontMatter } =
+                        BlogPostContent
                       const { title } = frontMatter
                       const { permalink, date, tags } = blogMetaData
 
@@ -176,27 +188,39 @@ function BlogListPage(props) {
                       const day = ('0' + dateObj.getDate()).slice(-2)
 
                       return (
-                        <div className='post__list-item' key={blogMetaData.permalink + index}>
+                        <div
+                          className='post__list-item'
+                          key={blogMetaData.permalink + index}
+                        >
                           <Link to={permalink} className='post__list-title'>
                             {title}
                           </Link>
                           <div className='post__list-tags'>
                             {tags.length > 0 &&
-                              tags.slice(0, 2).map(({ label, permalink: tagPermalink }, index) => (
-                                <Link
-                                  key={tagPermalink}
-                                  className={`post__tags ${
-                                    index < tags.length ? 'margin-right--sm' : ''
-                                  }`}
-                                  to={tagPermalink}
-                                  style={{
-                                    fontSize: '0.75em',
-                                    fontWeight: 500,
-                                  }}
-                                >
-                                  {label}
-                                </Link>
-                              ))}
+                              tags
+                                .slice(0, 2)
+                                .map(
+                                  (
+                                    { label, permalink: tagPermalink },
+                                    index
+                                  ) => (
+                                    <Link
+                                      key={tagPermalink}
+                                      className={`post__tags ${
+                                        index < tags.length
+                                          ? 'margin-right--sm'
+                                          : ''
+                                      }`}
+                                      to={tagPermalink}
+                                      style={{
+                                        fontSize: '0.75em',
+                                        fontWeight: 500,
+                                      }}
+                                    >
+                                      {label}
+                                    </Link>
+                                  )
+                                )}
                           </div>
                           <div className='post__list-date'>
                             {year}-{month}-{day}
