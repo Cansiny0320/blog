@@ -1382,8 +1382,6 @@ function inArea(grid, i, j) {
 }
 ```
 
-# <<<<<<< Updated upstream
-
 ## [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
 > 祖先：若节点 p 在节点 root 的左（右）子树中，或 p = root，则称 root 是 p 的祖先
@@ -1431,7 +1429,3 @@ var lowestCommonAncestor = function (root, p, q) {
   return left == null ? right : left
 }
 ```
-
-> > > > > > > Stashed changes
-> > > > > > > ength
-> > > > > > > }
