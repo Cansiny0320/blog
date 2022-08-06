@@ -465,25 +465,24 @@ function palindrome(s, l, r) {
 当然有些过程我们可以优化一下，比如用 map 保存左右括号方便查找，当我们遇到一个不配对的右括号的时候，直接返回 `false`。
 
 ```js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
 var isValid = function (s) {
-  if (s.length % 2 !== 0) return false
-
+  const map = {
+    ')': '(',
+    '}': '{',
+    ']': '[',
+  }
   const stack = []
-  const map = new Map([
-    ['(', ')'],
-    ['[', ']'],
-    ['{', '}'],
-  ])
 
-  for (const c of s) {
-    if (map.has(c)) {
-      stack.push(c)
+  for (const char of s) {
+    if (map[char]) {
+      const c = stack.pop()
+      if (c !== map[char]) return false
     } else {
-      if (map.get(stack[stack.length - 1]) === c) {
-        stack.pop()
-      } else {
-        return false
-      }
+      stack.push(char)
     }
   }
   return !stack.length
