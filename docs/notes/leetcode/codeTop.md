@@ -499,20 +499,27 @@ var isValid = function (s) {
 之后比较每个块的数字就可以
 
 ```js
+/**
+ * @param {string} version1
+ * @param {string} version2
+ * @return {number}
+ */
 var compareVersion = function (version1, version2) {
   const v1 = version1.split('.')
   const v2 = version2.split('.')
-  let n1, n2
-  let p = 0
-  while (p < Math.max(v1.length, v2.length)) {
-    n1 = p < v1.length ? parseInt(v1[p]) : 0
-    n2 = p < v2.length ? parseInt(v2[p]) : 0
-    if (n1 === n2) {
-      p++
-    } else {
-      return n1 - n2 > 0 ? 1 : -1
+  let i = 0
+  while (i < v1.length || i < v2.length) {
+    const n1 = v1[i] ? parseInt(v1[i]) : 0
+    const n2 = v2[i] ? parseInt(v2[i]) : 0
+    if (n1 > n2) {
+      return 1
     }
+    if (n1 < n2) {
+      return -1
+    }
+    i++
   }
+
   return 0
 }
 ```
