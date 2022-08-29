@@ -1,6 +1,6 @@
 ---
 slug: react-re-render
-title: [译]React 中的 re-render
+title: 【译】React 中的 re-render
 author: Cansiny0320
 author_title: 前端开发者
 author_url: https://github.com/Cansiny0320
